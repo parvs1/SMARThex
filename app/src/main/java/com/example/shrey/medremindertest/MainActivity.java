@@ -12,8 +12,8 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     ListView medSchedule;
-    ArrayList<Medicine> medicines = new ArrayList<Medicine>();
-    ArrayAdapter<Medicine> adapter = new ArrayAdapter<Medicine>(this, android.R.layout.simple_list_item_1, medicines);
+    ArrayList<Medicine> medicines;
+    ArrayAdapter<Medicine> adapter;
     Button addMedicine;
 
     @Override
@@ -21,9 +21,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        medicines = new ArrayList<Medicine>();
+
         medicines.add(new Medicine("Tums", 6, 00));
         medicines.add(new Medicine("Lanzo", 7, 30));
-        medicines.add(new Medicine("Tums", 7, 30, "PM"));
+
+        adapter = new ArrayAdapter<Medicine>(this, android.R.layout.simple_list_item_1, medicines);
 
 
         medSchedule = (ListView)findViewById(R.id.medSchedule);

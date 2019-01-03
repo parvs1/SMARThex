@@ -9,12 +9,13 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="86dp"
-        android:layout_marginTop="56dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="84dp"
+        android:layout_marginTop="55dp"
+        android:layout_marginEnd="85dp"
         android:ems="10"
         android:hint="Enter Medicine Name"
-        android:inputType="textPersonName"
-        android:text="Medicine Name: " />
+        android:inputType="textPersonName" />
 
 
 
@@ -39,11 +40,11 @@
 
     <Spinner
         android:id="@+id/frequencySpinner"
-        android:layout_width="186dp"
+        android:layout_width="156dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="99dp"
-        android:layout_marginTop="216dp" />
+        android:layout_marginStart="117dp"
+        android:layout_marginTop="219dp" />
 
 </RelativeLayout>

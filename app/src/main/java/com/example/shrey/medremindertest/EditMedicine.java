@@ -4,6 +4,7 @@ import android.app.TimePickerDialog;
 import android.icu.util.Calendar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -18,8 +19,9 @@ public class EditMedicine extends AppCompatActivity implements AdapterView.OnIte
     Button timePickerButton;
     Button saveButton;
     Spinner frequencySpinner;
+    public final String TAG = "F";
 
-    int[] time = new int[1];
+    int[] time = new int[2];
     int doseFrequency = 1;
 
     @Override
@@ -40,7 +42,7 @@ public class EditMedicine extends AppCompatActivity implements AdapterView.OnIte
                 mTimePicker = new TimePickerDialog(EditMedicine.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        timePickerButton.setText(selectedHour + ":" + selectedMinute);
+                        timePickerButton.setText(selectedHour%12 + ":" + selectedMinute);
                         time[0] = selectedHour;
                         time[1] = selectedMinute;
                     }
@@ -53,25 +55,26 @@ public class EditMedicine extends AppCompatActivity implements AdapterView.OnIte
 
         frequencySpinner = (Spinner) findViewById(R.id.frequencySpinner);
 
-        final ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(this, R.array.frequency_array, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(this, R.array.frequency_array, android.R.layout.simple_spinner_item);
         // Specify the layout to use when the list of choices appears
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
         frequencySpinner.setAdapter(spinnerAdapter);
 
-        frequencySpinner.setOnItemClickListener(this);
+        frequencySpinner.setOnItemSelectedListener(this);
 
         Button saveButton = (Button)findViewById(R.id.saveButton);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Medicine tempMedicine = new Medicine(editMedName.getText().toString(), time[0], time[1], doseFrequency);
+
+                Log.d(TAG, ""+ tempMedicine);
             }
         });
     }
 
-    public void onItemSelected(AdapterView<?> parent, View view,
-                               int pos, long id) {
+    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
         doseFrequency = pos + 1;
     }
 
