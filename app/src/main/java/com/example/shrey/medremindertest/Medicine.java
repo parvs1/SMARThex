@@ -1,6 +1,8 @@
 package com.example.shrey.medremindertest;
 
-public class Medicine {
+import java.io.Serializable;
+
+public class Medicine implements Serializable {
 
     public String medicineName;
     public int hour;

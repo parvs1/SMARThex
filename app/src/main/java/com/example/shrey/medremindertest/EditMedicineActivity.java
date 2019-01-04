@@ -1,6 +1,7 @@
 package com.example.shrey.medremindertest;
 
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.icu.util.Calendar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,7 +16,7 @@ import android.widget.TimePicker;
 
 import butterknife.OnItemSelected;
 
-public class EditMedicine extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class EditMedicineActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     EditText editMedName;
     Button timePickerButton;
@@ -31,9 +32,14 @@ public class EditMedicine extends AppCompatActivity implements AdapterView.OnIte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_medicine);
 
+        Medicine medicineToEdit = (Medicine)getIntent().getSerializableExtra("medicineToEdit");
+
         editMedName = (EditText)findViewById(R.id.editMedName);
+        editMedName.setText(medicineToEdit.medicineName);
 
         final Button timePickerButton = (Button)findViewById(R.id.timePickerButton);
+        final String tempTime = "" + medicineToEdit.hour%12 + ":" + medicineToEdit.minute;
+        timePickerButton.setText(tempTime);
         timePickerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -41,10 +47,11 @@ public class EditMedicine extends AppCompatActivity implements AdapterView.OnIte
                 int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
                 int minute = mcurrentTime.get(Calendar.MINUTE);
                 TimePickerDialog mTimePicker;
-                mTimePicker = new TimePickerDialog(EditMedicine.this, new TimePickerDialog.OnTimeSetListener() {
+                mTimePicker = new TimePickerDialog(EditMedicineActivity.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        timePickerButton.setText(selectedHour%12 + ":" + selectedMinute);
+                        tempTime = "" + selectedHour%12 + ":" + selectedMinute;
+                        timePickerButton.setText(tempTime);
                         time[0] = selectedHour;
                         time[1] = selectedMinute;
                     }
@@ -63,6 +70,8 @@ public class EditMedicine extends AppCompatActivity implements AdapterView.OnIte
         // Apply the adapter to the spinner
         frequencySpinner.setAdapter(spinnerAdapter);
 
+        frequencySpinner.setSelection(medicineToEdit.frequency-1);
+
         frequencySpinner.setOnItemSelectedListener(this);
 
         Button saveButton = (Button)findViewById(R.id.saveButton);
@@ -70,8 +79,12 @@ public class EditMedicine extends AppCompatActivity implements AdapterView.OnIte
             @Override
             public void onClick(View v) {
                 Medicine tempMedicine = new Medicine(editMedName.getText().toString(), time[0], time[1], doseFrequency);
-
                 Log.d(TAG, ""+ tempMedicine);
+
+                Intent editedMedicine = new Intent(EditMedicineActivity.this, MainActivity.class);
+                editedMedicine.putExtra("editedMedicine", tempMedicine);
+
+
             }
         });
     }
