@@ -13,6 +13,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 
+import butterknife.OnItemSelected;
+
 public class EditMedicine extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     EditText editMedName;
