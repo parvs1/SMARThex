@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">Med Reminder Test</string>
+
+    <string name="enter_medicine_name">Enter Medicine Name</string>
+    <string name="save">Save</string>
+    <string name="choose_time">Choose Time</string>
+
     <string-array name="frequency_array">
         <item>1 day</item>
         <item>2 days</item>
