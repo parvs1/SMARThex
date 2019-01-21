@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayAdapter<Medicine> adapter;
     FloatingActionButton addMedicine;
     public final int REQUEST_CODE = 4;
-    public final String TAG = "medadhererance";
+    public final String TAG = "com.med_adherence";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,13 +60,23 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        if (!medicinesFileText.equals(""))
-            Log.e(TAG, medicinesFileText);
+        String[] medicinesFileTextArray = medicinesFileText.split("\n");
 
         medicines = new ArrayList<Medicine>();
 
-        medicines.add(new Medicine("Tums", "06", "00"));
-        medicines.add(new Medicine("Lanzo", "07", "30"));
+        if(medicinesFileTextArray.length > 2){
+            for (int i = 0; i < medicinesFileTextArray.length; i+=4){
+                String tempName = medicinesFileTextArray[i];
+                String tempHour = medicinesFileTextArray[i+1];
+                String tempMin = medicinesFileTextArray[i+2];
+                int tempFreq = Integer.parseInt(medicinesFileTextArray[i+3]);
+
+                medicines.add(new Medicine(tempName, tempHour, tempMin, tempFreq));
+            }
+        }
+        else
+            medicines.add(new Medicine("Tap me to edit!","00","30",1));
+
 
         adapter = new ArrayAdapter<Medicine>(this, android.R.layout.simple_list_item_1, medicines);
 
@@ -127,11 +138,10 @@ public class MainActivity extends AppCompatActivity {
                 outputWriter.write(fileContents);
                 outputWriter.close();
 
-                //Log.e(TAG, "Saved as..." + fileContents); //Uncomment this to read the text file in the log if need be
+                //Log.e(TAG, "Saved as..." + fileContents); //uncomment to read file if need be
 
             } catch (Exception e) {
                 e.printStackTrace();
-
             }
 
         }

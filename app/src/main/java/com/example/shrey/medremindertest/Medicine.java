@@ -36,13 +36,17 @@ public class Medicine implements Serializable {
 
     public String toString()
     {
-        String description = "" + medicineName + " at " + hour + ":" + minute;
-        if (frequency == 1)
-            description = description + "; taken every day";
-        else
-            description = description + "; taken every " + frequency + " days";
+        if (medicineName.equals("Tap me to edit!"))
+            return medicineName;
+        else {
+            String description = "" + medicineName + " at " + hour + ":" + minute;
+            if (frequency == 1)
+                description = description + "; taken every day";
+            else
+                description = description + "; taken every " + frequency + " days";
 
-        return description;
+            return description;
+        }
     }
 
 }
