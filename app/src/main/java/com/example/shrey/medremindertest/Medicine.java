@@ -5,19 +5,19 @@ import java.io.Serializable;
 public class Medicine implements Serializable {
 
     public String medicineName;
-    public int hour;
-    public int minute;
+    public String hour;
+    public String minute;
     public int frequency;//days in between doses
 
     public Medicine()
     {
         medicineName = "";
-        hour = 0;
-        minute = 0;
+        hour = "0";
+        minute = "0";
         frequency = 1;
     }
 
-    public Medicine(String mName, int h, int m)
+    public Medicine(String mName, String h, String m)
     {
         medicineName = mName;
         hour = h;
@@ -26,7 +26,7 @@ public class Medicine implements Serializable {
     }
 
 
-    public Medicine (String mName, int h, int m, int fr)
+    public Medicine (String mName, String h, String m, int fr)
     {
         medicineName = mName;
         hour = h;
@@ -36,6 +36,13 @@ public class Medicine implements Serializable {
 
     public String toString()
     {
-        return "" + medicineName + " - " + hour + ":" + minute;
+        String description = "" + medicineName + " at " + hour + ":" + minute;
+        if (frequency == 1)
+            description = description + "; taken every day";
+        else
+            description = description + "; taken every " + frequency + " days";
+
+        return description;
     }
+
 }

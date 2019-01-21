@@ -24,7 +24,7 @@ public class EditMedicineActivity extends AppCompatActivity implements AdapterVi
     Spinner frequencySpinner;
     public final String TAG = "F";
 
-    int[] time = new int[2];
+    String[] time = new String[2];
     int doseFrequency = 1;
 
     @Override
@@ -34,12 +34,31 @@ public class EditMedicineActivity extends AppCompatActivity implements AdapterVi
 
         Medicine medicineToEdit = (Medicine)getIntent().getSerializableExtra("medicineToEdit");
 
+        //if adding new medicine, not editing, change medicineToEdit
+        if(medicineToEdit.medicineName.equals("temp") && Integer.parseInt(medicineToEdit.hour) == -1 && Integer.parseInt(medicineToEdit.minute) == -1)
+        {
+            medicineToEdit.medicineName = "";
+            medicineToEdit.hour = "13";
+            medicineToEdit.minute = "35";
+            time[0] = "13";
+            time[1] = "35";
+        }
+
         editMedName = (EditText)findViewById(R.id.editMedName);
         editMedName.setText(medicineToEdit.medicineName);
 
+        String timePickerButtonHourText = ""+Integer.parseInt(medicineToEdit.hour)%12;
+        if (timePickerButtonHourText.length() == 1)
+            timePickerButtonHourText = "0" + timePickerButtonHourText;
+
+        String timePickerButtonMinText = ""+Integer.parseInt(medicineToEdit.minute);
+        if (timePickerButtonMinText.length() == 1)
+            timePickerButtonMinText = "0" + timePickerButtonMinText;
+
+
         final Button timePickerButton = (Button)findViewById(R.id.timePickerButton);
-        final String tempTime = "" + medicineToEdit.hour%12 + ":" + medicineToEdit.minute;
-        timePickerButton.setText(tempTime);
+        String timeText = "" + timePickerButtonHourText + ":" + timePickerButtonMinText;
+        timePickerButton.setText(timeText);
         timePickerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -50,10 +69,20 @@ public class EditMedicineActivity extends AppCompatActivity implements AdapterVi
                 mTimePicker = new TimePickerDialog(EditMedicineActivity.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        tempTime = "" + selectedHour%12 + ":" + selectedMinute;
-                        timePickerButton.setText(tempTime);
-                        time[0] = selectedHour;
-                        time[1] = selectedMinute;
+
+                        String selectedHourText = ""+selectedHour;
+                        if (selectedHourText.length() == 1)
+                            selectedHourText = "0" + selectedHourText;
+
+                        String selectedMinText = ""+selectedMinute;
+                        if (selectedMinText.length() == 1)
+                            selectedMinText = "0" + selectedMinText;
+
+                        time[0] = selectedHourText;
+                        time[1] = selectedMinText;
+
+                        String timeText = "" + selectedHourText + ":" + selectedMinText;
+                        timePickerButton.setText(timeText);
                     }
                 }, hour, minute, false);
                 mTimePicker.setTitle("Select Time");
@@ -81,10 +110,11 @@ public class EditMedicineActivity extends AppCompatActivity implements AdapterVi
                 Medicine tempMedicine = new Medicine(editMedName.getText().toString(), time[0], time[1], doseFrequency);
                 Log.d(TAG, ""+ tempMedicine);
 
-                Intent editedMedicine = new Intent(EditMedicineActivity.this, MainActivity.class);
+                Intent editedMedicine = new Intent();
                 editedMedicine.putExtra("editedMedicine", tempMedicine);
 
-
+                setResult(RESULT_OK,editedMedicine);
+                finish();
             }
         });
     }
