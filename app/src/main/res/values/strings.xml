@@ -17,4 +17,7 @@
         <item>9 days</item>
         <item>10 days</item>
     </string-array>
+
+    <string name="title_activity_fullscreen">AlarmActivity</string>
+    <string name="dummy_content">Take Medicine Name \nNext Reminder in n days.</string>
 </resources>

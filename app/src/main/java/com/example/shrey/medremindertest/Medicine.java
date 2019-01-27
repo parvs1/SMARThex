@@ -4,10 +4,10 @@ import java.io.Serializable;
 
 public class Medicine implements Serializable {
 
-    public String medicineName;
-    public String hour;
-    public String minute;
-    public int frequency;//days in between doses
+    public String medicineName; //name of medicine
+    public String hour; //hour dose is taken
+    public String minute;   //minute does is taken
+    public int frequency; //days in between doses
 
     public Medicine()
     {
@@ -36,6 +36,8 @@ public class Medicine implements Serializable {
 
     public String toString()
     {
+        //unless it is original place holder, make each item for listview read 'medicineName; taken every n days
+
         if (medicineName.equals("Tap me to edit!"))
             return medicineName;
         else {
