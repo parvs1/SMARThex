@@ -1,21 +1,23 @@
 package com.example.shrey.medremindertest;
 
-public class Medicine {
+import java.io.Serializable;
 
-    public String medicineName;
-    public int hour;
-    public int minute;
-    public int frequency;//days in between doses
+public class Medicine implements Serializable {
+
+    public String medicineName; //name of medicine
+    public String hour; //hour dose is taken
+    public String minute;   //minute does is taken
+    public int frequency; //days in between doses
 
     public Medicine()
     {
         medicineName = "";
-        hour = 0;
-        minute = 0;
+        hour = "0";
+        minute = "0";
         frequency = 1;
     }
 
-    public Medicine(String mName, int h, int m)
+    public Medicine(String mName, String h, String m)
     {
         medicineName = mName;
         hour = h;
@@ -24,7 +26,7 @@ public class Medicine {
     }
 
 
-    public Medicine (String mName, int h, int m, int fr)
+    public Medicine (String mName, String h, String m, int fr)
     {
         medicineName = mName;
         hour = h;
@@ -34,6 +36,19 @@ public class Medicine {
 
     public String toString()
     {
-        return "" + medicineName + " - " + hour + ":" + minute;
+        //unless it is original place holder, make each item for listview read 'medicineName; taken every n days
+
+        if (medicineName.equals("Tap me to edit!"))
+            return medicineName;
+        else {
+            String description = "" + medicineName + " at " + hour + ":" + minute;
+            if (frequency == 1)
+                description = description + "; taken every day";
+            else
+                description = description + "; taken every " + frequency + " days";
+
+            return description;
+        }
     }
+
 }
