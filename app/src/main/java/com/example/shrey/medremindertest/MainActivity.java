@@ -1,5 +1,7 @@
 package com.example.shrey.medremindertest;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
@@ -24,9 +26,12 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
+    private AlarmManager alarmMgr;
+    private PendingIntent alarmIntent;
     ListView medSchedule; //list view of medicines
     ArrayList<Medicine> medicines; //array list that holds medicine objects created by user
     ArrayAdapter<Medicine> adapter; //adapter for medicines array list and medSchedule listview
@@ -160,10 +165,31 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy(){
         super.onDestroy();
+
         for (int i = 0; i < medicines.size(); i++){
             Medicine temp = medicines.get(i);
 
+            alarmMgr = (AlarmManager)MainActivity.this.getSystemService(Context.ALARM_SERVICE);
+            Intent intent = new Intent(MainActivity.this, FullscreenActivity.class);
+            intent.putExtra("Sending Medicine Name",temp);
 
+//Lets the other application cntinue the process as if we are owning it
+            alarmIntent = PendingIntent.getBroadcast(MainActivity.this, 0, intent, 0);
+
+// Set the alarm to start at the Medicine time.
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(System.currentTimeMillis());
+            calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(temp.hour));
+            calendar.set(Calendar.MINUTE, Integer.parseInt(temp.minute));
+
+//Repeat the alarm for the specified frequency of days
+            alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+                    1000 * 60 * 20, alarmIntent);
+            Calendar c = Calendar.getInstance();
+            c.setTimeInMillis(System.currentTimeMillis());
+            c.set(Calendar.HOUR_OF_DAY, Integer.parseInt(temp.hour));
+            alarmMgr.setInexactRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(),
+                    temp.frequency, alarmIntent);
         }
     }
 
