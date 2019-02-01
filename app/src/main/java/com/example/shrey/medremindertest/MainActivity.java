@@ -189,10 +189,9 @@ public class MainActivity extends AppCompatActivity {
             calendar.set(Calendar.MINUTE, Integer.parseInt(temp.minute));
 
             //Repeat the alarm for the specified frequency of days
-            alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
-                    86400000 * temp.frequency, alarmIntent);
+            alarmMgr.setInexactRepeating(alarmMgr.RTC_WAKEUP, calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY * temp.frequency, alarmIntent);
 
-            Log.e(TAG,"Set up " + temp.medicineName + "'s alarm:");
+            Log.e(TAG,"Set up " + temp.medicineName + "'s alarm.");
         }
     }
 
