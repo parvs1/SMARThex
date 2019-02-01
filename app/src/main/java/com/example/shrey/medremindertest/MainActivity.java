@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
-    }
+
 
         //Runs when returning from EditMedicineActivity (after creating or editing a medicine)
         @Override
