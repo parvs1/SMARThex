@@ -42,8 +42,8 @@ public class MainActivity extends AppCompatActivity {
     ArrayAdapter<Medicine> adapter; //adapter for medicines array list and medSchedule listview
     FloatingActionButton addMedicine; //floating action button on MainActivity
     public final int REQUEST_CODE = 4; //code for starting editMedicine Activity and obtaining its result
-    public final String TAG = "com.med-adherence"; //TAG for log usage
-    private BluetoothAdapter bleadapter;
+    public final String TAG = "MEDICATION_ADHERENCE"; //TAG for log usage
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,12 +54,9 @@ public class MainActivity extends AppCompatActivity {
         FileInputStream fileInputStream = null;
 
         // Use this check to determine whether BLE is supported on the device.
-        if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
-            Toast.makeText(this, "Bluetooth not available", Toast.LENGTH_SHORT).show();
+
 
             // initialize the bluetooth adapter
-            final BluetoothManager bleManager = (BluetoothManager)getSystemService(Context.BLUETOOTH_SERVICE);
-            bleadapter = bleManager.getAdapter();
 
             //try finding file 'medicinesFile.txt' if it exists
             try {
