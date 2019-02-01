@@ -1,5 +1,6 @@
 package com.example.shrey.medremindertest;
 
+import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -128,6 +129,8 @@ public class MainActivity extends AppCompatActivity {
             medicines.add(newMedicine);
             adapter.notifyDataSetChanged(); //update listview on change
 
+            setAlarms();
+
             //create or update file 'medicinesFile.txt'
             String filename = "medicinesFile.txt";
 
@@ -161,35 +164,35 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    /*when user exits application, set the alarms @Rinse. Each alarm should do a startActivityForResult using the FullscreenActivity (alarm activity)*/
     @Override
     protected void onDestroy(){
         super.onDestroy();
+    }
+
+    public void setAlarms() {
+        Log.e(TAG, "Started creating the alarms.");
 
         for (int i = 0; i < medicines.size(); i++){
             Medicine temp = medicines.get(i);
 
-            alarmMgr = (AlarmManager)MainActivity.this.getSystemService(Context.ALARM_SERVICE);
+            alarmMgr = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
             Intent intent = new Intent(MainActivity.this, FullscreenActivity.class);
-            intent.putExtra("Sending Medicine Name",temp);
+            intent.putExtra("medicineToAlert",temp);
 
-//Lets the other application cntinue the process as if we are owning it
-            alarmIntent = PendingIntent.getBroadcast(MainActivity.this, 0, intent, 0);
+            //Lets the other application continue the process as if we are owning it
+            alarmIntent = PendingIntent.getBroadcast(MainActivity.this, REQUEST_CODE, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-// Set the alarm to start at the Medicine time.
+            // Set the alarm to start at the Medicine time.
             Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis(System.currentTimeMillis());
             calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(temp.hour));
             calendar.set(Calendar.MINUTE, Integer.parseInt(temp.minute));
 
-//Repeat the alarm for the specified frequency of days
+            //Repeat the alarm for the specified frequency of days
             alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
-                    1000 * 60 * 20, alarmIntent);
-            Calendar c = Calendar.getInstance();
-            c.setTimeInMillis(System.currentTimeMillis());
-            c.set(Calendar.HOUR_OF_DAY, Integer.parseInt(temp.hour));
-            alarmMgr.setInexactRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(),
-                    temp.frequency, alarmIntent);
+                    86400000 * temp.frequency, alarmIntent);
+
+            Log.e(TAG,"Set up " + temp.medicineName + "'s alarm:");
         }
     }
 
