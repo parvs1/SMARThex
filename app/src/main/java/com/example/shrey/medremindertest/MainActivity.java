@@ -113,6 +113,17 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
+            medSchedule.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                @Override
+                public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                    medicines.remove(position);
+                    adapter.notifyDataSetChanged();
+                    updateFile();
+
+                    return true;
+                }
+            });
+
             //create floating action button that adds a new medicine to the medicines list when clicked on
             FloatingActionButton addMedicine = (FloatingActionButton) findViewById(R.id.addMedicine);
             addMedicine.setOnClickListener(new View.OnClickListener() {
@@ -127,62 +138,61 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-        //Runs when returning from EditMedicineActivity (after creating or editing a medicine)
-        @Override
-        protected void onActivityResult ( int requestCode, int resultCode, Intent data){
-            // REQUEST_CODE is defined above
-            if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
+    //Runs when returning from EditMedicineActivity (after creating or editing a medicine)
+    @Override
+    protected void onActivityResult ( int requestCode, int resultCode, Intent data){
+        // REQUEST_CODE is defined above
+    if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
 
-                //add medicine received from activity (if an edit, we already removed the original one)
-                Medicine newMedicine = (Medicine) data.getSerializableExtra("editedMedicine");
-                medicines.add(newMedicine);
-                adapter.notifyDataSetChanged(); //update listview on change
+            //add medicine received from activity (if an edit, we already removed the original one)
+            Medicine newMedicine = (Medicine) data.getSerializableExtra("editedMedicine");
+            medicines.add(newMedicine);
+            adapter.notifyDataSetChanged(); //update listview on change
 
-                setAlarms();
+            setAlarms();
+            updateFile();
+        }
+    }
 
-                //create or update file 'medicinesFile.txt'
-                String filename = "medicinesFile.txt";
+    public void updateFile(){
+        //create or update file 'medicinesFile.txt'
+        String filename = "medicinesFile.txt";
 
-                String fileContents = "";
+        String fileContents = "";
 
-                //add each medicine from medicines list to fileContents string, separating each attribute with a new line for later iteration
-                for (int i = 0; i < medicines.size(); i++) {
-                    Medicine temp = medicines.get(i);
-                    fileContents += temp.medicineName + "\n";
-                    fileContents += temp.hour + "\n";
-                    fileContents += temp.minute + "\n";
-                    fileContents += temp.frequency + "\n";
-                }
-
-                FileOutputStream outputStream;
-
-                //try creating a file 'medicinesFile.txt' with content 'fileContents'
-                try {
-                    outputStream = openFileOutput(filename, Context.MODE_PRIVATE);
-                    OutputStreamWriter outputWriter = new OutputStreamWriter(outputStream);
-                    outputWriter.write(fileContents);
-                    outputWriter.close();
-
-                    //Log.e(TAG, "Saved as..." + fileContents); //uncomment to read file if need be
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-            }
+        //add each medicine from medicines list to fileContents string, separating each attribute with a new line for later iteration
+        for (int i = 0; i < medicines.size(); i++) {
+            Medicine temp = medicines.get(i);
+            fileContents += temp.medicineName + "\n";
+            fileContents += temp.hour + "\n";
+            fileContents += temp.minute + "\n";
+            fileContents += temp.frequency + "\n";
         }
 
+        FileOutputStream outputStream;
 
+        //try creating a file 'medicinesFile.txt' with content 'fileContents'
+        try {
+            outputStream = openFileOutput(filename, Context.MODE_PRIVATE);
+            OutputStreamWriter outputWriter = new OutputStreamWriter(outputStream);
+            outputWriter.write(fileContents);
+            outputWriter.close();
+
+            //Log.e(TAG, "Saved as..." + fileContents); //uncomment to read file if need be
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     public void setAlarms() {
-        Log.e(TAG, "Started creating the alarms.");
-
         for (int i = 0; i < medicines.size(); i++){
             Medicine temp = medicines.get(i);
 
             alarmMgr = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
-            Intent intent = new Intent(MainActivity.this, FullscreenActivity.class);
+            Intent intent = new Intent(MainActivity.this, AlarmReceiver.class);
             intent.putExtra("medicineToAlert",temp);
+
 
             //Lets the other application continue the process as if we are owning it
             alarmIntent = PendingIntent.getBroadcast(MainActivity.this, REQUEST_CODE, intent, PendingIntent.FLAG_UPDATE_CURRENT);

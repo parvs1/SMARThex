@@ -29,6 +29,7 @@ public class BluetoothConnectActivity extends AppCompatActivity {
         @Override
         public void onScanResult(int callbackType, ScanResult result) {
             devices.add(result.getDevice());
+            deviceAdapter.notifyDataSetChanged();
         }
     };
 
