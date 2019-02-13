@@ -191,7 +191,7 @@ public class MainActivity extends AppCompatActivity {
 
             alarmMgr = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
             Intent intent = new Intent(MainActivity.this, AlarmReceiver.class);
-            intent.putExtra("medicineToAlert",temp);
+            intent.putExtra("medicineToAlert", temp);
 
 
             //Lets the other application continue the process as if we are owning it
