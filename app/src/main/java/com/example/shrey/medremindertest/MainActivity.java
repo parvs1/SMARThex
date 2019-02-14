@@ -186,16 +186,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setAlarms() {
+        alarmMgr = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+
         for (int i = 0; i < medicines.size(); i++){
             Medicine temp = medicines.get(i);
 
-            alarmMgr = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
-            Intent intent = new Intent(MainActivity.this, AlarmReceiver.class);
-            intent.putExtra("medicineToAlert", temp);
-
+            Intent alarmReceiver = new Intent(MainActivity.this, AlarmReceiver.class);
+            alarmReceiver.addFlags(Intent.FLAG_RECEIVER_FOREGROUND);
+            alarmReceiver.putExtra("nameToAlert", temp.medicineName);
 
             //Lets the other application continue the process as if we are owning it
-            alarmIntent = PendingIntent.getBroadcast(MainActivity.this, REQUEST_CODE, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            alarmIntent = PendingIntent.getBroadcast(MainActivity.this, REQUEST_CODE, alarmReceiver, PendingIntent.FLAG_UPDATE_CURRENT);
+
 
             // Set the alarm to start at the Medicine time.
             Calendar calendar = Calendar.getInstance();
@@ -206,7 +208,7 @@ public class MainActivity extends AppCompatActivity {
             //Repeat the alarm for the specified frequency of days
             alarmMgr.setInexactRepeating(alarmMgr.RTC_WAKEUP, calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY * temp.frequency, alarmIntent);
 
-            Log.e(TAG,"Set up " + temp.medicineName + "'s alarm.");
+            Log.i(TAG,"Set up " + temp.medicineName + "'s alarm.");
         }
     }
 

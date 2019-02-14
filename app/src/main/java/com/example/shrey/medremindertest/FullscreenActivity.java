@@ -1,12 +1,16 @@
 package com.example.shrey.medremindertest;
 
 import android.annotation.SuppressLint;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 /**
@@ -14,6 +18,10 @@ import android.widget.TextView;
  * status bar and navigation/system bar) with user interaction.
  */
 public class FullscreenActivity extends AppCompatActivity {
+
+    Uri notification;
+    Ringtone r;
+
     /**
      * Whether or not the system UI should be auto-hidden after
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
@@ -90,6 +98,11 @@ public class FullscreenActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_alarm);
 
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON|
+                WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD|
+                WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED|
+                WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
+
         mVisible = true;
         mControlsView = findViewById(R.id.fullscreen_content_controls);
         mContentView = findViewById(R.id.alarmMainText);
@@ -100,15 +113,19 @@ public class FullscreenActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 toggle();
+                r.stop();
             }
         });
 
         TextView alarmMainText = (TextView)findViewById(R.id.alarmMainText);
 
-        Medicine medicineToAlert = (Medicine)getIntent().getSerializableExtra("medicineToAlert");
+        String nameToAlert = getIntent().getStringExtra("nameToAlert");
 
-        alarmMainText.setText("Take " + medicineToAlert.medicineName + "\n Next reminder in " + medicineToAlert.frequency + "days");
+        alarmMainText.setText("Take " + nameToAlert + " now");
 
+        notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+        r = RingtoneManager.getRingtone(getApplicationContext(), notification);
+        r.play();
     }
 
     @Override

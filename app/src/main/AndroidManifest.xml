@@ -17,7 +17,13 @@
             android:enabled="true"
             android:exported="true"></receiver>
 
-        <activity android:name=".BluetoothConnectActivity" />
+        <activity android:name=".BluetoothConnectActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".FullscreenActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"

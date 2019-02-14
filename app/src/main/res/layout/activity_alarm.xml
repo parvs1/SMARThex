@@ -23,7 +23,7 @@
     <!-- This FrameLayout insets its children based on system windows using
          android:fitsSystemWindows. -->
     <FrameLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true">
 
@@ -35,7 +35,7 @@
             android:layout_gravity="bottom|center_horizontal"
             android:background="@color/black_overlay"
             android:orientation="horizontal"
-            tools:ignore="UselessParent"/>
+            tools:ignore="UselessParent" />
     </FrameLayout>
 
 </FrameLayout>

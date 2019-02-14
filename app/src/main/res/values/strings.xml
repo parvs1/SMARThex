@@ -19,5 +19,5 @@
     </string-array>
 
     <string name="title_activity_fullscreen">AlarmActivity</string>
-    <string name="dummy_content">Take Medicine Name \nNext Reminder in n days.</string>
+    <string name="dummy_content">Take Medicine Name now</string>
 </resources>

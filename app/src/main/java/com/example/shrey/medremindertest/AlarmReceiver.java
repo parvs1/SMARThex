@@ -11,12 +11,12 @@ public class AlarmReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
-        Medicine temp = (Medicine)intent.getSerializableExtra("medicineToAlert");
-        Log.i(TAG, "Starting alarm activity for " + temp.medicineName);
+        String nameToAlert = intent.getStringExtra("nameToAlert");
+        Log.i(TAG, "Starting alarm activity for " + nameToAlert);
 
         Intent i = new Intent(context, FullscreenActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        i.putExtra("medicineToAlert", temp);
+        i.putExtra("nameToAlert", nameToAlert);
         context.startActivity(i);
     }
 }
