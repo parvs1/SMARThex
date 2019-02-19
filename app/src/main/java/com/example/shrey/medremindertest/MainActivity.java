@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Medicine> medicines; //array list that holds medicine objects created by user
     ArrayAdapter<Medicine> adapter; //adapter for medicines array list and medSchedule listview
     FloatingActionButton addMedicine; //floating action button on MainActivity
-    public final int REQUEST_CODE = 4; //code for starting editMedicine Activity and obtaining its result
+    public final int REQUEST_CODE = 99; //code for starting editMedicine Activity and obtaining its result
     public final String TAG = "MEDICATION_ADHERENCE"; //TAG for log usage
 
 
@@ -116,9 +116,17 @@ public class MainActivity extends AppCompatActivity {
             medSchedule.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                 @Override
                 public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+
+
+                   Intent alarmReceiver = new Intent(MainActivity.this, AlarmReceiver.class);
+                   alarmIntent = PendingIntent.getBroadcast(MainActivity.this, medicines.size() -1 , alarmReceiver, PendingIntent.FLAG_CANCEL_CURRENT); //delete last alarm on the list (preceding ones will be replaced)
+
                     medicines.remove(position);
+
+                    //update list, file, and alarms
                     adapter.notifyDataSetChanged();
                     updateFile();
+                    setAlarms();
 
                     return true;
                 }
@@ -196,7 +204,7 @@ public class MainActivity extends AppCompatActivity {
             alarmReceiver.putExtra("nameToAlert", temp.medicineName);
 
             //Lets the other application continue the process as if we are owning it
-            alarmIntent = PendingIntent.getBroadcast(MainActivity.this, REQUEST_CODE, alarmReceiver, PendingIntent.FLAG_UPDATE_CURRENT);
+            alarmIntent = PendingIntent.getBroadcast(MainActivity.this, i, alarmReceiver, PendingIntent.FLAG_UPDATE_CURRENT);
 
 
             // Set the alarm to start at the Medicine time.
