@@ -28,7 +28,7 @@ public class BluetoothConnectActivity extends AppCompatActivity
 {
 	public final String TAG = "MEDICATION_ADHERENCE";
 
-	BluetoothManager BluetoothManager;
+	private UARTConnection uartConnection;
 	BluetoothAdapter bluetoothAdapter;
 	ListView devicesList;
 	ArrayList<BluetoothDevice> devices;
@@ -146,6 +146,31 @@ public class BluetoothConnectActivity extends AppCompatActivity
 				}
 			}, 30000);*/
 		}
+	}
+
+	public void startFlutterConnection(BluetoothDevice bluetoothDevice) {
+		// TODO make sure any current flutter/connection is properly closed?
+		this.uartConnection = new UARTConnection(getApplicationContext(), bluetoothDevice, Constants.FLUTTER_UART_SETTINGS);
+		this.uartConnection.addRxDataListener(new UARTConnection.RXDataListener() {
+			@Override
+			public void onRXData(byte[] newData) {
+
+			}
+		});
+	}
+
+
+	/**
+	 * Send a BLE message to the currently-connected Flutter
+	 * @param bytes the message to be sent
+	 * @return true if bytes are successfully written to the UART connection, false otherwise
+	 */
+	public synchronized boolean sendMessage(byte[] bytes) {
+		if (this.uartConnection == null) {
+			Log.e(Constants.LOG_TAG, "requested sendMessage with null uartConnection");
+			return false;
+		}
+		return this.uartConnection.writeBytes(bytes);
 	}
 
 }
