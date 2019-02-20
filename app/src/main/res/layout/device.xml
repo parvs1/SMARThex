@@ -5,16 +5,12 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/tvDeviceName"
-        android:textSize="15sp"/>
-
-    <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/tvDeviceAddress"
-        android:textSize="15sp"/>
+        android:layout_height="40dp"
+        android:gravity="center_vertical"
+        android:text="BluetoothDevice"
+        android:textSize="18sp" />
 
 
 </LinearLayout>

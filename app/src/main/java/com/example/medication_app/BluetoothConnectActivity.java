@@ -44,14 +44,13 @@ public class BluetoothConnectActivity extends AppCompatActivity
 		devicesList = (ListView) findViewById(R.id.deviceList);
 		devices = new ArrayList<>();
 
-		deviceAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, devices);
+		deviceAdapter = new DeviceListAdapter(this, R.layout.device, devices);
 		devicesList.setAdapter(deviceAdapter);
 
 		devicesList.setOnItemClickListener(new AdapterView.OnItemClickListener()
 		{
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-			{
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				BluetoothDevice bluetoothDevice = devices.get(position);
 
 
@@ -112,6 +111,7 @@ public class BluetoothConnectActivity extends AppCompatActivity
 			}
 		}
 	}
+
 	@TargetApi(21)
 	private void onClickScan() {
 		// Ensures Bluetooth is available on the device and it is enabled. If not,
@@ -128,18 +128,23 @@ public class BluetoothConnectActivity extends AppCompatActivity
 					BluetoothDevice device = result.getDevice();
 					Log.d(TAG,"onLeScan result: " + device.getName());
 
+					if (!devices.contains(device) && device.getName()!=null) {
+						devices.add(device);
+						deviceAdapter.notifyDataSetChanged();
+					}
+
 					super.onScanResult(callbackType, result);
 				}
 			};
 			// TODO ScanFilter https://developer.android.com/reference/android/bluetooth/le/ScanFilter
 			bluetoothAdapter.getBluetoothLeScanner().startScan(scanCallback);
-			new Handler().postDelayed(new Runnable() {
+			/*new Handler().postDelayed(new Runnable() {
 				@Override
 				public void run() {
 					bluetoothAdapter.getBluetoothLeScanner().stopScan(scanCallback);
 					Log.e(TAG,"Stopped LeScan");
 				}
-			}, 10000);
+			}, 30000);*/
 		}
 	}
 
