@@ -22,25 +22,27 @@ import java.util.ArrayList;
 public class BluetoothConnectActivity extends AppCompatActivity {
     public final String TAG = "MEDICATION_ADHERENCE";
 
-    BluetoothManager BluetoothManager;
-    BluetoothAdapter bluetoothAdapter;
+    BluetoothManager mBluetoothManager;
+    BluetoothAdapter mBluetoothAdapter;
     ListView devicesList;
     ArrayList<BluetoothDevice> devices;
     ArrayAdapter<BluetoothDevice> deviceAdapter;
     private static final int REQUEST_ENABLE_BT = 1;
-    private MintuReceiver mintuReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        mBluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bluetooth_connect);
         devicesList = (ListView)findViewById(R.id.deviceList);
+
         devices = new ArrayList<BluetoothDevice>();
 
         deviceAdapter = new ArrayAdapter<BluetoothDevice>(this, android.R.layout.simple_list_item_1,devices);
         devicesList.setAdapter(deviceAdapter);
 
-        mintuReceiver = new MintuReceiver();
 
         devicesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -51,23 +53,21 @@ public class BluetoothConnectActivity extends AppCompatActivity {
             }
         });
 
-        // Register for broadcasts when a device is discovered.
-        //BluetoothManager = (BluetoothManager) getSystemService(BLUETOOTH_SERVICE);
-        final BluetoothManager bluetoothManager =
-                (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
-        bluetoothAdapter = bluetoothManager.getAdapter();
-
-        if (bluetoothAdapter == null || !bluetoothAdapter.isEnabled()) {
+        if (mBluetoothAdapter == null || !mBluetoothAdapter.isEnabled()) {
             Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
         }
-        if (!bluetoothAdapter.isDiscovering())
-            bluetoothAdapter.startDiscovery();
-            checkBTPermissions();
+
+        if (mBluetoothAdapter.isDiscovering()) {
+            mBluetoothAdapter.cancelDiscovery();
+        }
+
+        mBluetoothAdapter.startDiscovery();
 
         IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
-        BluetoothConnectActivity.this.registerReceiver(mintuReceiver, filter);
+        BluetoothConnectActivity.this.registerReceiver(BluetoothReceiver, filter);
     }
+
     private void checkBTPermissions() {
         if(Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP){
             int permissionCheck = this.checkSelfPermission("Manifest.permission.ACCESS_FINE_LOCATION");
@@ -85,7 +85,27 @@ public class BluetoothConnectActivity extends AppCompatActivity {
         super.onDestroy();
 
         // Don't forget to unregister the ACTION_FOUND receiver.
-        unregisterReceiver(mintuReceiver);
+        unregisterReceiver(BluetoothReceiver);
     }
+
+    public BroadcastReceiver BluetoothReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.e(TAG, "Found a device");
+
+            String action = intent.getAction();
+            if (BluetoothDevice.ACTION_FOUND.equals(action)) {
+                // Discovery has found a device. Get the BluetoothDevice
+                // object and its info from the Intent.
+                BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+
+                if(device.getType() == BluetoothDevice.DEVICE_TYPE_LE) {
+                    Log.e(TAG,"Found LE Device");
+                    devices.add(device);
+                    deviceAdapter.notifyDataSetChanged();
+                }
+            }
+        }
+    };
 
 }
