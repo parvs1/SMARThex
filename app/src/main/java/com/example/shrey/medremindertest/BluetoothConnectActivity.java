@@ -26,6 +26,7 @@ public class BluetoothConnectActivity extends AppCompatActivity {
     ArrayList<BluetoothDevice> devices;
     ArrayAdapter<BluetoothDevice> deviceAdapter;
 	private static final int REQUEST_ENABLE_BT = 1;
+	private MintuReceiver mintuReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +37,8 @@ public class BluetoothConnectActivity extends AppCompatActivity {
 
         deviceAdapter = new ArrayAdapter<BluetoothDevice>(this, android.R.layout.simple_list_item_1,devices);
         devicesList.setAdapter(deviceAdapter);
+
+        mintuReceiver = new MintuReceiver();
 
         devicesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -56,33 +59,12 @@ public class BluetoothConnectActivity extends AppCompatActivity {
 			Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
 			startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
 		}
-
-        if (!bluetoothAdapter.isDiscovering())
-            bluetoothAdapter.startDiscovery();
+		if (!bluetoothAdapter.isDiscovering())
+			bluetoothAdapter.startDiscovery();
 
         IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
-        registerReceiver(receiver, filter);
+        BluetoothConnectActivity.this.registerReceiver(mintuReceiver, filter);
     }
-
-    // Create a BroadcastReceiver for ACTION_FOUND.
-    private final BroadcastReceiver receiver = new BroadcastReceiver() {
-        public void onReceive(Context context, Intent intent) {
-            Log.e(TAG, "Found a device");
-
-            String action = intent.getAction();
-            if (BluetoothDevice.ACTION_FOUND.equals(action)) {
-                // Discovery has found a device. Get the BluetoothDevice
-                // object and its info from the Intent.
-                BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-
-                if(device.getType() == BluetoothDevice.DEVICE_TYPE_LE) {
-                    Log.e(TAG,"Found LE Device!");
-                    devices.add(device);
-                    deviceAdapter.notifyDataSetChanged();
-                }
-            }
-        }
-    };
 
     protected void onDestroy() {
         super.onDestroy();

@@ -43,6 +43,16 @@
             </intent-filter>
         </activity>
         <activity android:name=".EditMedicineActivity" />
+
+        <receiver
+            android:name=".MintuReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.ACTION_POWER_CONNECTED"/>
+                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
