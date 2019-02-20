@@ -24,4 +24,5 @@ public class MintuReceiver extends BroadcastReceiver {
             }
         }
     }
+
 }
