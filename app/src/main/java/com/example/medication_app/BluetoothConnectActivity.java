@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,7 +21,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -53,7 +56,13 @@ public class BluetoothConnectActivity extends AppCompatActivity
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				BluetoothDevice bluetoothDevice = devices.get(position);
 
+				startConnection(bluetoothDevice);
 
+				if(uartConnection.isConnected()) {
+					ImageView check = findViewById(R.id.check);
+					check.setVisibility(View.VISIBLE);
+					Toast.makeText(BluetoothConnectActivity.this, "Connected to " + bluetoothDevice.getName(), Toast.LENGTH_SHORT).show();
+				}
 			}
 		});
 
@@ -128,7 +137,7 @@ public class BluetoothConnectActivity extends AppCompatActivity
 					BluetoothDevice device = result.getDevice();
 					Log.d(TAG,"onLeScan result: " + device.getName());
 
-					if (!devices.contains(device) && device.getName()!=null) {
+					if (!devices.contains(device) && device.getName() != null && device.getType() == BluetoothDevice.DEVICE_TYPE_LE) {
 						devices.add(device);
 						deviceAdapter.notifyDataSetChanged();
 					}
@@ -138,17 +147,17 @@ public class BluetoothConnectActivity extends AppCompatActivity
 			};
 			// TODO ScanFilter https://developer.android.com/reference/android/bluetooth/le/ScanFilter
 			bluetoothAdapter.getBluetoothLeScanner().startScan(scanCallback);
-			/*new Handler().postDelayed(new Runnable() {
+			new Handler().postDelayed(new Runnable() {
 				@Override
 				public void run() {
 					bluetoothAdapter.getBluetoothLeScanner().stopScan(scanCallback);
 					Log.e(TAG,"Stopped LeScan");
 				}
-			}, 30000);*/
+			}, 30000);
 		}
 	}
 
-	public void startFlutterConnection(BluetoothDevice bluetoothDevice) {
+	public void startConnection(BluetoothDevice bluetoothDevice) {
 		// TODO make sure any current flutter/connection is properly closed?
 		this.uartConnection = new UARTConnection(getApplicationContext(), bluetoothDevice, Constants.FLUTTER_UART_SETTINGS);
 		this.uartConnection.addRxDataListener(new UARTConnection.RXDataListener() {
@@ -157,20 +166,6 @@ public class BluetoothConnectActivity extends AppCompatActivity
 
 			}
 		});
-	}
-
-
-	/**
-	 * Send a BLE message to the currently-connected Flutter
-	 * @param bytes the message to be sent
-	 * @return true if bytes are successfully written to the UART connection, false otherwise
-	 */
-	public synchronized boolean sendMessage(byte[] bytes) {
-		if (this.uartConnection == null) {
-			Log.e(Constants.LOG_TAG, "requested sendMessage with null uartConnection");
-			return false;
-		}
-		return this.uartConnection.writeBytes(bytes);
 	}
 
 }

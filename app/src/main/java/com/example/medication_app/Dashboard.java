@@ -1,5 +1,6 @@
 package com.example.medication_app;
 
+import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 
 public class Dashboard extends AppCompatActivity
 {
+    private UARTConnection uartConnection;
 
     ArrayList<Module> modules;
     Button moduleBtn1;
@@ -135,15 +137,34 @@ public class Dashboard extends AppCompatActivity
         sendDataButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendData();
+                //sendData();
             }
         });
 
     }
 
-    //replace later with code to send data to bluetooth device
-    public void sendData() {
-        Log.e(TAG, modules.toString());
+    public void startConnection(BluetoothDevice bluetoothDevice) {
+        // TODO make sure any current flutter/connection is properly closed?
+        this.uartConnection = new UARTConnection(getApplicationContext(), bluetoothDevice, Constants.FLUTTER_UART_SETTINGS);
+        this.uartConnection.addRxDataListener(new UARTConnection.RXDataListener() {
+            @Override
+            public void onRXData(byte[] newData) {
+
+            }
+        });
+    }
+
+    /**
+     * Send a BLE message to the currently-connected Flutter
+     * @param bytes the message to be sent
+     * @return true if bytes are successfully written to the UART connection, false otherwise
+     */
+    public synchronized boolean sendMessage(byte[] bytes) {
+        if (this.uartConnection == null) {
+            Log.e(Constants.LOG_TAG, "requested sendMessage with null uartConnection");
+            return false;
+        }
+        return this.uartConnection.writeBytes(bytes);
     }
 
     @Override

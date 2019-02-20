@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -40,6 +41,8 @@ class DeviceListAdapter extends ArrayAdapter<BluetoothDevice> {
                 deviceName.setText(device.getName());
             }
 
+            ImageView check = (ImageView)convertView.findViewById(R.id.check);
+            check.setVisibility(View.INVISIBLE);
         }
 
         return convertView;

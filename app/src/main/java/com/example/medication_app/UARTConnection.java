@@ -1,14 +1,14 @@
 package com.example.medication_app;
 
+import android.annotation.TargetApi;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCallback;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattDescriptor;
 import android.content.Context;
+import android.os.Build;
 import android.util.Log;
-
-import org.cmucreatelab.kindle.fluttersttr2.helpers.Constants;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -216,6 +216,7 @@ public class UARTConnection extends BluetoothGattCallback {
         }
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onServicesDiscovered(BluetoothGatt gatt, int status) {
         Log.d(TAG, "UARTConnection.onServicesDiscovered");
