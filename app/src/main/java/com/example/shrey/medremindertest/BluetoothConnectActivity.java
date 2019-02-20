@@ -70,7 +70,7 @@ public class BluetoothConnectActivity extends AppCompatActivity {
 		super.onDestroy();
 
 		// Don't forget to unregister the ACTION_FOUND receiver.
-		unregisterReceiver(receiver);
+		unregisterReceiver(mintuReceiver);
 	}
 
 }
