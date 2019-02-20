@@ -1,5 +1,6 @@
-package com.example.shrey.medremindertest;
+package com.example.medication_app;
 
+import android.annotation.TargetApi;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.icu.util.Calendar;
@@ -14,8 +15,6 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 
-import butterknife.OnItemSelected;
-
 public class EditMedicineActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     EditText editMedName; //textbox for setting medicineName
@@ -27,6 +26,7 @@ public class EditMedicineActivity extends AppCompatActivity implements AdapterVi
     int doseFrequency = 1; //sets default frequency to 1 for spinner
 
     @Override
+    @TargetApi(24)
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_medicine);

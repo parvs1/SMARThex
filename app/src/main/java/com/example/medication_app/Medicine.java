@@ -1,4 +1,4 @@
-package com.example.shrey.medremindertest;
+package com.example.medication_app;
 
 import java.io.Serializable;
 

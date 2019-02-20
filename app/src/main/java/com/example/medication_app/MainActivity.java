@@ -1,4 +1,4 @@
-package com.example.shrey.medremindertest;
+package com.example.medication_app;
 
 import android.app.Activity;
 import android.app.AlarmManager;

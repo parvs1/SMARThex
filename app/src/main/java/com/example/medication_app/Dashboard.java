@@ -1,15 +1,16 @@
-package com.example.shrey.medremindertest;
+package com.example.medication_app;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 import java.util.ArrayList;
 
-public class Dashboard extends AppCompatActivity {
+public class Dashboard extends AppCompatActivity
+{
 
     ArrayList<Module> modules;
     Button moduleBtn1;

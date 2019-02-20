@@ -1,8 +1,8 @@
-package com.example.shrey.medremindertest;
+package com.example.medication_app;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -10,14 +10,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toolbar;
 
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.List;
 
-public class EditModule extends AppCompatActivity {
+public class EditModule extends AppCompatActivity
+{
 
     ArrayList<Medicine> medicines;
     ArrayList<String> times;

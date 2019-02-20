@@ -1,9 +1,10 @@
-package com.example.shrey.medremindertest;
+package com.example.medication_app;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Module implements Serializable {
+public class Module implements Serializable
+{
     public int module;
     public String medicineName;
     public ArrayList<String> times;

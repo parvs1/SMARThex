@@ -1,4 +1,4 @@
-package com.example.shrey.medremindertest;
+package com.example.medication_app;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -15,12 +15,14 @@ import static org.junit.Assert.*;
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 @RunWith(AndroidJUnit4.class)
-public class ExampleInstrumentedTest {
-    @Test
-    public void useAppContext() {
-        // Context of the app under test.
-        Context appContext = InstrumentationRegistry.getTargetContext();
+public class ExampleInstrumentedTest
+{
+	@Test
+	public void useAppContext()
+	{
+		// Context of the app under test.
+		Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.example.shrey.medremindertest", appContext.getPackageName());
-    }
+		assertEquals("com.example.medication_app", appContext.getPackageName());
+	}
 }
