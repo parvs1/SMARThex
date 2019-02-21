@@ -40,7 +40,6 @@ public class EditModule extends AppCompatActivity
         createTimesList();
 
 
-
         ArrayList<String> medNamesArrayList = new ArrayList<String>();
         for (int i = 0; i < medicines.size(); i++) {
             Boolean check = false;

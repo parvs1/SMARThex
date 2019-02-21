@@ -21,6 +21,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -50,6 +51,17 @@ public class BluetoothConnectActivity extends AppCompatActivity
 		deviceAdapter = new DeviceListAdapter(this, R.layout.device, devices);
 		devicesList.setAdapter(deviceAdapter);
 
+		final Button nextButton = (Button)findViewById(R.id.nextButton);
+		nextButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				Intent intent = new Intent();
+
+				setResult(RESULT_OK, intent);
+				finish();
+			}
+		});
+
 		devicesList.setOnItemClickListener(new AdapterView.OnItemClickListener()
 		{
 			@Override
@@ -62,6 +74,7 @@ public class BluetoothConnectActivity extends AppCompatActivity
 					ImageView check = findViewById(R.id.check);
 					check.setVisibility(View.VISIBLE);
 					Toast.makeText(BluetoothConnectActivity.this, "Connected to " + bluetoothDevice.getName(), Toast.LENGTH_SHORT).show();
+					nextButton.setVisibility(View.VISIBLE);
 				}
 			}
 		});
@@ -135,7 +148,6 @@ public class BluetoothConnectActivity extends AppCompatActivity
 				@Override
 				public void onScanResult(int callbackType, ScanResult result) {
 					BluetoothDevice device = result.getDevice();
-					Log.d(TAG,"onLeScan result: " + device.getName());
 
 					if (!devices.contains(device) && device.getName() != null && device.getType() == BluetoothDevice.DEVICE_TYPE_LE) {
 						devices.add(device);

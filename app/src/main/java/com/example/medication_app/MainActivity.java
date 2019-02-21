@@ -53,12 +53,6 @@ public class MainActivity extends AppCompatActivity {
         String medicinesFileText = "";
         FileInputStream fileInputStream = null;
 
-        // Use this check to determine whether BLE is supported on the device.
-
-
-            // initialize the bluetooth adapter
-
-            //try finding file 'medicinesFile.txt' if it exists
             try {
                 fileInputStream = openFileInput("medicinesFile.txt");
                 InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream);
