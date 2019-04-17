@@ -181,18 +181,15 @@ public class Dashboard extends AppCompatActivity
                 connectBtn.setText("Send Data");
                 connectBtn.setBackgroundColor(Color.GREEN);
 
-                connectBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        byte[] result = modules.toString().getBytes();
-                        Log.e(TAG, result.toString());
-                        sendMessage(result);
-                    }
-                });
-            }
+            connectBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    byte[] result = modules.toString().getBytes();
+                    Log.e(TAG, result.toString());
+                    sendMessage(result);
+                }
+            });
         }
-
-        //Paul George is MVP
 
 
         if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_MODEDIT) {
