@@ -26,9 +26,10 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class BluetoothConnectActivity extends AppCompatActivity
+public class BluetoothConnectActivity extends AppCompatActivity implements Serializable
 {
 	public final String TAG = "MEDICATION_ADHERENCE";
 
@@ -51,24 +52,25 @@ public class BluetoothConnectActivity extends AppCompatActivity
 		deviceAdapter = new DeviceListAdapter(this, R.layout.device, devices);
 		devicesList.setAdapter(deviceAdapter);
 
-		final Button nextButton = (Button)findViewById(R.id.nextButton);
-		nextButton.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				Intent intent = new Intent();
 
-				setResult(RESULT_OK, intent);
-				finish();
-			}
-		});
 
 		devicesList.setOnItemClickListener(new AdapterView.OnItemClickListener()
 		{
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				BluetoothDevice bluetoothDevice = devices.get(position);
+				final BluetoothDevice bluetoothDevice = devices.get(position);
 
 				startConnection(bluetoothDevice);
+				final Button nextButton = (Button)findViewById(R.id.nextButton);
+				nextButton.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View view) {
+						Intent intent = new Intent();
+						intent.putExtra("bluetoothdevice",bluetoothDevice);
+						setResult(RESULT_OK, intent);
+						finish();
+					}
+				});
 
 				if(uartConnection.isConnected()) {
 					ImageView check = findViewById(R.id.check);
