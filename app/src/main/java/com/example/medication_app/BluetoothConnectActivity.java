@@ -38,6 +38,7 @@ public class BluetoothConnectActivity extends AppCompatActivity
 	ArrayList<BluetoothDevice> devices;
 	ArrayAdapter<BluetoothDevice> deviceAdapter;
 	private static final int REQUEST_ENABLE_BT = 1;
+	BluetoothDevice bluetoothDevice;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -56,7 +57,7 @@ public class BluetoothConnectActivity extends AppCompatActivity
 			@Override
 			public void onClick(View view) {
 				Intent intent = new Intent();
-
+				intent.putExtra("bluetoothDevice", bluetoothDevice);
 				setResult(RESULT_OK, intent);
 				finish();
 			}
@@ -66,16 +67,12 @@ public class BluetoothConnectActivity extends AppCompatActivity
 		{
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				BluetoothDevice bluetoothDevice = devices.get(position);
+				bluetoothDevice = devices.get(position);
 
-				startConnection(bluetoothDevice);
-
-				if(uartConnection.isConnected()) {
-					ImageView check = findViewById(R.id.check);
-					check.setVisibility(View.VISIBLE);
-					Toast.makeText(BluetoothConnectActivity.this, "Connected to " + bluetoothDevice.getName(), Toast.LENGTH_SHORT).show();
-					nextButton.setVisibility(View.VISIBLE);
-				}
+				ImageView check = findViewById(R.id.check);
+				check.setVisibility(View.VISIBLE);
+				Toast.makeText(BluetoothConnectActivity.this, "Connected to " + bluetoothDevice.getName(), Toast.LENGTH_SHORT).show();
+				nextButton.setVisibility(View.VISIBLE);
 			}
 		});
 

@@ -173,17 +173,23 @@ public class Dashboard extends AppCompatActivity
     @Override
     protected void onActivityResult ( int requestCode, int resultCode, Intent data){
         if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_BLECONNECT) {
-            connectBtn.setText("Send Data");
-            connectBtn.setBackgroundColor(Color.GREEN);
 
-            connectBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    byte[] result = modules.toString().getBytes();
-                    Log.e(TAG, result.toString());
-                    sendMessage(result);
-                }
-            });
+            BluetoothDevice bluetoothDevice = (BluetoothDevice)data.getParcelableExtra("bluetoothDevice");
+            startConnection(bluetoothDevice);
+
+            if(uartConnection.isConnected()) {
+                connectBtn.setText("Send Data");
+                connectBtn.setBackgroundColor(Color.GREEN);
+
+                connectBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        byte[] result = modules.toString().getBytes();
+                        Log.e(TAG, result.toString());
+                        sendMessage(result);
+                    }
+                });
+            }
         }
 
 
