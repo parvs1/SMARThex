@@ -171,45 +171,46 @@ public class Dashboard extends AppCompatActivity
     }
 
     @Override
-    protected void onActivityResult ( int requestCode, int resultCode, Intent data){
+    protected void onActivityResult ( int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_BLECONNECT) {
 
-            BluetoothDevice bluetoothDevice = (BluetoothDevice)data.getParcelableExtra("bluetoothDevice");
+            BluetoothDevice bluetoothDevice = (BluetoothDevice) data.getParcelableExtra("bluetoothDevice");
             startConnection(bluetoothDevice);
 
-            if(uartConnection.isConnected()) {
+            if (uartConnection.isConnected()) {
                 connectBtn.setText("Send Data");
                 connectBtn.setBackgroundColor(Color.GREEN);
 
-            connectBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    byte[] result = modules.toString().getBytes();
-                    Log.e(TAG, result.toString());
-                    sendMessage(result);
-                }
-            });
-        }
+                connectBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        byte[] result = modules.toString().getBytes();
+                        Log.e(TAG, result.toString());
+                        sendMessage(result);
+                    }
+                });
+            }
 
 
-        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_MODEDIT) {
+            if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_MODEDIT) {
 
-            //add medicine received from activity (if an edit, we already removed the original one)
-            Module newModule = (Module) data.getSerializableExtra("editedModule");
-            modules.set(newModule.module - 1, newModule);
+                //add medicine received from activity (if an edit, we already removed the original one)
+                Module newModule = (Module) data.getSerializableExtra("editedModule");
+                modules.set(newModule.module - 1, newModule);
 
-            if (newModule.module == 1)
-                moduleBtn1.setText(modules.get(0).modBtnText());
-            if (newModule.module == 2)
-                moduleBtn2.setText(modules.get(1).modBtnText());
-            if (newModule.module == 3)
-                moduleBtn3.setText(modules.get(2).modBtnText());
-            if (newModule.module == 4)
-                moduleBtn4.setText(modules.get(3).modBtnText());
-            if (newModule.module == 5)
-                moduleBtn5.setText(modules.get(4).modBtnText());
-            if (newModule.module == 6)
-                moduleBtn6.setText(modules.get(5).modBtnText());
+                if (newModule.module == 1)
+                    moduleBtn1.setText(modules.get(0).modBtnText());
+                if (newModule.module == 2)
+                    moduleBtn2.setText(modules.get(1).modBtnText());
+                if (newModule.module == 3)
+                    moduleBtn3.setText(modules.get(2).modBtnText());
+                if (newModule.module == 4)
+                    moduleBtn4.setText(modules.get(3).modBtnText());
+                if (newModule.module == 5)
+                    moduleBtn5.setText(modules.get(4).modBtnText());
+                if (newModule.module == 6)
+                    moduleBtn6.setText(modules.get(5).modBtnText());
+            }
         }
     }
 }
