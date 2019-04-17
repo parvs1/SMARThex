@@ -175,6 +175,8 @@ public class Dashboard extends AppCompatActivity implements Serializable
         return this.uartConnection.writeBytes(bytes);
     }
 
+    //Paul George is the MVP
+
     @Override
     protected void onActivityResult ( int requestCode, int resultCode, Intent data){
 
