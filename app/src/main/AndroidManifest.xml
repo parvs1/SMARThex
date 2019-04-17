@@ -19,7 +19,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ConnectandSend"></activity>
         <activity android:name=".EditModule" />
         <activity android:name=".Dashboard">
             <intent-filter>

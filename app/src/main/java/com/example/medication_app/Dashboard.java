@@ -178,16 +178,25 @@ public class Dashboard extends AppCompatActivity implements Serializable
     @Override
     protected void onActivityResult ( int requestCode, int resultCode, Intent data){
 
-        if(this.uartConnection.isConnected())
-        {
-            BluetoothDevice bluetoothDevice = (BluetoothDevice)data.getParcelableExtra("bluetoothDevice");
-            startConnection(bluetoothDevice);
-
-        }
 
         if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_BLECONNECT) {
-            connectBtn.setText("Send Data");
-            connectBtn.setBackgroundColor(Color.GREEN);
+
+            if(uartConnection.isConnected()) {
+                connectBtn.setText("Send Data");
+                connectBtn.setBackgroundColor(Color.GREEN);
+
+                BluetoothDevice bluetoothDevice = (BluetoothDevice)data.getParcelableExtra("bluetoothDevice");
+                startConnection(bluetoothDevice);
+
+                connectBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        byte[]result = modules.toString().getBytes();
+                        sendMessage(result);
+                    }
+                });
+
+            }
             /*
             final ArrayList<byte[]> bbrr = new ArrayList<>();
             final byte[] result = new byte [6];
@@ -212,6 +221,7 @@ public class Dashboard extends AppCompatActivity implements Serializable
                 }
             });
             */
+
 
         }
 
