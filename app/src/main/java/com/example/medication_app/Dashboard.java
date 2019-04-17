@@ -7,11 +7,15 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 
+import java.io.ByteArrayInputStream;
+import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class Dashboard extends AppCompatActivity
+public class Dashboard extends AppCompatActivity implements Serializable
 {
     private UARTConnection uartConnection;
 
@@ -25,7 +29,7 @@ public class Dashboard extends AppCompatActivity
     Button connectBtn;
     int REQUEST_CODE_BLECONNECT = 98;
     int REQUEST_CODE_MODEDIT = 99;
-    public final String TAG = "MEDICATION_ADHERENCE"; //TAG for log usage
+    public final String TAG = "MEDICATION_ADHERENCE";//TAG for log usage
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,6 +150,7 @@ public class Dashboard extends AppCompatActivity
 
     }
 
+
     public void startConnection(BluetoothDevice bluetoothDevice) {
         // TODO make sure any current flutter/connection is properly closed?
         this.uartConnection = new UARTConnection(getApplicationContext(), bluetoothDevice, Constants.FLUTTER_UART_SETTINGS);
@@ -171,46 +176,74 @@ public class Dashboard extends AppCompatActivity
     }
 
     @Override
-    protected void onActivityResult ( int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult ( int requestCode, int resultCode, Intent data){
+
+
         if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_BLECONNECT) {
 
-            BluetoothDevice bluetoothDevice = (BluetoothDevice) data.getParcelableExtra("bluetoothDevice");
-            startConnection(bluetoothDevice);
-
-            if (uartConnection.isConnected()) {
+            if(uartConnection.isConnected()) {
                 connectBtn.setText("Send Data");
                 connectBtn.setBackgroundColor(Color.GREEN);
 
+                BluetoothDevice bluetoothDevice = (BluetoothDevice)data.getParcelableExtra("bluetoothDevice");
+                startConnection(bluetoothDevice);
+
                 connectBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View view) {
-                        byte[] result = modules.toString().getBytes();
-                        Log.e(TAG, result.toString());
+                    public void onClick(View v) {
+                        byte[]result = modules.toString().getBytes();
                         sendMessage(result);
                     }
                 });
+
             }
+            /*
+            final ArrayList<byte[]> bbrr = new ArrayList<>();
+            final byte[] result = new byte [6];
+            final ArrayList<byte[]> resultnames = new ArrayList<>();
+            final ArrayList<byte[]> resultlists = new ArrayList<>();
 
 
-            if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_MODEDIT) {
 
-                //add medicine received from activity (if an edit, we already removed the original one)
-                Module newModule = (Module) data.getSerializableExtra("editedModule");
-                modules.set(newModule.module - 1, newModule);
+            connectBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    for(int i = 0; i < modules.size(); i++) {
+                        result[i] = (byte) modules.get(i).module;
+                        resultnames.add(modules.get(i).times.toString().getBytes());
+                        resultlists.add(modules.get(i).medicineName.getBytes());
+                        Log.e(TAG, resultnames.toString());
+                        sendMessage(resultnames);
+                    }
+                    bbrr.set(0,result);
+                    bbrr.set(1,resultnames);
+                    bbrr.set(2,resultlists);
+                }
+            });
+            */
 
-                if (newModule.module == 1)
-                    moduleBtn1.setText(modules.get(0).modBtnText());
-                if (newModule.module == 2)
-                    moduleBtn2.setText(modules.get(1).modBtnText());
-                if (newModule.module == 3)
-                    moduleBtn3.setText(modules.get(2).modBtnText());
-                if (newModule.module == 4)
-                    moduleBtn4.setText(modules.get(3).modBtnText());
-                if (newModule.module == 5)
-                    moduleBtn5.setText(modules.get(4).modBtnText());
-                if (newModule.module == 6)
-                    moduleBtn6.setText(modules.get(5).modBtnText());
-            }
+
+        }
+
+
+        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_MODEDIT) {
+
+            //add medicine received from activity (if an edit, we already removed the original one)
+            Module newModule = (Module) data.getSerializableExtra("editedModule");
+            modules.set(newModule.module - 1, newModule);
+
+            if (newModule.module == 1)
+                moduleBtn1.setText(modules.get(0).modBtnText());
+            if (newModule.module == 2)
+                moduleBtn2.setText(modules.get(1).modBtnText());
+            if (newModule.module == 3)
+                moduleBtn3.setText(modules.get(2).modBtnText());
+            if (newModule.module == 4)
+                moduleBtn4.setText(modules.get(3).modBtnText());
+            if (newModule.module == 5)
+                moduleBtn5.setText(modules.get(4).modBtnText());
+            if (newModule.module == 6)
+                moduleBtn6.setText(modules.get(5).modBtnText());
         }
     }
 }
