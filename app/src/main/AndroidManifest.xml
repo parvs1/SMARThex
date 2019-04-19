@@ -19,6 +19,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <receiver
+            android:name=".Alarm2Receiver"
+            android:enabled="true"
+            android:exported="true"></receiver>
+
         <activity android:name=".EditModule" />
         <activity android:name=".Dashboard">
             <intent-filter>
@@ -29,7 +34,11 @@
         </activity>
 
         <receiver
-            android:name=".AlarmReceiver"
+            android:name=".Alarm1Receiver"
+            android:enabled="true"
+            android:exported="true" />
+        <receiver
+            android:name=".Alarm2Receiver"
             android:enabled="true"
             android:exported="true" />
 
