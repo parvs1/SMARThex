@@ -202,15 +202,15 @@ public class Dashboard extends AppCompatActivity implements Serializable
                             sendMessage(message);
                             //wait for BLE to receive
 
-                            //send module number Integer as a String
-                            String s = "" + module.module;
-                            message = s.getBytes();
+                            //send module number integer as a string
+                            String modNum = "" + module.module;
+                            message = modNum.getBytes();
                             sendMessage(message);
                             //wait for BLE to receive
 
                             //send number of times for BLE to store for this module as a String
-                            String length = "" + module.times.size();
-                            message = length.getBytes();
+                            String numTimes = "" + module.times.size();
+                            message = numTimes.getBytes();
                             sendMessage(message);
                             //wait for BLE to receive
 
