@@ -2,12 +2,15 @@ package com.example.medication_app;
 
 import android.app.Activity;
 import android.app.AlarmManager;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -43,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
     FloatingActionButton addMedicine; //floating action button on MainActivity
     public final int REQUEST_CODE = 99; //code for starting editMedicine Activity and obtaining its result
     public final String TAG = "MEDICATION_ADHERENCE"; //TAG for log usage
+    public final String CHANNEL_ID = "0";
 
 
     @Override
@@ -112,8 +116,7 @@ public class MainActivity extends AppCompatActivity {
                 public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
 
-                   Intent alarmReceiver = new Intent(MainActivity.this, AlarmReceiver.class);
-                   alarmIntent = PendingIntent.getBroadcast(MainActivity.this, medicines.size() -1 , alarmReceiver, PendingIntent.FLAG_CANCEL_CURRENT); //delete last alarm on the list (preceding ones will be replaced)
+                   //To do: cancel the alarm the user just deleted
 
                     medicines.remove(position);
 
@@ -193,7 +196,7 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < medicines.size(); i++){
             Medicine temp = medicines.get(i);
 
-            Intent alarmReceiver = new Intent(MainActivity.this, AlarmReceiver.class);
+            Intent alarmReceiver = new Intent(MainActivity.this, Alarm1Receiver.class);
             alarmReceiver.addFlags(Intent.FLAG_RECEIVER_FOREGROUND);
             alarmReceiver.putExtra("nameToAlert", temp.medicineName);
 
@@ -211,6 +214,22 @@ public class MainActivity extends AppCompatActivity {
             alarmMgr.setInexactRepeating(alarmMgr.RTC_WAKEUP, calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY * temp.frequency, alarmIntent);
 
             Log.i(TAG,"Set up " + temp.medicineName + "'s alarm.");
+        }
+    }
+
+    private void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = getString(R.string.channel_name);
+            String description = getString(R.string.channel_description);
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
         }
     }
 
