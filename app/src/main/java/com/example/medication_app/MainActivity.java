@@ -7,7 +7,14 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.nfc.NdefMessage;
+import android.nfc.NdefRecord;
+import android.nfc.NfcAdapter;
+import android.nfc.Tag;
+import android.nfc.tech.Ndef;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -29,6 +36,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -43,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
     FloatingActionButton addMedicine; //floating action button on MainActivity
     public final int REQUEST_CODE = 99; //code for starting editMedicine Activity and obtaining its result
     public final String TAG = "MEDICATION_ADHERENCE"; //TAG for log usage
+    public static final String MIME_TEXT_PLAIN = "text/plain";
 
 
     @Override
@@ -210,8 +219,111 @@ public class MainActivity extends AppCompatActivity {
             //Repeat the alarm for the specified frequency of days
             alarmMgr.setInexactRepeating(alarmMgr.RTC_WAKEUP, calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY * temp.frequency, alarmIntent);
 
+            // (if the nfc tag has not been recognized yet and activity hasn't stopped)
+
+
+
             Log.i(TAG,"Set up " + temp.medicineName + "'s alarm.");
         }
+    }
+
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        handleIntent(intent);
+    }
+
+    public static void setupForegroundDispatch(Activity activity, NfcAdapter adapter) {
+        final Intent intent = new Intent(activity.getApplicationContext(), activity.getClass());
+        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
+        final PendingIntent pendingIntent = PendingIntent.getActivity(activity.getApplicationContext(), 0, intent, 0);
+
+        IntentFilter[] filters = new IntentFilter[1];
+        String[][] techList = new String[][]{};
+
+        // Notice that this is the same filter as in our manifest.
+        filters[0] = new IntentFilter();
+        filters[0].addAction(NfcAdapter.ACTION_NDEF_DISCOVERED);
+        filters[0].addCategory(Intent.CATEGORY_DEFAULT);
+        try {
+            filters[0].addDataType(MIME_TEXT_PLAIN);
+        } catch (IntentFilter.MalformedMimeTypeException e) {
+            throw new RuntimeException("Check your mime type.");
+        }
+
+        adapter.enableForegroundDispatch(activity, pendingIntent, filters, techList);
+    }
+
+    public static void stopForegroundDispatch(final Activity activity, NfcAdapter adapter) {
+        adapter.disableForegroundDispatch(activity);
+    }
+
+    private void handleIntent(Intent intent) {
+        String action = intent.getAction();
+        if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(action)) {
+
+            String type = intent.getType();
+            if (MIME_TEXT_PLAIN.equals(type)) {
+
+                Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+
+                if (getTextFromTag(tag).equals("")) { //Checking if the NFC Tag detects the reader. If so, then that means the tag is activated.
+                    //Stop the Alarm.
+                } else {
+                    //Keep the Alarm Going / Proceed on with the next levles
+                }
+            }
+
+        }
+    }
+
+    protected String getTextFromTag(Tag tag) {
+        Ndef ndef = Ndef.get(tag);
+        if (ndef == null) {
+            // NDEF is not supported by this Tag.
+            return null;
+        }
+
+        NdefMessage ndefMessage = ndef.getCachedNdefMessage();
+
+        NdefRecord[] records = ndefMessage.getRecords();
+        for (NdefRecord ndefRecord : records) {
+            if (ndefRecord.getTnf() == NdefRecord.TNF_WELL_KNOWN && Arrays.equals(ndefRecord.getType(), NdefRecord.RTD_TEXT)) {
+                try {
+                    return readText(ndefRecord);
+                } catch (UnsupportedEncodingException e) {
+                }
+            }
+        }
+
+        return null;
+    }
+
+    private String readText(NdefRecord record) throws UnsupportedEncodingException {
+        /*
+         * See NFC forum specification for "Text Record Type Definition" at 3.2.1
+         *
+         * http://www.nfc-forum.org/specs/
+         *
+         * bit_7 defines encoding
+         * bit_6 reserved for future use, must be 0
+         * bit_5..0 length of IANA language code
+         */
+
+        byte[] payload = record.getPayload();
+
+        // Get the Text Encoding
+        String textEncoding = ((payload[0] & 128) == 0) ? "UTF-8" : "UTF-16";
+
+        // Get the Language Code
+        int languageCodeLength = payload[0] & 0063;
+
+        // String languageCode = new String(payload, 1, languageCodeLength, "US-ASCII");
+        // e.g. "en"
+
+        // Get the Text
+        return new String(payload, languageCodeLength + 1, payload.length - languageCodeLength - 1, textEncoding);
     }
 
 }

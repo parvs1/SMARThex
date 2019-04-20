@@ -175,6 +175,7 @@ public class Dashboard extends AppCompatActivity implements Serializable
         return this.uartConnection.writeBytes(bytes);
     }
 
+    //Paul George is the MVP
 
     @Override
     protected void onActivityResult ( int requestCode, int resultCode, Intent data){
@@ -182,51 +183,22 @@ public class Dashboard extends AppCompatActivity implements Serializable
 
         if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_BLECONNECT) {
 
-            BluetoothDevice bluetoothDevice = (BluetoothDevice)data.getParcelableExtra("bluetoothDevice");
-            startConnection(bluetoothDevice);
-
-            if (uartConnection.isConnected()) {
+            if(uartConnection.isConnected()) {
                 connectBtn.setText("Send Data");
                 connectBtn.setBackgroundColor(Color.GREEN);
+
+                BluetoothDevice bluetoothDevice = (BluetoothDevice)data.getParcelableExtra("bluetoothDevice");
+                startConnection(bluetoothDevice);
 
                 connectBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        byte[] message;
-
-                        for(int i = 0; i < modules.size(); i++)
-                        {
-                            //send medicine name
-                            Module module = modules.get(i);
-                            message = module.medicineName.getBytes();
-                            sendMessage(message);
-                            //wait for BLE to receive
-
-                            //send module number integer as a string
-                            String modNum = "" + module.module;
-                            message = modNum.getBytes();
-                            sendMessage(message);
-                            //wait for BLE to receive
-
-                            //send number of times for BLE to store for this module as a String
-                            String numTimes = "" + module.times.size();
-                            message = numTimes.getBytes();
-                            sendMessage(message);
-                            //wait for BLE to receive
-
-                            //send each time in a for loop
-                            for(int t = 0; t < module.times.size(); t++)
-                            {
-                                String time = module.times.get(t);
-                                message = time.getBytes();
-                                sendMessage(message);
-                                //wait for BLE to receive
-                            }
-                        }
+                        byte[]result = modules.toString().getBytes();
+                        sendMessage(result);
                     }
                 });
-            }
 
+            }
             /*
             final ArrayList<byte[]> bbrr = new ArrayList<>();
             final byte[] result = new byte [6];
@@ -251,6 +223,8 @@ public class Dashboard extends AppCompatActivity implements Serializable
                 }
             });
             */
+
+
         }
 
 
