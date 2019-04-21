@@ -30,7 +30,7 @@ public class Alarm1Receiver extends BroadcastReceiver
 
 		//create and execute notification
 		NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
-				.setSmallIcon(R.drawable.baseline_notification_important_24) //replace notification icon
+				.setSmallIcon(R.drawable.baseline_notification_important_24)
 				.setContentTitle("Take " + nameToAlert)
 				.setContentText("It is time for you to take " + nameToAlert)
                 .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
@@ -47,16 +47,10 @@ public class Alarm1Receiver extends BroadcastReceiver
         Level2Receiver.addFlags(Intent.FLAG_RECEIVER_FOREGROUND);
         Level2Receiver.putExtra("nameToAlert", nameToAlert);
 
-        Level2Intent = PendingIntent.getBroadcast(context, 95, Level2Receiver, PendingIntent.FLAG_UPDATE_CURRENT);
+        Level2Intent = PendingIntent.getBroadcast(context, 992, Level2Receiver, PendingIntent.FLAG_UPDATE_CURRENT);
 
         // Set Level 2 to start in 5 minutes
         alarmManager.set(AlarmManager.RTC_WAKEUP,System.currentTimeMillis() + (5*60*1000), Level2Intent);
-
-		/*
-		Intent i = new Intent(context, FullscreenActivity.class);
-		i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		i.putExtra("nameToAlert", nameToAlert);
-		context.startActivity(i);*/
 	}
 
 	//activate when in contact with NFC TAG

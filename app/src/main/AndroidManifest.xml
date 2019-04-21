@@ -10,6 +10,8 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:allowBackup="true"
@@ -20,9 +22,21 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <receiver
-            android:name=".Alarm2Receiver"
+            android:name=".Alarm4Receiver"
             android:enabled="true"
             android:exported="true"></receiver>
+        <receiver
+            android:name=".Alarm3Receiver"
+            android:enabled="true"
+            android:exported="true" />
+        <receiver
+            android:name=".Alarm2Receiver"
+            android:enabled="true"
+            android:exported="true" />
+        <receiver
+            android:name=".Alarm1Receiver"
+            android:enabled="true"
+            android:exported="true" />
 
         <activity android:name=".EditModule" />
         <activity android:name=".Dashboard">
@@ -33,14 +47,6 @@
             </intent-filter>
         </activity>
 
-        <receiver
-            android:name=".Alarm1Receiver"
-            android:enabled="true"
-            android:exported="true" />
-        <receiver
-            android:name=".Alarm2Receiver"
-            android:enabled="true"
-            android:exported="true" />
 
         <activity android:name=".BluetoothConnectActivity">
             <intent-filter>
