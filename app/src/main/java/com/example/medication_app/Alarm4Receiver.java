@@ -16,6 +16,9 @@ public class Alarm4Receiver extends BroadcastReceiver {
         String nameToAlert = intent.getStringExtra("nameToAlert");
         Log.i(TAG, "Starting alarm level 4 activity for " + nameToAlert);
 
+        //get requestCode
+        int requestCode = intent.getIntExtra("requestCode", 0);
+
         //replace with setting that user can choose
         String phoneNo = "4125763105";
 

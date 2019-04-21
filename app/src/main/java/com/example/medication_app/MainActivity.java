@@ -210,6 +210,7 @@ public class MainActivity extends AppCompatActivity {
             Intent alarmReceiver = new Intent(MainActivity.this, Alarm1Receiver.class);
             alarmReceiver.addFlags(Intent.FLAG_RECEIVER_FOREGROUND);
             alarmReceiver.putExtra("nameToAlert", temp.medicineName);
+            alarmReceiver.putExtra("requestCode", i);
 
             //Lets the other application continue the process as if we are owning it
             alarmIntent = PendingIntent.getBroadcast(MainActivity.this, i, alarmReceiver, PendingIntent.FLAG_UPDATE_CURRENT);
