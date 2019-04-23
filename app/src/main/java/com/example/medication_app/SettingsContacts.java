@@ -24,7 +24,7 @@ public class SettingsContacts extends AppCompatActivity {
     ArrayList<String> StoreContacts ;
     final int REQUEST_CODE = 1113;
     ArrayAdapter<String> arrayAdapter ;
-    Cursor cursor ;
+    Cursor cursor;
     String name, number,email ;
     public  static final int RequestPermissionCode  = 1 ;
 
