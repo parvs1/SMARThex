@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
     public final int REQUEST_CODE = 99; //code for starting editMedicine Activity and obtaining its result
     public final String TAG = "MEDICATION_ADHERENCE"; //TAG for log usage
     public static final String MIME_TEXT_PLAIN = "text/plain";
-
+    Button settings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
                 public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
 
-                   Intent alarmReceiver = new Intent(MainActivity.this, AlarmReceiver.class);
+                   Intent alarmReceiver = new Intent(MainActivity.this, Alarm1Receiver.class);
                    alarmIntent = PendingIntent.getBroadcast(MainActivity.this, medicines.size() -1 , alarmReceiver, PendingIntent.FLAG_CANCEL_CURRENT); //delete last alarm on the list (preceding ones will be replaced)
 
                     medicines.remove(position);
@@ -145,6 +145,14 @@ public class MainActivity extends AppCompatActivity {
                     startActivityForResult(editMedicineActivity, REQUEST_CODE);
                 }
             });
+            settings.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    setContentView(R.layout.activity_settings_contacts);
+                }
+
+            });
+
         }
 
 
@@ -201,7 +209,7 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < medicines.size(); i++){
             Medicine temp = medicines.get(i);
 
-            Intent alarmReceiver = new Intent(MainActivity.this, AlarmReceiver.class);
+            Intent alarmReceiver = new Intent(MainActivity.this, Alarm1Receiver.class);
             alarmReceiver.addFlags(Intent.FLAG_RECEIVER_FOREGROUND);
             alarmReceiver.putExtra("nameToAlert", temp.medicineName);
             alarmReceiver.putExtra("requestCode", i);
@@ -262,15 +270,42 @@ public class MainActivity extends AppCompatActivity {
 
                 Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
 
-                if (getTextFromTag(tag).equals("")) { //Checking if the NFC Tag detects the String "DriveAlive". If so, then that means the tag is activated.
-                    //code for deactivating method
+                if (getTextFromTag(tag).equals("")) { //Checking if the NFC Tag is what we set out for it to be. If so, then that means the tag is activated.
+                    AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+
+
+                    //Cancel Level 2
+                    Intent Level2Receiver = new Intent(getApplicationContext(), Alarm2Receiver.class);
+                    PendingIntent Level2Intent = PendingIntent.getBroadcast(
+                            getApplicationContext(), 992, Level2Receiver,
+                            PendingIntent.FLAG_UPDATE_CURRENT);
+
+                    alarmManager.cancel(Level2Intent);
+
+                    //Cancel Level 3
+                    Intent Level3Receiver = new Intent(getApplicationContext(), Alarm3Receiver.class);
+                    PendingIntent Level3Intent = PendingIntent.getBroadcast(
+                            getApplicationContext(), 993, Level3Receiver,
+                            PendingIntent.FLAG_UPDATE_CURRENT);
+
+                    alarmManager.cancel(Level3Intent);
+
+                    //Cancel Level 4
+                    Intent Level4Receiver = new Intent(getApplicationContext(), Alarm4Receiver.class);
+                    PendingIntent Level4Intent = PendingIntent.getBroadcast(
+                            getApplicationContext(), 994, Level4Receiver,
+                            PendingIntent.FLAG_UPDATE_CURRENT);
+
+                    alarmManager.cancel(Level4Intent);
+                }
                 } else {
                    //keep on going
                 }
             }
 
         }
-    }
+
+
 
     protected String getTextFromTag(Tag tag) {
         Ndef ndef = Ndef.get(tag);
