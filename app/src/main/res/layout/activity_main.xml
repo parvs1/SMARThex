@@ -30,5 +30,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/round_alarm_add_24" />
 
+    <Button
+        android:id="@+id/settingsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Settings"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="667dp" />
+
 
 </android.support.constraint.ConstraintLayout>

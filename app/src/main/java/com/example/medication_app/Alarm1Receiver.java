@@ -62,13 +62,6 @@ public class Alarm1Receiver extends BroadcastReceiver
 	/*public void cancelAlarm(){
 		AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
 
-		//cancel Level 1
-		Intent alarmReceiver = new Intent(getApplicationContext(), Alarm1Receiver.class);
-		PendingIntent alarmIntent = PendingIntent.getBroadcast(
-				getApplicationContext(), requestCode, alarmReceiver,
-				PendingIntent.FLAG_UPDATE_CURRENT);
-
-		alarmManager.cancel(alarmIntent);
 
 		//Cancel Level 2
 		Intent Level2Receiver = new Intent(getApplicationContext(), Alarm2Receiver.class);

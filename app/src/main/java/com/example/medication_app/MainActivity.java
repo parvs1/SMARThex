@@ -1,20 +1,20 @@
 package com.example.medication_app;
 
-import android.Manifest;
 import android.app.Activity;
 import android.app.AlarmManager;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
-import android.os.Build;
+import android.nfc.NdefMessage;
+import android.nfc.NdefRecord;
+import android.nfc.NfcAdapter;
+import android.nfc.Tag;
+import android.nfc.tech.Ndef;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -35,6 +35,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -49,19 +50,13 @@ public class MainActivity extends AppCompatActivity {
     FloatingActionButton addMedicine; //floating action button on MainActivity
     public final int REQUEST_CODE = 99; //code for starting editMedicine Activity and obtaining its result
     public final String TAG = "MEDICATION_ADHERENCE"; //TAG for log usage
-    public final String CHANNEL_ID = "0";
-    public final int MY_PERMISSIONS_REQUEST_SEND_SMS = 0;
-    public final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 1;
-
+    public static final String MIME_TEXT_PLAIN = "text/plain";
+    Button settings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        createNotificationChannel();
-        requestPermissions();
-
 
         String medicinesFileText = "";
         FileInputStream fileInputStream = null;
@@ -107,8 +102,6 @@ public class MainActivity extends AppCompatActivity {
             medSchedule = (ListView) findViewById(R.id.medSchedule);
             medSchedule.setAdapter(adapter);
 
-
-
             medSchedule.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id)/*on item click indicates an edit*/ {
@@ -127,7 +120,8 @@ public class MainActivity extends AppCompatActivity {
                 public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
 
-                   //To do: cancel the alarm the user just deleted
+                   Intent alarmReceiver = new Intent(MainActivity.this, Alarm1Receiver.class);
+                   alarmIntent = PendingIntent.getBroadcast(MainActivity.this, medicines.size() -1 , alarmReceiver, PendingIntent.FLAG_CANCEL_CURRENT); //delete last alarm on the list (preceding ones will be replaced)
 
                     medicines.remove(position);
 
@@ -151,6 +145,14 @@ public class MainActivity extends AppCompatActivity {
                     startActivityForResult(editMedicineActivity, REQUEST_CODE);
                 }
             });
+            settings.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    setContentView(R.layout.activity_settings_contacts);
+                }
+
+            });
+
         }
 
 
@@ -228,106 +230,130 @@ public class MainActivity extends AppCompatActivity {
             Log.i(TAG,"Set up " + temp.medicineName + "'s alarm.");
         }
     }
-
-    private void createNotificationChannel() {
-        // Create the NotificationChannel, but only on API 26+ because
-        // the NotificationChannel class is new and not in the support library
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = getString(R.string.channel_name);
-            String description = getString(R.string.channel_description);
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
-            channel.setDescription(description);
-            // Register the channel with the system; you can't change the importance
-            // or other notification behaviors after this
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-        }
-    }
-
-    private void requestPermissions(){
-        // Here, thisActivity is the current activity
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.SEND_SMS)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            // Permission is not granted
-            // Should we show an explanation?
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.SEND_SMS)) {
-                Toast.makeText(this, "This app need access to the SMS Permission in order to text your selected emergency contact! Please grant access!", Toast.LENGTH_LONG);
-                // Show an explanation to the user *asynchronously* -- don't block
-                // this thread waiting for the user's response! After the user
-                // sees the explanation, try again to request the permission.
-            } else {
-                // No explanation needed; request the permission
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.SEND_SMS},
-                        MY_PERMISSIONS_REQUEST_SEND_SMS);
-
-                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
-                // app-defined int constant. The callback method gets the
-                // result of the request.
-            }
-        } else {
-            // Permission has already been granted
-        }
-
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.CALL_PHONE)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            // Permission is not granted
-            // Should we show an explanation?
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.CALL_PHONE)) {
-                Toast.makeText(this, "This app need access to the Call Phone Permission in order to call your selected emergency contact! Please grant access!", Toast.LENGTH_LONG);
-                // Show an explanation to the user *asynchronously* -- don't block
-                // this thread waiting for the user's response! After the user
-                // sees the explanation, try again to request the permission.
-            } else {
-                // No explanation needed; request the permission
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.CALL_PHONE},
-                        MY_PERMISSIONS_REQUEST_CALL_PHONE);
-
-                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
-                // app-defined int constant. The callback method gets the
-                // result of the request.
-            }
-        } else {
-            // Permission has already been granted
-        }
-    }
-
     @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String[] permissions, int[] grantResults) {
-        switch (requestCode) {
-            case MY_PERMISSIONS_REQUEST_SEND_SMS: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // permission was granted, yay! Do the
-                    // contacts-related task you need to do.
-                } else {
-                    requestPermissions();
+    protected void onNewIntent(Intent intent) {
+        handleIntent(intent);
+    }
+
+    public static void setupForegroundDispatch(Activity activity, NfcAdapter adapter) {
+        final Intent intent = new Intent(activity.getApplicationContext(), activity.getClass());
+        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
+        final PendingIntent pendingIntent = PendingIntent.getActivity(activity.getApplicationContext(), 0, intent, 0);
+
+        IntentFilter[] filters = new IntentFilter[1];
+        String[][] techList = new String[][]{};
+
+        // Notice that this is the same filter as in our manifest.
+        filters[0] = new IntentFilter();
+        filters[0].addAction(NfcAdapter.ACTION_NDEF_DISCOVERED);
+        filters[0].addCategory(Intent.CATEGORY_DEFAULT);
+        try {
+            filters[0].addDataType(MIME_TEXT_PLAIN);
+        } catch (IntentFilter.MalformedMimeTypeException e) {
+            throw new RuntimeException("Check your mime type.");
+        }
+
+        adapter.enableForegroundDispatch(activity, pendingIntent, filters, techList);
+    }
+
+    public static void stopForegroundDispatch(final Activity activity, NfcAdapter adapter) {
+        adapter.disableForegroundDispatch(activity);
+    }
+
+    private void handleIntent(Intent intent) {
+        String action = intent.getAction();
+        if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(action)) {
+
+            String type = intent.getType();
+            if (MIME_TEXT_PLAIN.equals(type)) {
+
+                Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+
+                if (getTextFromTag(tag).equals("")) { //Checking if the NFC Tag is what we set out for it to be. If so, then that means the tag is activated.
+                    AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+
+
+                    //Cancel Level 2
+                    Intent Level2Receiver = new Intent(getApplicationContext(), Alarm2Receiver.class);
+                    PendingIntent Level2Intent = PendingIntent.getBroadcast(
+                            getApplicationContext(), 992, Level2Receiver,
+                            PendingIntent.FLAG_UPDATE_CURRENT);
+
+                    alarmManager.cancel(Level2Intent);
+
+                    //Cancel Level 3
+                    Intent Level3Receiver = new Intent(getApplicationContext(), Alarm3Receiver.class);
+                    PendingIntent Level3Intent = PendingIntent.getBroadcast(
+                            getApplicationContext(), 993, Level3Receiver,
+                            PendingIntent.FLAG_UPDATE_CURRENT);
+
+                    alarmManager.cancel(Level3Intent);
+
+                    //Cancel Level 4
+                    Intent Level4Receiver = new Intent(getApplicationContext(), Alarm4Receiver.class);
+                    PendingIntent Level4Intent = PendingIntent.getBroadcast(
+                            getApplicationContext(), 994, Level4Receiver,
+                            PendingIntent.FLAG_UPDATE_CURRENT);
+
+                    alarmManager.cancel(Level4Intent);
                 }
-                return;
+                } else {
+                   //keep on going
+                }
             }
 
-            case MY_PERMISSIONS_REQUEST_CALL_PHONE: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // permission was granted, yay! Do the
-                    // contacts-related task you need to do.
-                } else {
-                    requestPermissions();
+        }
+
+
+
+    protected String getTextFromTag(Tag tag) {
+        Ndef ndef = Ndef.get(tag);
+        if (ndef == null) {
+            // NDEF is not supported by this Tag.
+            return null;
+        }
+
+        NdefMessage ndefMessage = ndef.getCachedNdefMessage();
+
+        NdefRecord[] records = ndefMessage.getRecords();
+        for (NdefRecord ndefRecord : records) {
+            if (ndefRecord.getTnf() == NdefRecord.TNF_WELL_KNOWN && Arrays.equals(ndefRecord.getType(), NdefRecord.RTD_TEXT)) {
+                try {
+                    return readText(ndefRecord);
+                } catch (UnsupportedEncodingException e) {
                 }
-                return;
             }
         }
+
+        return null;
     }
+
+    private String readText(NdefRecord record) throws UnsupportedEncodingException {
+        /*
+         * See NFC forum specification for "Text Record Type Definition" at 3.2.1
+         *
+         * http://www.nfc-forum.org/specs/
+         *
+         * bit_7 defines encoding
+         * bit_6 reserved for future use, must be 0
+         * bit_5..0 length of IANA language code
+         */
+
+        byte[] payload = record.getPayload();
+
+        // Get the Text Encoding
+        String textEncoding = ((payload[0] & 128) == 0) ? "UTF-8" : "UTF-16";
+
+        // Get the Language Code
+        int languageCodeLength = payload[0] & 0063;
+
+        // String languageCode = new String(payload, 1, languageCodeLength, "US-ASCII");
+        // e.g. "en"
+
+        // Get the Text
+        return new String(payload, languageCodeLength + 1, payload.length - languageCodeLength - 1, textEncoding);
+    }
+
 
 }
