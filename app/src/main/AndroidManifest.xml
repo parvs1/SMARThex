@@ -23,15 +23,6 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
 
-        <activity android:name=".EmergencyContactDetail" />
-        <activity android:name=".SettingsContacts" >
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-        </activity>
-
         <receiver
             android:name=".Alarm4Receiver"
             android:enabled="true"
