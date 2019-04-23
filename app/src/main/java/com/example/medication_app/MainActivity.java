@@ -62,8 +62,6 @@ public class MainActivity extends AppCompatActivity {
     public final String TAG = "MEDICATION_ADHERENCE"; //TAG for log usage
     public static final String MIME_TEXT_PLAIN = "text/plain";
     Button settingsButton;
-    public final int MY_PERMISSIONS_REQUEST_SEND_SMS = 0;
-    public final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 1;
     public final String CHANNEL_ID = "0";
     public final int PERMISSION_ALL = 3;
     String[] PERMISSIONS = {
@@ -466,6 +464,5 @@ public class MainActivity extends AppCompatActivity {
         }
         return true;
     }
-
 
 }

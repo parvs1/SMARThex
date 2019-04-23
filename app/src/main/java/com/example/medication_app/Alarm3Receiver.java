@@ -48,8 +48,8 @@ public class Alarm3Receiver extends BroadcastReceiver {
             e.printStackTrace();
         }
 
-        String smsMessage = "SmartHex is notifying you that " + nameToAlert + " wasn't taken.";
-        //replace first parameter when setting implemented
+        String smsMessage = "SmartHex is notifying you that " + nameToAlert + " wasn't taken yet.";
+
         SmsManager.getDefault().sendTextMessage(phoneNo, null, smsMessage, null, null);
 
         alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
