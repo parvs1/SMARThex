@@ -19,6 +19,9 @@ public class Alarm2Receiver extends BroadcastReceiver {
         String nameToAlert = intent.getStringExtra("nameToAlert");
         Log.i(TAG, "Starting alarm level 2 activity for " + nameToAlert);
 
+        //get requestCode
+        int requestCode = intent.getIntExtra("requestCode", 0);
+
 		Intent overlay = new Intent(context, FullscreenActivity.class);
 		overlay.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		overlay.putExtra("nameToAlert", nameToAlert);
@@ -29,6 +32,7 @@ public class Alarm2Receiver extends BroadcastReceiver {
         Intent Level3Receiver = new Intent(context, Alarm3Receiver.class);
         Level3Receiver.addFlags(Intent.FLAG_RECEIVER_FOREGROUND);
         Level3Receiver.putExtra("nameToAlert", nameToAlert);
+        Level3Receiver.putExtra("requestCode", requestCode);
 
         Level3Intent = PendingIntent.getBroadcast(context, 993, Level3Receiver, PendingIntent.FLAG_UPDATE_CURRENT);
 

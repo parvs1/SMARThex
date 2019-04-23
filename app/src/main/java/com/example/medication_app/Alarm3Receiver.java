@@ -21,6 +21,9 @@ public class Alarm3Receiver extends BroadcastReceiver {
         String nameToAlert = intent.getStringExtra("nameToAlert");
         Log.i(TAG, "Starting alarm level 3 activity for " + nameToAlert);
 
+        //get requestCode
+        int requestCode = intent.getIntExtra("requestCode", 0);
+
         SmsManager smsManager = SmsManager.getDefault();
 
         // TO DO: Make setting to set this phone number
@@ -35,6 +38,7 @@ public class Alarm3Receiver extends BroadcastReceiver {
         Intent Level4Receiver = new Intent(context, Alarm4Receiver.class);
         Level4Receiver.addFlags(Intent.FLAG_RECEIVER_FOREGROUND);
         Level4Receiver.putExtra("nameToAlert", nameToAlert);
+        Level4Receiver.putExtra("requestCode", requestCode);
 
         Level4Intent = PendingIntent.getBroadcast(context, 994, Level4Receiver, PendingIntent.FLAG_UPDATE_CURRENT);
 
