@@ -34,7 +34,7 @@ public class Alarm2Receiver extends BroadcastReceiver {
         Level3Receiver.putExtra("nameToAlert", nameToAlert);
         Level3Receiver.putExtra("requestCode", requestCode);
 
-        Level3Intent = PendingIntent.getBroadcast(context, 993, Level3Receiver, PendingIntent.FLAG_UPDATE_CURRENT);
+        Level3Intent = PendingIntent.getBroadcast(context, 993, Level3Receiver, PendingIntent.FLAG_ONE_SHOT);
 
         // Set Level 3 to start in 5 minutes
         alarmManager.set(AlarmManager.RTC_WAKEUP,System.currentTimeMillis() + (5*60*1000), Level3Intent);

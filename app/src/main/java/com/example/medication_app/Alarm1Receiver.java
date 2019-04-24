@@ -1,6 +1,8 @@
 package com.example.medication_app;
 
 import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -31,12 +33,13 @@ public class Alarm1Receiver extends BroadcastReceiver
 		//get requestCode
 		int requestCode = intent.getIntExtra("requestCode", 0);
 
-		//create and execute notification
+		String contentTitle = "Take " + nameToAlert;
+		String contentText = "It is time for you to take " + nameToAlert + ".";
+
 		NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
 				.setSmallIcon(R.drawable.baseline_notification_important_24)
-				.setContentTitle("Take " + nameToAlert)
-				.setContentText("It is time for you to take " + nameToAlert)
-                .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
+				.setContentTitle(contentTitle)
+				.setContentText(contentText)
 				.setPriority(NotificationCompat.PRIORITY_HIGH);
 
 		NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
@@ -51,7 +54,7 @@ public class Alarm1Receiver extends BroadcastReceiver
         Level2Receiver.putExtra("nameToAlert", nameToAlert);
         Level2Receiver.putExtra("requestCode", requestCode);
 
-        Level2Intent = PendingIntent.getBroadcast(context, 992, Level2Receiver, PendingIntent.FLAG_UPDATE_CURRENT);
+        Level2Intent = PendingIntent.getBroadcast(context, 992, Level2Receiver, PendingIntent.FLAG_ONE_SHOT);
 
         // Set Level 2 to start in 5 minutes
         alarmManager.set(AlarmManager.RTC_WAKEUP,System.currentTimeMillis() + (5*60*1000), Level2Intent);

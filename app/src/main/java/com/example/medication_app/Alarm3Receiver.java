@@ -1,11 +1,14 @@
 package com.example.medication_app;
 
+import android.Manifest;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.provider.ContactsContract;
+import android.support.v4.content.ContextCompat;
 import android.telephony.SmsManager;
 import android.util.Log;
 
@@ -17,6 +20,7 @@ public class Alarm3Receiver extends BroadcastReceiver {
     public final String TAG = "MEDICATION_ADHERENCE"; //TAG for log usage
     AlarmManager alarmManager;
     PendingIntent Level4Intent;
+
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -59,7 +63,7 @@ public class Alarm3Receiver extends BroadcastReceiver {
         Level4Receiver.putExtra("nameToAlert", nameToAlert);
         Level4Receiver.putExtra("requestCode", requestCode);
 
-        Level4Intent = PendingIntent.getBroadcast(context, 994, Level4Receiver, PendingIntent.FLAG_UPDATE_CURRENT);
+        Level4Intent = PendingIntent.getBroadcast(context, 994, Level4Receiver, PendingIntent.FLAG_ONE_SHOT);
 
         // Set Level 4 to start in 5 minutes
         alarmManager.set(AlarmManager.RTC_WAKEUP,System.currentTimeMillis() + (5*60*1000), Level4Intent);

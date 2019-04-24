@@ -147,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
                 Intent alarmReceiver = new Intent(MainActivity.this, Alarm1Receiver.class);
-                alarmIntent = PendingIntent.getBroadcast(MainActivity.this, medicines.size() - 1, alarmReceiver, PendingIntent.FLAG_UPDATE_CURRENT); //delete last alarm on the list (preceding ones will be replaced)
+                alarmIntent = PendingIntent.getBroadcast(MainActivity.this, medicines.size() - 1, alarmReceiver, PendingIntent.FLAG_ONE_SHOT); //delete last alarm on the list (preceding ones will be replaced)
 
                 alarmManager.cancel(alarmIntent);
 
@@ -299,7 +299,7 @@ public class MainActivity extends AppCompatActivity {
             alarmReceiver.putExtra("requestCode", i);
 
             //Lets the other application continue the process as if we are owning it
-            alarmIntent = PendingIntent.getBroadcast(MainActivity.this, i, alarmReceiver, PendingIntent.FLAG_UPDATE_CURRENT);
+            alarmIntent = PendingIntent.getBroadcast(MainActivity.this, i, alarmReceiver, PendingIntent.FLAG_CANCEL_CURRENT);
 
 
             // Set the alarm to start at the Medicine time.
@@ -361,7 +361,7 @@ public class MainActivity extends AppCompatActivity {
                     Intent Level2Receiver = new Intent(getApplicationContext(), Alarm2Receiver.class);
                     PendingIntent Level2Intent = PendingIntent.getBroadcast(
                             getApplicationContext(), 992, Level2Receiver,
-                            PendingIntent.FLAG_UPDATE_CURRENT);
+                            PendingIntent.FLAG_ONE_SHOT);
 
                     alarmManager.cancel(Level2Intent);
 
@@ -369,7 +369,7 @@ public class MainActivity extends AppCompatActivity {
                     Intent Level3Receiver = new Intent(getApplicationContext(), Alarm3Receiver.class);
                     PendingIntent Level3Intent = PendingIntent.getBroadcast(
                             getApplicationContext(), 993, Level3Receiver,
-                            PendingIntent.FLAG_UPDATE_CURRENT);
+                            PendingIntent.FLAG_ONE_SHOT);
 
                     alarmManager.cancel(Level3Intent);
 
@@ -377,7 +377,7 @@ public class MainActivity extends AppCompatActivity {
                     Intent Level4Receiver = new Intent(getApplicationContext(), Alarm4Receiver.class);
                     PendingIntent Level4Intent = PendingIntent.getBroadcast(
                             getApplicationContext(), 994, Level4Receiver,
-                            PendingIntent.FLAG_UPDATE_CURRENT);
+                            PendingIntent.FLAG_ONE_SHOT);
 
                     alarmManager.cancel(Level4Intent);
                 }
