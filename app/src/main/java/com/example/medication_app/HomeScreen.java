@@ -8,7 +8,8 @@ import android.view.View;
 import android.widget.Button;
 
 public class HomeScreen extends AppCompatActivity {
-    Button editSchedule;
+    Button editAlarms;
+    Button editMedSchedule;
     Button settings;
     Button dashboard;
 
@@ -17,8 +18,8 @@ public class HomeScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
 
-        editSchedule = (Button) findViewById(R.id.editMedSchedule);
-        editSchedule.setOnClickListener(new View.OnClickListener() {
+        editAlarms = (Button) findViewById(R.id.edalarms);
+        editAlarms.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(HomeScreen.this, MainActivity.class);
@@ -49,6 +50,15 @@ public class HomeScreen extends AppCompatActivity {
 
             }
         });
+        editMedSchedule = (Button) findViewById(R.id.edSchedule);
+        editMedSchedule.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(HomeScreen.this, MedicineSchedule.class);
+                startActivity(i);
+            }
+        });
+
     }
 
 }

@@ -6,39 +6,48 @@
     android:layout_height="match_parent"
     tools:context=".HomeScreen">
 
+    <Button
+        android:id="@+id/edSchedule"
+        android:layout_width="100dp"
+        android:layout_height="70dp"
+        android:background="@drawable/round_button"
+        android:text="Edit Alarms"
+        tools:layout_editor_absoluteX="18dp"
+        tools:layout_editor_absoluteY="648dp" />
+
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="304dp"
         android:layout_height="527dp"
         app:srcCompat="@drawable/MedLogo"
         tools:layout_editor_absoluteX="64dp"
-        tools:layout_editor_absoluteY="102dp" />
-
-    <Button
-        android:id="@+id/editMedSchedule"
-        android:layout_width="100dp"
-        android:layout_height="56dp"
-        android:background="@drawable/round_button"
-        android:text="Edit your Scheudle"
-        tools:layout_editor_absoluteX="155dp"
-        tools:layout_editor_absoluteY="659dp" />
+        tools:layout_editor_absoluteY="111dp" />
 
     <Button
         android:id="@+id/settings"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="70dp"
         android:background="@drawable/round_button_orange"
         android:text="Settings"
-        tools:layout_editor_absoluteX="307dp"
-        tools:layout_editor_absoluteY="28dp" />
+        tools:layout_editor_absoluteX="301dp"
+        tools:layout_editor_absoluteY="647dp" />
 
     <Button
         android:id="@+id/dashboard"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="70dp"
         android:background="@drawable/round_button_orange"
         android:text="Dashboard"
-        tools:layout_editor_absoluteX="27dp"
+        tools:layout_editor_absoluteX="18dp"
+        tools:layout_editor_absoluteY="30dp" />
+
+    <Button
+        android:id="@+id/edalarms"
+        android:layout_width="100dp"
+        android:layout_height="70dp"
+        android:background="@drawable/round_button"
+        android:text="Edit Alarms"
+        tools:layout_editor_absoluteX="301dp"
         tools:layout_editor_absoluteY="28dp" />
 
 </android.support.constraint.ConstraintLayout>
