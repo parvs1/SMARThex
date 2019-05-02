@@ -33,8 +33,8 @@ public class HomeScreen extends AppCompatActivity {
     {
         @Override
         public void onClick (View v){
-        //Intent i = new Intent(HomeScreen.this, SettingsActivity.class);
-        //startActivity(i);
+        Intent i = new Intent(HomeScreen.this, SettingsActivity.class);
+        startActivity(i);
 
     }
     });
