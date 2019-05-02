@@ -22,6 +22,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".Contact"></activity>
+        <activity android:name=".EmergencyContactDetail" />
+        <activity android:name=".SettingsContacts" />
 
         <receiver
             android:name=".Alarm4Receiver"
