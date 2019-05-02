@@ -25,7 +25,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".Contact"></activity>
+        <activity android:name=".MedicineSchedule"></activity>
+        <activity android:name=".Contact" />
         <activity android:name=".EmergencyContactDetail" />
         <activity android:name=".SettingsContacts" />
 
