@@ -11,15 +11,23 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 
-public class EditMedicineActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class EditMedicineActivity extends AppCompatActivity {
 
     EditText editMedName; //textbox for setting medicineName
     Button saveButton; //button for saving the new or edited medicine
-    Spinner frequencySpinner; //spinner to set number of days between doses
+    CheckBox sunCheck;
+    CheckBox monCheck;
+    CheckBox tuesCheck;
+    CheckBox wedCheck;
+    CheckBox thursCheck;
+    CheckBox friCheck;
+    CheckBox satCheck;
+    boolean[] editedDays;
     public final String TAG = "com.med-adherence"; //TAG for log usage
 
     String[] time = new String[2]; //time array that holds a string of hours and minutes in separate elements
@@ -34,14 +42,17 @@ public class EditMedicineActivity extends AppCompatActivity implements AdapterVi
         //get the medicine from the parent activity
         Medicine medicineToEdit = (Medicine)getIntent().getSerializableExtra("medicineToEdit");
 
+        time[0] = "12";
+        time[1] = "00";
+
+        editedDays = new boolean[7];
+
         //if adding new medicine, not editing, change medicineToEdit to some default placeholders
-        if(medicineToEdit.medicineName.equals("temp") && Integer.parseInt(medicineToEdit.hour) == -1 && Integer.parseInt(medicineToEdit.minute) == -1)
+        if(medicineToEdit.medicineName.equals("te425252621afawetmp"))
         {
             medicineToEdit.medicineName = "";
-            medicineToEdit.hour = "13";
-            medicineToEdit.minute = "35";
-            time[0] = "13";
-            time[1] = "35";
+            medicineToEdit.hour = "12";
+            medicineToEdit.minute = "00";
         }
 
         editMedName = (EditText)findViewById(R.id.editMedName);
@@ -102,25 +113,47 @@ public class EditMedicineActivity extends AppCompatActivity implements AdapterVi
         });
 
 
-        frequencySpinner = (Spinner) findViewById(R.id.frequencySpinner);
+        boolean[] days = medicineToEdit.days;
 
-        //set the items in the spinner to be choices of n days
-        ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(this, R.array.frequency_array, android.R.layout.simple_spinner_item);
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
-        frequencySpinner.setAdapter(spinnerAdapter);
+        sunCheck = (CheckBox) findViewById(R.id.sunCheck);
+        sunCheck.setChecked(days[0]);
 
-        //since 0th index is 1 day, subtract 1 from frequency to set initial position
-        frequencySpinner.setSelection(medicineToEdit.frequency-1);
-        //create the onItemSelectedListener
-        frequencySpinner.setOnItemSelectedListener(this);
+        monCheck = (CheckBox) findViewById(R.id.monCheck);
+        monCheck.setChecked(days[1]);
+
+        tuesCheck = (CheckBox) findViewById(R.id.tuesCheck);
+        tuesCheck.setChecked(days[2]);
+
+        wedCheck = (CheckBox) findViewById(R.id.wedCheck);
+        wedCheck.setChecked(days[3]);
+
+        thursCheck = (CheckBox) findViewById(R.id.thursCheck);
+        thursCheck.setChecked(days[4]);
+
+        friCheck = (CheckBox) findViewById(R.id.friCheck);
+        friCheck.setChecked(days[5]);
+
+        satCheck = (CheckBox) findViewById(R.id.satCheck);
+        satCheck.setChecked(days[0]);
 
         //when finished editing or creating, click this button to save changes
         saveButton = (Button)findViewById(R.id.saveButton);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Medicine tempMedicine = new Medicine(editMedName.getText().toString(), time[0], time[1], doseFrequency);
+
+                editedDays[0] = sunCheck.isChecked();
+                editedDays[1] = monCheck.isChecked();
+                editedDays[2] = tuesCheck.isChecked();
+                editedDays[3] = wedCheck.isChecked();
+                editedDays[4] = thursCheck.isChecked();
+                editedDays[5] = friCheck.isChecked();
+                editedDays[6] = satCheck.isChecked();
+
+                for(int day = 0; day < editedDays.length; day++)
+                    Log.i(TAG, "" + day + ":" + editedDays[day]);
+
+                Medicine tempMedicine = new Medicine(editMedName.getText().toString(), time[0], time[1], editedDays);
                 Log.d(TAG, ""+ tempMedicine);
 
                 Intent editedMedicine = new Intent();
@@ -132,11 +165,4 @@ public class EditMedicineActivity extends AppCompatActivity implements AdapterVi
         });
     }
 
-    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-        doseFrequency = pos + 1;    //since pos 0 is equivalent to 1 day, add 1
-    }
-
-    public void onNothingSelected(AdapterView<?> parent) {
-        // Another interface callback
-    }
 }

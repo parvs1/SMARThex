@@ -7,31 +7,23 @@ public class Medicine implements Serializable {
     public String medicineName; //name of medicine
     public String hour; //hour dose is taken
     public String minute;   //minute does is taken
-    public int frequency; //days in between doses
+    public boolean[] days; //days in between doses
 
     public Medicine()
     {
         medicineName = "";
-        hour = "0";
-        minute = "0";
-        frequency = 1;
+        hour = "00";
+        minute = "00";
+        days = new boolean[7];
     }
 
-    public Medicine(String mName, String h, String m)
+
+    public Medicine (String mName, String h, String m, boolean[] d)
     {
         medicineName = mName;
         hour = h;
         minute = m;
-        frequency = 1;
-    }
-
-
-    public Medicine (String mName, String h, String m, int fr)
-    {
-        medicineName = mName;
-        hour = h;
-        minute = m;
-        frequency = fr;
+        days = d;
     }
 
     public String toString()
@@ -41,11 +33,21 @@ public class Medicine implements Serializable {
         if (medicineName.equals("Tap me to edit!"))
             return medicineName;
         else {
-            String description = "" + medicineName + " at " + hour + ":" + minute;
-            if (frequency == 1)
-                description = description + "; taken every day";
-            else
-                description = description + "; taken every " + frequency + " days";
+            String description = "" + medicineName + "     " + hour + ":" + minute + "     ";
+            if(days[0])
+                description += "Sun. ";
+            if(days[1])
+                description += "Mon. ";
+            if(days[2])
+                description += "Tues. ";
+            if(days[3])
+                description += "Wed. ";
+            if(days[4])
+                description += "Thurs. ";
+            if(days[5])
+                description += "Fri. ";
+            if(days[6])
+                description += "Sat. ";
 
             return description;
         }

@@ -71,7 +71,7 @@ public class EditModule extends AppCompatActivity
                 times.clear();
                 for (int i = 0; i < medicines.size(); i++) {
                     if (medicines.get(i).medicineName.equals(medicineName))
-                        times.add(medicines.get(i).hour + ":" + medicines.get(i).minute + ", " + medicines.get(i).frequency);
+                        times.add(medicines.get(i).hour + ":" + medicines.get(i).minute + ", " + medicines.get(i).days.toString());
                 }
 
                 medName = medicineName;
@@ -141,9 +141,15 @@ public class EditModule extends AppCompatActivity
             String tempName = medicinesFileTextArray[i];
             String tempHour = medicinesFileTextArray[i + 1];
             String tempMin = medicinesFileTextArray[i + 2];
-            int tempFreq = Integer.parseInt(medicinesFileTextArray[i + 3]);
+            String daysString = medicinesFileTextArray[i + 3];
 
-            medicines.add(new Medicine(tempName, tempHour, tempMin, tempFreq));
+            String[] daysArray = daysString.split(",");
+
+            boolean[] days = new boolean[7];
+            for(int day = 0; day < days.length; day++)
+                days[i] = Boolean.parseBoolean(daysArray[day]);
+
+            medicines.add(new Medicine(tempName, tempHour, tempMin, days));
         }
     }
 }

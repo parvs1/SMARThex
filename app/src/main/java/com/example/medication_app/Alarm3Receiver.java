@@ -9,7 +9,9 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.provider.ContactsContract;
 import android.support.v4.content.ContextCompat;
+import android.telephony.PhoneNumberUtils;
 import android.telephony.SmsManager;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 
 import java.io.FileInputStream;
@@ -51,6 +53,9 @@ public class Alarm3Receiver extends BroadcastReceiver {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        TelephonyManager tm = (TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE);
+        phoneNo = PhoneNumberUtils.formatNumber(phoneNo, tm.getSimCountryIso());
 
         String smsMessage = "SmartHex is notifying you that " + nameToAlert + " wasn't taken yet.";
 

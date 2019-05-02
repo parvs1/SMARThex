@@ -137,16 +137,26 @@ public class MainActivity extends AppCompatActivity {
         if (medicinesFileTextArray.length > 2) {
 
             //iterate line by line to create the arraylist of medicines
-            for (int i = 0; i < medicinesFileTextArray.length; i += 4) {
+            for (int i = 0; i < medicinesFileTextArray.length; i+=4) {
                 String tempName = medicinesFileTextArray[i];
                 String tempHour = medicinesFileTextArray[i + 1];
                 String tempMin = medicinesFileTextArray[i + 2];
-                int tempFreq = Integer.parseInt(medicinesFileTextArray[i + 3]);
+                String daysArray = medicinesFileTextArray[i + 3];
 
-                medicines.add(new Medicine(tempName, tempHour, tempMin, tempFreq));
+                String[] daysString = daysArray.split(",");
+
+                boolean[] days = new boolean[7];
+                for(int day = 0; day < days.length; day++)
+                    days[day] = Boolean.parseBoolean(daysString[day]);
+
+                medicines.add(new Medicine(tempName, tempHour, tempMin, days));
             }
-        } else
-            medicines.add(new Medicine("Tap me to edit!", "00", "30", 1)); //initial placeholder text to guide user through editing a medicine for first time
+        }
+        else {
+            boolean[] days = new boolean[7];
+            medicines.add(new Medicine("Tap me to edit!", "00", "30", days)); //initial placeholder text to guide user through editing a medicine for first time
+        }
+
 
         //create and set array adapter for medicines and medSchedule listview
         adapter = new ArrayAdapter<Medicine>(this, android.R.layout.simple_list_item_1, medicines);
@@ -192,7 +202,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent editMedicineActivity = new Intent(MainActivity.this, EditMedicineActivity.class);
-                editMedicineActivity.putExtra("medicineToEdit", new Medicine("temp", "-1", "-1")); //provide placeholders so we can use EditMedicineActivity instead of creating a redundant new one
+                boolean days[] = new boolean[7];
+                editMedicineActivity.putExtra("medicineToEdit", new Medicine("te425252621afawetmp", "00", "00", days)); //provide placeholders so we can use EditMedicineActivity instead of creating a redundant new one
 
                 startActivityForResult(editMedicineActivity, REQUEST_CODE);
             }
@@ -230,7 +241,12 @@ public class MainActivity extends AppCompatActivity {
             fileContents += temp.medicineName + "\n";
             fileContents += temp.hour + "\n";
             fileContents += temp.minute + "\n";
-            fileContents += temp.frequency + "\n";
+
+
+            for(int day = 0; day < temp.days.length; day++)
+                fileContents += temp.days[day] + ",";
+
+            fileContents+="\n";
         }
 
         FileOutputStream outputStream;
@@ -242,7 +258,7 @@ public class MainActivity extends AppCompatActivity {
             outputWriter.write(fileContents);
             outputWriter.close();
 
-            //Log.e(TAG, "Saved as..." + fileContents); //uncomment to read file if need be
+            //Log.e(TAG, "Saved as:" + "\n" + fileContents); //uncomment to read file if need be
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -262,17 +278,63 @@ public class MainActivity extends AppCompatActivity {
             //Lets the other application continue the process as if we are owning it
             alarmIntent = PendingIntent.getBroadcast(MainActivity.this, i, alarmReceiver, PendingIntent.FLAG_CANCEL_CURRENT);
 
-
             // Set the alarm to start at the Medicine time.
             Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis(System.currentTimeMillis());
             calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(temp.hour));
             calendar.set(Calendar.MINUTE, Integer.parseInt(temp.minute));
 
-            //Repeat the alarm for the specified frequency of days
-            alarmManager.setInexactRepeating(alarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY * temp.frequency, alarmIntent);
+            boolean[] days = temp.days;
 
-            Log.i(TAG, "Set up " + temp.medicineName + "'s alarm.");
+            //Sunday
+            if(days[0]) {
+                Log.i(TAG, "Created alarm for " + temp.medicineName + " at " + temp.hour + ":" + temp.minute + " on Sunday.");
+                calendar.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+                alarmManager.setInexactRepeating(alarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY * 7, alarmIntent);
+            }
+
+            //Monday
+            if(days[1]) {
+                Log.i(TAG, "Created alarm for " + temp.medicineName + " at " + temp.hour + ":" + temp.minute + " on Monday.");
+                calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+                alarmManager.setInexactRepeating(alarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY * 7, alarmIntent);
+            }
+
+            //Tuesday
+            if(days[2]) {
+                Log.i(TAG, "Created alarm for " + temp.medicineName + " at " + temp.hour + ":" + temp.minute + " on Tuesday.");
+                calendar.set(Calendar.DAY_OF_WEEK, Calendar.TUESDAY);
+                alarmManager.setInexactRepeating(alarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY * 7, alarmIntent);
+            }
+
+            //Wednesday
+            if(days[3]) {
+                Log.i(TAG, "Created alarm for " + temp.medicineName + " at " + temp.hour + ":" + temp.minute + " on Wednesday.");
+                calendar.set(Calendar.DAY_OF_WEEK, Calendar.WEDNESDAY);
+                alarmManager.setInexactRepeating(alarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY * 7, alarmIntent);
+            }
+
+            //Thursday
+            if(days[4]) {
+                Log.i(TAG, "Created alarm for " + temp.medicineName + " at " + temp.hour + ":" + temp.minute + " on Thursday.");
+                calendar.set(Calendar.DAY_OF_WEEK, Calendar.THURSDAY);
+                alarmManager.setInexactRepeating(alarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY * 7, alarmIntent);
+            }
+
+            //Friday
+            if(days[5]) {
+                Log.i(TAG, "Created alarm for " + temp.medicineName + " at " + temp.hour + ":" + temp.minute + " on Friday.");
+                calendar.set(Calendar.DAY_OF_WEEK, Calendar.FRIDAY);
+                alarmManager.setInexactRepeating(alarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY * 7, alarmIntent);
+            }
+
+            //Saturday
+            if(days[6]) {
+                Log.i(TAG, "Created alarm for " + temp.medicineName + " at " + temp.hour + ":" + temp.minute + " on Saturday.");
+                calendar.set(Calendar.DAY_OF_WEEK, Calendar.SATURDAY);
+                alarmManager.setInexactRepeating(alarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY * 7, alarmIntent);
+            }
+
         }
     }
 
