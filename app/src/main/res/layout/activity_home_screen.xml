@@ -11,8 +11,8 @@
         android:layout_width="304dp"
         android:layout_height="527dp"
         app:srcCompat="@drawable/MedLogo"
-        tools:layout_editor_absoluteX="46dp"
-        tools:layout_editor_absoluteY="117dp" />
+        tools:layout_editor_absoluteX="64dp"
+        tools:layout_editor_absoluteY="102dp" />
 
     <Button
         android:id="@+id/editMedSchedule"
@@ -20,8 +20,8 @@
         android:layout_height="56dp"
         android:background="@drawable/round_button"
         android:text="Edit your Scheudle"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="28dp" />
+        tools:layout_editor_absoluteX="155dp"
+        tools:layout_editor_absoluteY="659dp" />
 
     <Button
         android:id="@+id/settings"
@@ -38,16 +38,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/round_button_orange"
         android:text="Dashboard"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="667dp" />
+        tools:layout_editor_absoluteX="27dp"
+        tools:layout_editor_absoluteY="28dp" />
 
-    <Button
-        android:id="@+id/button4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"
-        tools:layout_editor_absoluteX="322dp"
-        tools:layout_editor_absoluteY="667dp"
-
-        android:background="@drawable/round_button"/>
 </android.support.constraint.ConstraintLayout>
