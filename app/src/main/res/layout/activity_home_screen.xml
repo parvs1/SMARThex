@@ -11,7 +11,7 @@
         android:layout_width="100dp"
         android:layout_height="70dp"
         android:background="@drawable/round_button"
-        android:text="Edit Alarms"
+        android:text="Edit Schedule"
         tools:layout_editor_absoluteX="18dp"
         tools:layout_editor_absoluteY="648dp" />
 
