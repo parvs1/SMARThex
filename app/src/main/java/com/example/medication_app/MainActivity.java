@@ -23,9 +23,12 @@ import android.os.Build;
 import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -61,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
     public final int REQUEST_CODE = 99; //code for starting editMedicine Activity and obtaining its result
     public final String TAG = "MEDICATION_ADHERENCE"; //TAG for log usage
     public static final String MIME_TEXT_PLAIN = "text/plain";
-    Button settingsButton;
     public final String CHANNEL_ID = "0";
     public final int PERMISSION_ALL = 3;
     String[] PERMISSIONS = {
@@ -69,7 +71,8 @@ public class MainActivity extends AppCompatActivity {
             Manifest.permission.CALL_PHONE,
             Manifest.permission.READ_CONTACTS
     };
-    public final int PICK_CONTACT = 4;
+
+    public String nfcID;
 
 
     @Override
@@ -99,6 +102,27 @@ public class MainActivity extends AppCompatActivity {
                 String readString = String.copyValueOf(buffer, 0, charRead);
                 medicinesFileText += readString;
             }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        String nfcIDFileText = "";
+
+        try {
+            fileInputStream = openFileInput("nfcID.txt");
+            InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream);
+
+            char[] buffer = new char[1024];
+            int charRead;
+
+            //creates string that contains text from 'nfcID.txt'
+            while ((charRead = inputStreamReader.read(buffer)) > 0) {
+                String readString = String.copyValueOf(buffer, 0, charRead);
+                nfcIDFileText += readString;
+            }
+
+            nfcID = nfcIDFileText;
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -163,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //create floating action button that adds a new medicine to the medicines list when clicked on
-        FloatingActionButton addMedicine = (FloatingActionButton) findViewById(R.id.addMedicine);
+        addMedicine = (FloatingActionButton) findViewById(R.id.addMedicine);
         addMedicine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -174,38 +198,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        settingsButton = (Button) findViewById(R.id.settingsButton);
-
-        String emergencyContactFileText = "";
-
-        try {
-            fileInputStream = openFileInput("emergencyContact.txt");
-            InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream);
-
-            char[] buffer = new char[1024];
-            int charRead;
-
-            //creates string that contains text from 'emergencyContact.txt'
-            while ((charRead = inputStreamReader.read(buffer)) > 0) {
-                String readString = String.copyValueOf(buffer, 0, charRead);
-                emergencyContactFileText += readString;
-            }
-
-            settingsButton.setText(emergencyContactFileText);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-
-        settingsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(Intent.ACTION_PICK, ContactsContract.CommonDataKinds.Phone.CONTENT_URI);
-                startActivityForResult(i, PICK_CONTACT);
-            }
-        });
-
+        handleIntent(getIntent());
     }
 
 
@@ -222,38 +215,6 @@ public class MainActivity extends AppCompatActivity {
 
             setAlarms();
             updateFile();
-        }
-
-        if (resultCode == RESULT_OK && requestCode == PICK_CONTACT)
-        {
-            Uri contactUri = data.getData();
-            Cursor cursor = getContentResolver().query(contactUri, null, null, null, null);
-            cursor.moveToFirst();
-            int column = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
-            settingsButton.setText(cursor.getString(column));
-            updateContact(cursor.getString(column));
-        }
-    }
-
-    public void updateContact(String phoneNo) {
-        //create or update file 'medicinesFile.txt'
-        String filename = "emergencyContact.txt";
-
-        String fileContents = phoneNo;
-
-        FileOutputStream outputStream;
-
-        //try creating a file 'medicinesFile.txt' with content 'fileContents'
-        try {
-            outputStream = openFileOutput(filename, Context.MODE_PRIVATE);
-            OutputStreamWriter outputWriter = new OutputStreamWriter(outputStream);
-            outputWriter.write(fileContents);
-            outputWriter.close();
-
-            //Log.e(TAG, "Saved as..." + fileContents); //uncomment to read file if need be
-
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
@@ -355,7 +316,18 @@ public class MainActivity extends AppCompatActivity {
 
                 Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
 
-                if (getTextFromTag(tag).equals("")) { //Checking if the NFC Tag is what we set out for it to be. If so, then that means the tag is activated.
+                if (getTextFromTag(tag).equals(nfcID)) { //Checking if the NFC Tag is what we set out for it to be. If so, then that means the tag is activated.
+
+                    NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
+                            .setSmallIcon(R.drawable.baseline_alarm_off_24)
+                            .setContentTitle("Thanks for taking your medicine!")
+                            .setContentText("Alarms for latest medicine have been cancelled.")
+                            .setPriority(NotificationCompat.PRIORITY_MIN);
+
+                    NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+
+                    // notificationId is a unique int for each notification that you must define
+                    notificationManager.notify(111, builder.build());
 
                     //Cancel Level 2
                     Intent Level2Receiver = new Intent(getApplicationContext(), Alarm2Receiver.class);
@@ -385,7 +357,6 @@ public class MainActivity extends AppCompatActivity {
                 //keep on going
             }
         }
-
     }
 
 

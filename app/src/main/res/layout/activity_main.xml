@@ -30,18 +30,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/round_alarm_add_24" />
 
-    <Button
-        android:id="@+id/settingsButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="No contact selected"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/medSchedule"
-        app:layout_constraintVertical_bias="0.6" />
-
 
 </android.support.constraint.ConstraintLayout>
