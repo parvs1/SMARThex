@@ -14,6 +14,7 @@ import android.widget.TextView;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class EditModule extends AppCompatActivity
 {
@@ -71,7 +72,7 @@ public class EditModule extends AppCompatActivity
                 times.clear();
                 for (int i = 0; i < medicines.size(); i++) {
                     if (medicines.get(i).medicineName.equals(medicineName))
-                        times.add(medicines.get(i).hour + ":" + medicines.get(i).minute + ", " + medicines.get(i).days.toString());
+                        times.add(medicines.get(i).hour + ":" + medicines.get(i).minute + ", " + Arrays.toString(medicines.get(i).days));
                 }
 
                 medName = medicineName;
@@ -147,7 +148,7 @@ public class EditModule extends AppCompatActivity
 
             boolean[] days = new boolean[7];
             for(int day = 0; day < days.length; day++)
-                days[i] = Boolean.parseBoolean(daysArray[day]);
+                days[day] = Boolean.parseBoolean(daysArray[day]);
 
             medicines.add(new Medicine(tempName, tempHour, tempMin, days));
         }

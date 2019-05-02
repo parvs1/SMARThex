@@ -141,13 +141,13 @@ public class MainActivity extends AppCompatActivity {
                 String tempName = medicinesFileTextArray[i];
                 String tempHour = medicinesFileTextArray[i + 1];
                 String tempMin = medicinesFileTextArray[i + 2];
-                String daysArray = medicinesFileTextArray[i + 3];
+                String daysString = medicinesFileTextArray[i + 3];
 
-                String[] daysString = daysArray.split(",");
+                String[] daysArray = daysString.split(",");
 
                 boolean[] days = new boolean[7];
                 for(int day = 0; day < days.length; day++)
-                    days[day] = Boolean.parseBoolean(daysString[day]);
+                    days[day] = Boolean.parseBoolean(daysArray[day]);
 
                 medicines.add(new Medicine(tempName, tempHour, tempMin, days));
             }
