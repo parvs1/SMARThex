@@ -8,6 +8,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.media.RingtoneManager;
+import android.os.SystemClock;
 import android.provider.Settings;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
@@ -57,7 +58,7 @@ public class Alarm1Receiver extends BroadcastReceiver
         Level2Intent = PendingIntent.getBroadcast(context, 992, Level2Receiver, PendingIntent.FLAG_ONE_SHOT);
 
         // Set Level 2 to start in 5 minutes
-        alarmManager.set(AlarmManager.RTC_WAKEUP,System.currentTimeMillis() + (5*60*1000), Level2Intent);
+        alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + (5*60*1000), Level2Intent);
 	}
 
 	//use this code for when in contact with NFC TAG

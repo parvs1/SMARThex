@@ -153,12 +153,10 @@ public class MainActivity extends AppCompatActivity {
                 alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Yes",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                //Delete all alarms
-                                for(int i = 0; i < medicines.size(); i++){
-                                    Intent alarmReceiver = new Intent(MainActivity.this, Alarm1Receiver.class);
-                                    alarmIntent = PendingIntent.getBroadcast(MainActivity.this, i, alarmReceiver, PendingIntent.FLAG_CANCEL_CURRENT);
-                                    alarmManager.cancel(alarmIntent);
-                                }
+
+                                Intent alarmReceiver = new Intent(MainActivity.this, Alarm1Receiver.class);
+                                alarmIntent = PendingIntent.getBroadcast(MainActivity.this, positionToDelete, alarmReceiver, PendingIntent.FLAG_CANCEL_CURRENT);
+                                alarmManager.cancel(alarmIntent);
 
 
                                 medicines.remove(positionToDelete);
@@ -166,7 +164,6 @@ public class MainActivity extends AppCompatActivity {
                                 //update list, file, and reset the alarms with the updated list
                                 adapter.notifyDataSetChanged();
                                 updateFile();
-                                setAlarms();
                             }
                         });
                 alertDialog.show();

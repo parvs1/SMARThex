@@ -199,11 +199,12 @@ public class HomeScreen extends AppCompatActivity {
             String type = intent.getType();
             if (MIME_TEXT_PLAIN.equals(type)) {
 
-                AlarmManager.AlarmClockInfo nextAlarmClock = alarmManager.getNextAlarmClock();
-
                 Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-                Log.i(TAG, "Next alarm: " + alarmManager.getNextAlarmClock().getTriggerTime() + "         System time: " + System.currentTimeMillis());
-                if (getTextFromTag(tag).equals(nfcID) && Math.abs((alarmManager.getNextAlarmClock().getTriggerTime()-System.currentTimeMillis()))<=300000) { //Checking if the NFC Tag is what we set out for it to be and if the next alarm is within 5 minutes. If so, then that means the tag is activated at the right time.
+
+                Intent Level2Receiver = new Intent(getApplicationContext(), Alarm2Receiver.class);
+                boolean isWorking = (PendingIntent.getBroadcast(getApplicationContext(), 992, Level2Receiver, PendingIntent.FLAG_ONE_SHOT)) != null; //check if Level 2 alarm is active
+
+                if (getTextFromTag(tag).equals(nfcID) && isWorking) {
 
                     Toast.makeText(this, "Confirmed! Thank you for taking your medication!", Toast.LENGTH_LONG).show();
 
@@ -219,7 +220,6 @@ public class HomeScreen extends AppCompatActivity {
                     notificationManager.notify(111, builder.build());
 
                     //Cancel Level 2
-                    Intent Level2Receiver = new Intent(getApplicationContext(), Alarm2Receiver.class);
                     PendingIntent Level2Intent = PendingIntent.getBroadcast(
                             getApplicationContext(), 992, Level2Receiver,
                             PendingIntent.FLAG_ONE_SHOT);
@@ -242,11 +242,10 @@ public class HomeScreen extends AppCompatActivity {
 
                     alarmManager.cancel(Level4Intent);
                 }
-                else if (getTextFromTag(tag).equals(nfcID) && Math.abs((alarmManager.getNextAlarmClock().getTriggerTime()-System.currentTimeMillis()))>300000)
-                    Toast.makeText(this, "You're a bit too early! It is not yet time to take your medication!", Toast.LENGTH_LONG).show();
+                else if (getTextFromTag(tag).equals(nfcID) && !isWorking)
+                    Toast.makeText(this, "No alarms have triggered yet. No need to take any medicine right now.", Toast.LENGTH_LONG).show();
                 else
-                    Toast.makeText(this, "Wrong ID. Change the NFC ID in settings if you need to.", Toast.LENGTH_LONG).show();
-
+                    Toast.makeText(this, "Wrong NFC Tag ID. If you think this is a mistake, then you can change the NFC ID in the SmartHex app settings.", Toast.LENGTH_LONG).show();
 
             } else {
                 //keep on going

@@ -7,6 +7,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.SystemClock;
 import android.provider.ContactsContract;
 import android.support.v4.content.ContextCompat;
 import android.telephony.PhoneNumberUtils;
@@ -68,6 +69,6 @@ public class Alarm3Receiver extends BroadcastReceiver {
         Level4Intent = PendingIntent.getBroadcast(context, 994, Level4Receiver, PendingIntent.FLAG_ONE_SHOT);
 
         // Set Level 4 to start in 5 minutes
-        alarmManager.set(AlarmManager.RTC_WAKEUP,System.currentTimeMillis() + (5*60*1000), Level4Intent);
+        alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + (5*60*1000), Level4Intent);
     }
 }

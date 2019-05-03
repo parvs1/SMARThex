@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.os.SystemClock;
 import android.util.Log;
 
 public class Alarm2Receiver extends BroadcastReceiver {
@@ -37,6 +38,6 @@ public class Alarm2Receiver extends BroadcastReceiver {
         Level3Intent = PendingIntent.getBroadcast(context, 993, Level3Receiver, PendingIntent.FLAG_ONE_SHOT);
 
         // Set Level 3 to start in 5 minutes
-        alarmManager.set(AlarmManager.RTC_WAKEUP,System.currentTimeMillis() + (5*60*1000), Level3Intent);
+        alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + (5*60*1000), Level3Intent);
     }
 }
