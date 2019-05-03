@@ -16,6 +16,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 
+import java.util.Random;
+
 public class EditMedicineActivity extends AppCompatActivity {
 
     EditText editMedName; //textbox for setting medicineName
@@ -28,10 +30,9 @@ public class EditMedicineActivity extends AppCompatActivity {
     CheckBox friCheck;
     CheckBox satCheck;
     boolean[] editedDays;
+    int alarmRequestCode;
     public final String TAG = "com.med-adherence"; //TAG for log usage
-
     String[] time = new String[2]; //time array that holds a string of hours and minutes in separate elements
-    int doseFrequency = 1; //sets default frequency to 1 for spinner
 
     @Override
     @TargetApi(24)
@@ -41,18 +42,21 @@ public class EditMedicineActivity extends AppCompatActivity {
 
         //get the medicine from the parent activity
         Medicine medicineToEdit = (Medicine)getIntent().getSerializableExtra("medicineToEdit");
+        alarmRequestCode = medicineToEdit.alarmRequestCode;
 
         time[0] = "12";
         time[1] = "00";
 
         editedDays = new boolean[7];
 
-        //if adding new medicine, not editing, change medicineToEdit to some default placeholders
+        //if adding new medicine, not editing, change medicineToEdit to some default placeholders and give it a unique, random request code
         if(medicineToEdit.medicineName.equals("te425252621afawetmp"))
         {
             medicineToEdit.medicineName = "";
             medicineToEdit.hour = "12";
             medicineToEdit.minute = "00";
+            Random random = new Random();
+            alarmRequestCode = random.nextInt(798) + 101;
         }
 
         editMedName = (EditText)findViewById(R.id.editMedName);
@@ -153,7 +157,7 @@ public class EditMedicineActivity extends AppCompatActivity {
                 for(int day = 0; day < editedDays.length; day++)
                     Log.i(TAG, "" + day + ":" + editedDays[day]);
 
-                Medicine tempMedicine = new Medicine(editMedName.getText().toString(), time[0], time[1], editedDays);
+                Medicine tempMedicine = new Medicine(editMedName.getText().toString(), time[0], time[1], alarmRequestCode, editedDays);
                 Log.d(TAG, ""+ tempMedicine);
 
                 Intent editedMedicine = new Intent();

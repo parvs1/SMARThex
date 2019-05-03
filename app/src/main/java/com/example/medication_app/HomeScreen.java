@@ -202,22 +202,11 @@ public class HomeScreen extends AppCompatActivity {
                 Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
 
                 Intent Level2Receiver = new Intent(getApplicationContext(), Alarm2Receiver.class);
-                boolean isWorking = (PendingIntent.getBroadcast(getApplicationContext(), 992, Level2Receiver, PendingIntent.FLAG_ONE_SHOT)) != null; //check if Level 2 alarm is active
+                boolean isActive = (PendingIntent.getBroadcast(getApplicationContext(), 992, Level2Receiver, PendingIntent.FLAG_NO_CREATE)) != null; //check if Level 2 alarm is active
 
-                if (getTextFromTag(tag).equals(nfcID) && isWorking) {
+                if (getTextFromTag(tag).equals(nfcID) && isActive) {
 
                     Toast.makeText(this, "Confirmed! Thank you for taking your medication!", Toast.LENGTH_LONG).show();
-
-                    NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
-                            .setSmallIcon(R.drawable.baseline_alarm_off_24)
-                            .setContentTitle("Thanks for taking your medicine!")
-                            .setContentText("Alarms for latest medicine have been cancelled.")
-                            .setPriority(NotificationCompat.PRIORITY_MIN);
-
-                    NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-
-                    // notificationId is a unique int for each notification that you must define
-                    notificationManager.notify(111, builder.build());
 
                     //Cancel Level 2
                     PendingIntent Level2Intent = PendingIntent.getBroadcast(
@@ -242,7 +231,7 @@ public class HomeScreen extends AppCompatActivity {
 
                     alarmManager.cancel(Level4Intent);
                 }
-                else if (getTextFromTag(tag).equals(nfcID) && !isWorking)
+                else if (getTextFromTag(tag).equals(nfcID) && !isActive)
                     Toast.makeText(this, "No alarms have triggered yet. No need to take any medicine right now.", Toast.LENGTH_LONG).show();
                 else
                     Toast.makeText(this, "Wrong NFC Tag ID. If you think this is a mistake, then you can change the NFC ID in the SmartHex app settings.", Toast.LENGTH_LONG).show();

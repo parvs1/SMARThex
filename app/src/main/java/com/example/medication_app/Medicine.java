@@ -6,7 +6,8 @@ public class Medicine implements Serializable {
 
     public String medicineName; //name of medicine
     public String hour; //hour dose is taken
-    public String minute;   //minute does is taken
+    public String minute;   //minute dose is taken
+    public int alarmRequestCode;
     public boolean[] days; //days in between doses
 
     public Medicine()
@@ -14,15 +15,17 @@ public class Medicine implements Serializable {
         medicineName = "";
         hour = "00";
         minute = "00";
+        alarmRequestCode = 0;
         days = new boolean[7];
     }
 
 
-    public Medicine (String mName, String h, String m, boolean[] d)
+    public Medicine (String mName, String h, String m, int arc, boolean[] d)
     {
         medicineName = mName;
         hour = h;
         minute = m;
+        alarmRequestCode = arc;
         days = d;
     }
 

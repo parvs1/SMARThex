@@ -138,11 +138,12 @@ public class EditModule extends AppCompatActivity
 
         String[] medicinesFileTextArray = medicinesFileText.split("\n"); //split text from 'medicinesFile.txt' by line
 
-        for (int i = 0; i < medicinesFileTextArray.length; i += 4) {
+        for (int i = 0; i < medicinesFileTextArray.length; i+=5) {
             String tempName = medicinesFileTextArray[i];
             String tempHour = medicinesFileTextArray[i + 1];
             String tempMin = medicinesFileTextArray[i + 2];
-            String daysString = medicinesFileTextArray[i + 3];
+            int tempAlarmRequestCode = Integer.parseInt(medicinesFileTextArray[i+3]);
+            String daysString = medicinesFileTextArray[i + 4];
 
             String[] daysArray = daysString.split(",");
 
@@ -150,7 +151,7 @@ public class EditModule extends AppCompatActivity
             for(int day = 0; day < days.length; day++)
                 days[day] = Boolean.parseBoolean(daysArray[day]);
 
-            medicines.add(new Medicine(tempName, tempHour, tempMin, days));
+            medicines.add(new Medicine(tempName, tempHour, tempMin, tempAlarmRequestCode, days));
         }
     }
 }

@@ -55,11 +55,12 @@ public class BootReceiver extends BroadcastReceiver {
             if (medicinesFileTextArray.length > 2) {
 
                 //iterate line by line to create the arraylist of medicines
-                for (int i = 0; i < medicinesFileTextArray.length; i+=4) {
+                for (int i = 0; i < medicinesFileTextArray.length; i+=5) {
                     String tempName = medicinesFileTextArray[i];
                     String tempHour = medicinesFileTextArray[i + 1];
                     String tempMin = medicinesFileTextArray[i + 2];
-                    String daysString = medicinesFileTextArray[i + 3];
+                    int tempAlarmRequestCode = Integer.parseInt(medicinesFileTextArray[i+3]);
+                    String daysString = medicinesFileTextArray[i + 4];
 
                     String[] daysArray = daysString.split(",");
 
@@ -67,7 +68,7 @@ public class BootReceiver extends BroadcastReceiver {
                     for(int day = 0; day < days.length; day++)
                         days[day] = Boolean.parseBoolean(daysArray[day]);
 
-                    medicines.add(new Medicine(tempName, tempHour, tempMin, days));
+                    medicines.add(new Medicine(tempName, tempHour, tempMin, tempAlarmRequestCode, days));
                 }
             }
         }
@@ -84,10 +85,10 @@ public class BootReceiver extends BroadcastReceiver {
             Intent alarmReceiver = new Intent(context, Alarm1Receiver.class);
             alarmReceiver.addFlags(Intent.FLAG_RECEIVER_FOREGROUND);
             alarmReceiver.putExtra("nameToAlert", temp.medicineName);
-            alarmReceiver.putExtra("requestCode", i);
+            alarmReceiver.putExtra("requestCode", temp.alarmRequestCode);
 
             //Lets the other application continue the process as if we are owning it
-            alarmIntent = PendingIntent.getBroadcast(context, i, alarmReceiver, PendingIntent.FLAG_CANCEL_CURRENT);
+            alarmIntent = PendingIntent.getBroadcast(context, temp.alarmRequestCode, alarmReceiver, PendingIntent.FLAG_CANCEL_CURRENT);
 
             // Set the alarm to start at the Medicine time.
             Calendar calendar = Calendar.getInstance();
