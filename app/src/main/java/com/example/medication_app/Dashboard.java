@@ -58,9 +58,6 @@ public class Dashboard extends AppCompatActivity implements Serializable
         testTimesMod5.add("1:40");
         modules.add(new Module(5, "", testTimesMod5));
 
-        ArrayList<String> testTimesMod6 = new ArrayList<String>();
-        testTimesMod6.add("1:40");
-        modules.add(new Module(6, "", testTimesMod6));
 
         moduleBtn1 = (Button)findViewById(R.id.moduleBtn1);
         moduleBtn1.setText(modules.get(0).modBtnText());
@@ -126,18 +123,6 @@ public class Dashboard extends AppCompatActivity implements Serializable
         });
 
 
-        moduleBtn6 = (Button)findViewById(R.id.moduleBtn6);
-        moduleBtn6.setText(modules.get(5).modBtnText());
-        moduleBtn6.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent editModuleActivity = new Intent(Dashboard.this, EditModule.class);
-                editModuleActivity.putExtra("moduleToEdit", modules.get(5)); //send original medicine values as placeholders for edit activity
-
-                startActivityForResult(editModuleActivity, REQUEST_CODE_MODEDIT);
-            }
-        });
-
         connectBtn = (Button)findViewById(R.id.sendDataButton);
         connectBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -175,7 +160,6 @@ public class Dashboard extends AppCompatActivity implements Serializable
         return this.uartConnection.writeBytes(bytes);
     }
 
-    //Paul George is the MVP
 
     @Override
     protected void onActivityResult ( int requestCode, int resultCode, Intent data){

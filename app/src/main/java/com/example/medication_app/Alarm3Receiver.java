@@ -54,9 +54,6 @@ public class Alarm3Receiver extends BroadcastReceiver {
             e.printStackTrace();
         }
 
-        TelephonyManager tm = (TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE);
-        phoneNo = PhoneNumberUtils.formatNumber(phoneNo, tm.getSimCountryIso());
-
         String smsMessage = "SmartHex is notifying you that " + nameToAlert + " wasn't taken yet.";
 
         SmsManager.getDefault().sendTextMessage(phoneNo, null, smsMessage, null, null);

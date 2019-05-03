@@ -26,14 +26,12 @@ import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 
-import static com.example.medication_app.MainActivity.MIME_TEXT_PLAIN;
-
 public class SettingsActivity extends AppCompatActivity {
 
     Button contactsButton;
     Button nfcButton;
     NfcAdapter mNfcAdapter;
-
+    public static final String MIME_TEXT_PLAIN = "text/plain";
     public final int PICK_CONTACT = 4;
 
     @Override
