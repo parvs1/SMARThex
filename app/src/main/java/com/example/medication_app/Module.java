@@ -26,6 +26,6 @@ public class Module implements Serializable
     }
 
     public String toString(){
-        return "" + medicineName + " " + module + " || " + times.toString();
+        return "" + medicineName + "," + module + "," + times.size() + times.toString();
     }
 }

@@ -67,7 +67,8 @@ public class MainActivity extends AppCompatActivity {
     public final int NEW_MEDICINE_REQUEST_CODE = 98; //code for starting editMedicine Activity  for creating a NEW medicine and obtaining its result
     public final String TAG = "MEDICATION_ADHERENCE"; //TAG for log usage
     public final String CHANNEL_ID = "0";
-    int alarmToDeleteRequestCode;
+    public int alarmToDeleteRequestCode;
+    public int positionToDelete;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,6 +152,7 @@ public class MainActivity extends AppCompatActivity {
                 alertDialog.setTitle("Delete this Alarm?");
                 alertDialog.setMessage("Are you sure you want to delete this alarm for " + medicines.get(position).medicineName + "?");
                 alarmToDeleteRequestCode = medicines.get(position).alarmRequestCode;
+                positionToDelete = position;
                 alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Yes",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
@@ -160,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
                                 alarmManager.cancel(alarmIntent);
 
 
-                                medicines.remove(alarmToDeleteRequestCode);
+                                medicines.remove(position);
 
                                 //update list, file, and reset the alarms with the updated list
                                 adapter.notifyDataSetChanged();
