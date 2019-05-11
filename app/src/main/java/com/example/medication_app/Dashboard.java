@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -17,12 +18,12 @@ public class Dashboard extends AppCompatActivity implements Serializable
 	private UARTConnection uartConnection;
 
 	ArrayList<Module> modules;
-	Button moduleBtn1;
-	Button moduleBtn2;
-	Button moduleBtn3;
-	Button moduleBtn4;
-	Button moduleBtn5;
-	Button moduleBtn6;
+	ImageButton moduleBtn1;
+	ImageButton moduleBtn2;
+	ImageButton moduleBtn3;
+	ImageButton moduleBtn4;
+	ImageButton moduleBtn5;
+	ImageButton moduleBtn6;
 	Button connectBtn;
 	int REQUEST_CODE_BLECONNECT = 98;
 	int REQUEST_CODE_MODEDIT = 99;
@@ -32,32 +33,35 @@ public class Dashboard extends AppCompatActivity implements Serializable
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_dashboard);
+		setContentView(R.layout.activity_dashboard_hex);
 
 		modules = new ArrayList<>();
 
 		for (int i = 0; i < 5; i++)
 			modules.add(new Module());
 
-		moduleBtn1 = (Button) findViewById(R.id.moduleBtn1);
+		moduleBtn1 = (ImageButton) findViewById(R.id.moduleBtn1);
 		if (!modules.get(0).medicineName.equals("-1"))
-			moduleBtn1.setText(modules.get(0).modBtnText());
+		{
+			moduleBtn1.setImageDrawable(getDrawable(R.drawable.hexagon));
+			moduleBtn1.setColorFilter(Color.RED);
+		}
 
-		moduleBtn2 = (Button) findViewById(R.id.moduleBtn2);
+/*		moduleBtn2 = (ImageButton) findViewById(R.id.moduleBtn2);
 		if (!modules.get(1).medicineName.equals("-1"))
 			moduleBtn2.setText(modules.get(1).modBtnText());
 
-		moduleBtn3 = (Button) findViewById(R.id.moduleBtn3);
+		moduleBtn3 = (ImageButton) findViewById(R.id.moduleBtn3);
 		if (!modules.get(2).medicineName.equals("-1"))
 			moduleBtn3.setText(modules.get(2).modBtnText());
 
-		moduleBtn4 = (Button) findViewById(R.id.moduleBtn4);
+		moduleBtn4 = (ImageButton) findViewById(R.id.moduleBtn4);
 		if (!modules.get(3).medicineName.equals("-1"))
 			moduleBtn4.setText(modules.get(3).modBtnText());
 
-		moduleBtn5 = (Button) findViewById(R.id.moduleBtn5);
+		moduleBtn5 = (ImageButton) findViewById(R.id.moduleBtn5);
 		if (!modules.get(4).medicineName.equals("-1"))
-			moduleBtn5.setText(modules.get(4).modBtnText());
+			moduleBtn5.setText(modules.get(4).modBtnText());*/
 
 		moduleBtn1.setOnClickListener(new View.OnClickListener()
 		{
@@ -257,7 +261,7 @@ public class Dashboard extends AppCompatActivity implements Serializable
 			Module newModule = (Module) data.getSerializableExtra("editedModule");
 			modules.set(newModule.module - 1, newModule);
 
-			if (newModule.module == 1)
+/*			if (newModule.module == 1)
 				moduleBtn1.setText(modules.get(0).modBtnText());
 			if (newModule.module == 2)
 				moduleBtn2.setText(modules.get(1).modBtnText());
@@ -268,7 +272,7 @@ public class Dashboard extends AppCompatActivity implements Serializable
 			if (newModule.module == 5)
 				moduleBtn5.setText(modules.get(4).modBtnText());
 			if (newModule.module == 6)
-				moduleBtn6.setText(modules.get(5).modBtnText());
+				moduleBtn6.setText(modules.get(5).modBtnText());*/
 		}
 	}
 }
