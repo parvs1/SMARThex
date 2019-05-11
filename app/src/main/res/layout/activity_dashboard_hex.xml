@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0288D1"
+    android:background="#0097A7"
     tools:context=".Dashboard">
 
     <ImageButton
@@ -107,7 +107,7 @@
         android:layout_marginBottom="140dp"
         android:background="@drawable/white_bg"
         android:text="Connect"
-        android:textColor="#03A9F4"
+        android:textColor="#00BCD4"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -144,10 +144,80 @@
         android:layout_width="36dp"
         android:layout_height="36dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:background="@android:color/transparent"
         app:layout_constraintBottom_toBottomOf="@+id/textViewDashboard"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textViewDashboard"
         app:srcCompat="@drawable/baseline_settings_white_36" />
+
+    <TextView
+        android:id="@+id/textViewModule1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/moduleBtn1"
+        app:layout_constraintEnd_toEndOf="@+id/moduleBtn1"
+        app:layout_constraintStart_toStartOf="@+id/moduleBtn1"
+        app:layout_constraintTop_toTopOf="@+id/moduleBtn1" />
+
+    <TextView
+        android:id="@+id/textViewModule2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/moduleBtn2"
+        app:layout_constraintEnd_toEndOf="@+id/moduleBtn2"
+        app:layout_constraintStart_toStartOf="@+id/moduleBtn2"
+        app:layout_constraintTop_toTopOf="@+id/moduleBtn2" />
+
+    <TextView
+        android:id="@+id/textViewModule3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/moduleBtn3"
+        app:layout_constraintEnd_toEndOf="@+id/moduleBtn3"
+        app:layout_constraintStart_toStartOf="@+id/moduleBtn3"
+        app:layout_constraintTop_toTopOf="@+id/moduleBtn3" />
+
+    <TextView
+        android:id="@+id/textViewModule4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/moduleBtn4"
+        app:layout_constraintEnd_toEndOf="@+id/moduleBtn4"
+        app:layout_constraintStart_toStartOf="@+id/moduleBtn4"
+        app:layout_constraintTop_toTopOf="@+id/moduleBtn4" />
+
+    <TextView
+        android:id="@+id/textViewModule5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/moduleBtn5"
+        app:layout_constraintEnd_toEndOf="@+id/moduleBtn5"
+        app:layout_constraintStart_toStartOf="@+id/moduleBtn5"
+        app:layout_constraintTop_toTopOf="@+id/moduleBtn5" />
 
 </android.support.constraint.ConstraintLayout>

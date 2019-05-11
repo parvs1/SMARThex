@@ -15,6 +15,13 @@ public class Module implements Serializable
         times = new ArrayList<String>();
     }
 
+    public Module(int module)
+    {
+        this.module = module;
+        medicineName = "-1";
+        times = new ArrayList<String>();
+    }
+
     public Module(int m, String mName, ArrayList<String> ts) {
         module = m;
         medicineName = mName;
@@ -22,7 +29,7 @@ public class Module implements Serializable
     }
 
     public String modBtnText() {
-        return " Module " + module + " - " + medicineName + " ";
+        return medicineName;
     }
 
     public String toString(){

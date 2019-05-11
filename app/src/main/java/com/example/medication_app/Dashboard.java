@@ -4,11 +4,13 @@ import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -24,6 +26,11 @@ public class Dashboard extends AppCompatActivity implements Serializable
 	ImageButton moduleBtn4;
 	ImageButton moduleBtn5;
 	ImageButton moduleBtn6;
+	TextView textViewModule1;
+	TextView textViewModule2;
+	TextView textViewModule3;
+	TextView textViewModule4;
+	TextView textViewModule5;
 	Button connectBtn;
 	int REQUEST_CODE_BLECONNECT = 98;
 	int REQUEST_CODE_MODEDIT = 99;
@@ -35,10 +42,16 @@ public class Dashboard extends AppCompatActivity implements Serializable
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_dashboard_hex);
 
+		textViewModule1 = findViewById(R.id.textViewModule1);
+		textViewModule2 = findViewById(R.id.textViewModule2);
+		textViewModule3 = findViewById(R.id.textViewModule3);
+		textViewModule4 = findViewById(R.id.textViewModule4);
+		textViewModule5 = findViewById(R.id.textViewModule5);
+
 		modules = new ArrayList<>();
 
 		for (int i = 0; i < 5; i++)
-			modules.add(new Module());
+			modules.add(new Module(i + 1));
 
 		moduleBtn1 = (ImageButton) findViewById(R.id.moduleBtn1);
 		if (!modules.get(0).medicineName.equals("-1"))
@@ -47,21 +60,33 @@ public class Dashboard extends AppCompatActivity implements Serializable
 			moduleBtn1.setColorFilter(Color.RED);
 		}
 
-/*		moduleBtn2 = (ImageButton) findViewById(R.id.moduleBtn2);
+		moduleBtn2 = (ImageButton) findViewById(R.id.moduleBtn2);
 		if (!modules.get(1).medicineName.equals("-1"))
-			moduleBtn2.setText(modules.get(1).modBtnText());
+		{
+			moduleBtn2.setImageDrawable(getDrawable(R.drawable.hexagon));
+			moduleBtn2.setColorFilter(Color.CYAN);
+		}
 
 		moduleBtn3 = (ImageButton) findViewById(R.id.moduleBtn3);
 		if (!modules.get(2).medicineName.equals("-1"))
-			moduleBtn3.setText(modules.get(2).modBtnText());
+		{
+			moduleBtn3.setImageDrawable(getDrawable(R.drawable.hexagon));
+			moduleBtn3.setColorFilter(Color.GREEN);
+		}
 
 		moduleBtn4 = (ImageButton) findViewById(R.id.moduleBtn4);
 		if (!modules.get(3).medicineName.equals("-1"))
-			moduleBtn4.setText(modules.get(3).modBtnText());
+		{
+			moduleBtn4.setImageDrawable(getDrawable(R.drawable.hexagon));
+			moduleBtn4.setColorFilter(Color.YELLOW);
+		}
 
 		moduleBtn5 = (ImageButton) findViewById(R.id.moduleBtn5);
 		if (!modules.get(4).medicineName.equals("-1"))
-			moduleBtn5.setText(modules.get(4).modBtnText());*/
+		{
+			moduleBtn5.setImageDrawable(getDrawable(R.drawable.hexagon));
+			moduleBtn5.setColorFilter(Color.BLUE);
+		}
 
 		moduleBtn1.setOnClickListener(new View.OnClickListener()
 		{
@@ -179,20 +204,32 @@ public class Dashboard extends AppCompatActivity implements Serializable
 
 			BluetoothDevice bluetoothDevice = (BluetoothDevice) data.getParcelableExtra("bluetoothDevice");
 			startConnection(bluetoothDevice);
+			Snackbar.make(getWindow().getDecorView().getRootView(), "Connected!", Snackbar.LENGTH_LONG)
+					.setAction("CLOSE", new View.OnClickListener()
+					{
+						@Override
+						public void onClick(View view)
+						{
+
+						}
+					})
+					.setActionTextColor(getResources().getColor(android.R.color.holo_red_light))
+					.show();
 			Log.i(TAG, bluetoothDevice.getAddress());
 
 			if (uartConnection.isConnected())
 			{
 				connectBtn.setText("Send Data");
-				connectBtn.setBackgroundColor(Color.GREEN);
 
 				connectBtn.setOnClickListener(new View.OnClickListener()
 				{
 					@Override
 					public void onClick(View v)
 					{
-						Log.d("WUMBO", "shrimpo");
 						byte[] message;
+						final byte[] result = new byte[6];
+						ArrayList<byte[]> resultNames = new ArrayList<>();
+						ArrayList<byte[]> resultLists = new ArrayList<>();
 
 						for (int i = 0; i < modules.size(); i++)
 						{
@@ -210,7 +247,6 @@ public class Dashboard extends AppCompatActivity implements Serializable
 
 								//send module number integer as a string
 								String modNum = Integer.toString(module.module);
-								Log.e("Shrumbo", Integer.toString(modules.size()));
 								message = modNum.getBytes();
 								sendMessage(message);
 								//wait for BLE to receive
@@ -256,23 +292,41 @@ public class Dashboard extends AppCompatActivity implements Serializable
 
 		if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_MODEDIT)
 		{
-
 			//add medicine received from activity (if an edit, we already removed the original one)
 			Module newModule = (Module) data.getSerializableExtra("editedModule");
 			modules.set(newModule.module - 1, newModule);
+			Log.e("module", Integer.toString(newModule.module));
 
-/*			if (newModule.module == 1)
-				moduleBtn1.setText(modules.get(0).modBtnText());
+			if (newModule.module == 1)
+			{
+				moduleBtn1.setColorFilter(Color.RED);
+				textViewModule1.setText(modules.get(0).modBtnText());
+				textViewModule1.setVisibility(View.VISIBLE);
+			}
 			if (newModule.module == 2)
-				moduleBtn2.setText(modules.get(1).modBtnText());
+			{
+				textViewModule2.setText(modules.get(1).modBtnText());
+				textViewModule2.setVisibility(View.VISIBLE);
+				moduleBtn2.setColorFilter(Color.CYAN);
+			}
 			if (newModule.module == 3)
-				moduleBtn3.setText(modules.get(2).modBtnText());
+			{
+				textViewModule3.setText(modules.get(2).modBtnText());
+				textViewModule3.setVisibility(View.VISIBLE);
+				moduleBtn3.setColorFilter(Color.GREEN);
+			}
 			if (newModule.module == 4)
-				moduleBtn4.setText(modules.get(3).modBtnText());
+			{
+				textViewModule4.setText(modules.get(3).modBtnText());
+				textViewModule4.setVisibility(View.VISIBLE);
+				moduleBtn4.setColorFilter(Color.YELLOW);
+			}
 			if (newModule.module == 5)
-				moduleBtn5.setText(modules.get(4).modBtnText());
-			if (newModule.module == 6)
-				moduleBtn6.setText(modules.get(5).modBtnText());*/
+			{
+				textViewModule5.setText(modules.get(4).modBtnText());
+				textViewModule5.setVisibility(View.VISIBLE);
+				moduleBtn5.setColorFilter(Color.BLUE);
+			}
 		}
 	}
 }

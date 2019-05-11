@@ -14,7 +14,7 @@
         android:layout_marginTop="8dp"
         android:gravity="center_vertical"
         android:text="BluetoothDevice"
-        android:textColor="#0288D1 "
+        android:textColor="#0097A7 "
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/check"

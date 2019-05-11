@@ -71,7 +71,6 @@ public class BluetoothConnectActivity extends AppCompatActivity
 
 				ImageView check = findViewById(R.id.check);
 				check.setVisibility(View.VISIBLE);
-				Toast.makeText(BluetoothConnectActivity.this, "Connected to " + bluetoothDevice.getName(), Toast.LENGTH_SHORT).show();
 				nextButton.setVisibility(View.VISIBLE);
 			}
 		});
