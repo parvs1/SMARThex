@@ -196,7 +196,7 @@ public class Dashboard extends AppCompatActivity implements Serializable
 							{
 								//send medicine name
 								Module module = modules.get(i);
-/*
+
 								message = module.medicineName.getBytes();
 								sendMessage(message);
 								//wait for BLE to receive
@@ -220,16 +220,6 @@ public class Dashboard extends AppCompatActivity implements Serializable
 								//wait for BLE to receive
 
 								sendMessage(comma.getBytes());
-*/
-
-								//send each time in a for loop
-								for (int t = 0; t < module.times.size(); t++)
-								{
-									String time = module.times.get(t);
-									message = time.getBytes();
-									sendMessage(message);
-									//wait for BLE to receive
-								}
 							}
 						}
 					}

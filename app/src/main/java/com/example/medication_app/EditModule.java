@@ -72,7 +72,7 @@ public class EditModule extends AppCompatActivity
                 times.clear();
                 for (int i = 0; i < medicines.size(); i++) {
                     if (medicines.get(i).medicineName.equals(medicineName))
-                        times.add(medicines.get(i).hour + ":" + medicines.get(i).minute + ", " + Arrays.toString(medicines.get(i).days));
+                        times.add(medicines.get(i).hour + ":" + medicines.get(i).minute + ", " + Arrays.toString(daysArrayShortener((medicines.get(i).days))));
                 }
 
                 medName = medicineName;
@@ -153,5 +153,18 @@ public class EditModule extends AppCompatActivity
 
             medicines.add(new Medicine(tempName, tempHour, tempMin, tempAlarmRequestCode, days));
         }
+    }
+
+    public String[] daysArrayShortener (boolean[] daysArray)
+    {
+        String[] shortenedArray = new String[daysArray.length];
+        for(int i = 0; i < shortenedArray.length; i++){
+            if(daysArray[i])
+                shortenedArray[i] = "t";
+            else
+                shortenedArray[i] = "f";
+        }
+
+        return shortenedArray;
     }
 }
