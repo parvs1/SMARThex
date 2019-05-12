@@ -36,6 +36,8 @@ public class Dashboard extends AppCompatActivity implements Serializable
 	Button connectBtn;
 	int REQUEST_CODE_BLECONNECT = 98;
 	int REQUEST_CODE_MODEDIT = 99;
+	int hour,min,second;
+	String time;
 	public final String TAG = "MEDICATION_ADHERENCE";//TAG for log usage
 
 	@Override
@@ -255,7 +257,10 @@ public class Dashboard extends AppCompatActivity implements Serializable
 
 						Calendar calendar = Calendar.getInstance();
 						calendar.setTimeInMillis(System.currentTimeMillis());
-						String hour = calendar.
+						hour = Calendar.HOUR_OF_DAY;
+						min = Calendar.MINUTE;
+						second = Calendar.SECOND;
+						time = "" + (hour*3600) + (min*60) + second;
 
 
 
