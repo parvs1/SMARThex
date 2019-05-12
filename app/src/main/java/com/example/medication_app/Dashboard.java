@@ -4,6 +4,7 @@ import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -233,17 +234,24 @@ public class Dashboard extends AppCompatActivity implements Serializable
 
 						for (int i = 0; i < modules.size(); i++)
 						{
+							String time = "" + SystemClock.currentThreadTimeMillis();
+							String colon = ":";
+							String semicolon = ";";
+
+							message = time.getBytes();
+							sendMessage(message);
+
 							if (!modules.get(i).medicineName.equals("-1"))
 							{
-								//send medicine name
 								Module module = modules.get(i);
 
+								//send medicine name
 								message = module.medicineName.getBytes();
 								sendMessage(message);
 								//wait for BLE to receive
 
-								String comma = ",";
-								sendMessage(comma.getBytes());
+
+								sendMessage(colon.getBytes());
 
 								//send module number integer as a string
 								String modNum = Integer.toString(module.module);
@@ -251,7 +259,7 @@ public class Dashboard extends AppCompatActivity implements Serializable
 								sendMessage(message);
 								//wait for BLE to receive
 
-								sendMessage(comma.getBytes());
+								sendMessage(colon.getBytes());
 
 								//send number of times for BLE to store for this module as a String
 								String numTimes = Integer.toString(module.times.size());
@@ -259,7 +267,7 @@ public class Dashboard extends AppCompatActivity implements Serializable
 								sendMessage(message);
 								//wait for BLE to receive
 
-								sendMessage(comma.getBytes());
+								sendMessage(semicolon.getBytes());
 							}
 						}
 					}
