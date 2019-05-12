@@ -307,6 +307,28 @@ public class Dashboard extends AppCompatActivity implements Serializable
 					}
 				});
 			}
+
+            /*
+            final ArrayList<byte[]> bbrr = new ArrayList<>();
+            final byte[] result = new byte [6];
+            final ArrayList<byte[]> resultnames = new ArrayList<>();
+            final ArrayList<byte[]> resultlists = new ArrayList<>();
+            connectBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    for(int i = 0; i < modules.size(); i++) {
+                        result[i] = (byte) modules.get(i).module;
+                        resultnames.add(modules.get(i).times.toString().getBytes());
+                        resultlists.add(modules.get(i).medicineName.getBytes());
+                        Log.e(TAG, resultnames.toString());
+                        sendMessage(resultnames);
+                    }
+                    bbrr.set(0,result);
+                    bbrr.set(1,resultnames);
+                    bbrr.set(2,resultlists);
+                }
+            });
+            */
 		}
 
 
@@ -319,17 +341,13 @@ public class Dashboard extends AppCompatActivity implements Serializable
 
 			int color = data.getIntExtra("color", 0);
 
-			switch(color){
-				case 1:
 
-			}
 
 			if (newModule.module == 1)
 			{
 				moduleBtn1.setColorFilter(Color.RED);
 				textViewModule1.setText(modules.get(0).modBtnText());
 				textViewModule1.setVisibility(View.VISIBLE);
-
 			}
 			if (newModule.module == 2)
 			{
