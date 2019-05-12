@@ -1,11 +1,13 @@
 package com.example.medication_app;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -19,10 +21,10 @@ public class Profile extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        profilers.add("Manage your Appointments");
-        profilers.add("Check your Alarms");
-        profilers.add("View Your Medicines");
-        profilers.add("Contact your Doctor");
+        profilers.add(0,"Check your Alarms");
+        profilers.add(1,"View Your Medicines");
+        profilers.add(2,"Contact your Doctor");
+        profilers.add(3,"Renew your Prescription");
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
@@ -40,6 +42,32 @@ public class Profile extends AppCompatActivity {
         medProfile = (ListView) findViewById(R.id.medProfile);
         tings = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1,profilers);
         medProfile.setAdapter(tings);
+
+        medProfile.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if(position == 0)
+                {
+                    Intent i = new Intent(Profile.this, MainActivity.class);
+                    startActivity(i);
+                }
+                if(position == 1)
+                {
+                    Intent j = new Intent(Profile.this, MainActivity.class);
+                    startActivity(j);
+                }
+                if(position == 2)
+                {
+                    Intent k = new Intent(Profile.this, MainActivity.class);
+                    startActivity(k);
+                }
+                if(position == 3)
+                {
+                    Intent l = new Intent(Profile.this, MainActivity.class);
+                    startActivity(l);
+                }
+            }
+        });
 
 
     }
