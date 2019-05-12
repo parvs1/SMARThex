@@ -9,4 +9,5 @@
 
     <string name="title_activity_fullscreen">AlarmActivity</string>
     <string name="dummy_content">Take Medicine Name now</string>
+    <string name="title_activity_profile">Profile</string>
 </resources>

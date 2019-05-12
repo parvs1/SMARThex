@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.provider.ContactsContract;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -22,6 +23,8 @@ public class Dashboard extends AppCompatActivity implements Serializable
 
 	ArrayList<Module> modules;
 	ImageButton moduleBtn1;
+	ImageButton settings;
+	ImageButton alarms;
 	ImageButton moduleBtn2;
 	ImageButton moduleBtn3;
 	ImageButton moduleBtn4;
@@ -33,6 +36,8 @@ public class Dashboard extends AppCompatActivity implements Serializable
 	TextView textViewModule4;
 	TextView textViewModule5;
 	Button connectBtn;
+	Button docProfile;
+	Button alarm;
 	int REQUEST_CODE_BLECONNECT = 98;
 	int REQUEST_CODE_MODEDIT = 99;
 	public final String TAG = "MEDICATION_ADHERENCE";//TAG for log usage
@@ -42,6 +47,32 @@ public class Dashboard extends AppCompatActivity implements Serializable
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_dashboard_hex);
+
+		settings = (ImageButton) findViewById(R.id.settings);
+			settings.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					Intent i = new Intent(Dashboard.this, SettingsActivity.class);
+					startActivity(i);
+				}
+			});
+		docProfile = (ImageButton) findViewById(R.id.profile);
+		docProfile.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent j = new Intent(Dashboard.this, Profile.class);
+				startActivity(j);
+			}
+		});
+		alarm = (ImageButton) findViewById(R.id.alarm);
+		alarm.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent k = new Intent(Dashboard.this,MainActivity.class);
+				startActivity((k));
+			}
+		});
+
 
 		textViewModule1 = findViewById(R.id.textViewModule1);
 		textViewModule2 = findViewById(R.id.textViewModule2);
