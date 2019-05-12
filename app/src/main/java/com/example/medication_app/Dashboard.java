@@ -32,6 +32,7 @@ public class Dashboard extends AppCompatActivity implements Serializable
 	TextView textViewModule4;
 	TextView textViewModule5;
 	Button connectBtn;
+	Button alarm;
 	int REQUEST_CODE_BLECONNECT = 98;
 	int REQUEST_CODE_MODEDIT = 99;
 	int hour,min,second;
@@ -54,6 +55,14 @@ public class Dashboard extends AppCompatActivity implements Serializable
 
             }
         });
+        alarm = findViewById(R.id.alarm);
+        alarm.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent j = new Intent(Dashboard.this, MainActivity.class);
+				startActivity(j);
+			}
+		});
 
 		textViewModule1 = findViewById(R.id.textViewModule1);
 		textViewModule2 = findViewById(R.id.textViewModule2);
