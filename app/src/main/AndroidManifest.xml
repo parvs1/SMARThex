@@ -27,7 +27,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".PharmaPrescription"></activity>
+        <activity android:name=".DoctorContact"></activity>
+        <activity android:name=".PharmaPrescription" />
         <activity
             android:name=".Profile"
             android:label="@string/title_activity_profile"

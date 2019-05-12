@@ -4,7 +4,6 @@ import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -14,9 +13,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.io.Serializable;
-import java.math.RoundingMode;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 public class Dashboard extends AppCompatActivity implements Serializable
 {
@@ -165,7 +162,7 @@ public class Dashboard extends AppCompatActivity implements Serializable
 		});
 
 
-		connectBtn = (Button) findViewById(R.id.sendDataButton);
+		connectBtn = (Button) findViewById(R.id.viewmed);
 		connectBtn.setOnClickListener(new View.OnClickListener()
 		{
 			@Override

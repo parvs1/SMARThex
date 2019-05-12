@@ -9,66 +9,54 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 
 public class Profile extends AppCompatActivity {
-    ListView medProfile;
-    ArrayList<String> profilers;
-    ArrayAdapter<String> tings;
+    Button renew;
+    Button alarm;
+    Button contact;
+    Button view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        profilers.add(0,"Check your Alarms");
-        profilers.add(1,"View Your Medicines");
-        profilers.add(2,"Contact your Doctor");
-        profilers.add(3,"Renew your Prescription");
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        renew = findViewById(R.id.renew);
+        renew.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public void onClick(View v) {
+                Intent i = new Intent(Profile.this, PharmaPrescription.class);
+                startActivity(i);
             }
         });
-        medProfile = (ListView) findViewById(R.id.medProfile);
-        tings = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1,profilers);
-        medProfile.setAdapter(tings);
-
-        medProfile.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        alarm = findViewById(R.id.alarm);
+        alarm.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(position == 0)
-                {
-                    Intent i = new Intent(Profile.this, MainActivity.class);
-                    startActivity(i);
-                }
-                if(position == 1)
-                {
-                    Intent j = new Intent(Profile.this, Dashboard.class);
-                    startActivity(j);
-                }
-                if(position == 2)
-                {
-                    Intent k = new Intent(Profile.this, MainActivity.class);
-                    startActivity(k);
-                }
-                if(position == 3)
-                {
-                    Intent l = new Intent(Profile.this, MainActivity.class);
-                    startActivity(l);
-                }
+            public void onClick(View v) {
+                Intent j = new Intent(Profile.this,MainActivity.class);
+                startActivity(j);
             }
         });
-
+        contact = findViewById(R.id.contact);
+        contact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent k = new Intent(Profile.this, DoctorContact.class);
+                startActivity(k);
+            }
+        });
+        view = findViewById(R.id.viewmed);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent l = new Intent(Profile.this, Dashboard.class);
+                startActivity(l);
+            }
+        });
 
     }
 

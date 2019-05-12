@@ -26,5 +26,13 @@
         android:textColorHint="@android:color/white"
         android:backgroundTint="@android:color/white"/>
 
+    <Button
+        android:id="@+id/button"
+        android:layout_width="158dp"
+        android:layout_height="55dp"
+        android:text="Button"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="117dp" />
+
 
 </android.support.constraint.ConstraintLayout>

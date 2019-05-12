@@ -82,7 +82,7 @@
         app:layout_constraintTop_toBottomOf="@+id/moduleBtn4" />
 
     <Button
-        android:id="@+id/sendDataButton"
+        android:id="@+id/viewmed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
