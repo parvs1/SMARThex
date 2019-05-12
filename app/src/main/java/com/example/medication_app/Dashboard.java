@@ -252,14 +252,16 @@ public class Dashboard extends AppCompatActivity implements Serializable
 						ArrayList<byte[]> resultNames = new ArrayList<>();
 						ArrayList<byte[]> resultLists = new ArrayList<>();
 
+						String time = "" + SystemClock.currentThreadTimeMillis();
+
+						message = time.getBytes();
+						sendMessage(message);
+
 						for (int i = 0; i < modules.size(); i++)
 						{
-							String time = "" + SystemClock.currentThreadTimeMillis();
+
 							String colon = ":";
 							String semicolon = ";";
-
-							message = time.getBytes();
-							sendMessage(message);
 
 							if (!modules.get(i).medicineName.equals("-1"))
 							{
