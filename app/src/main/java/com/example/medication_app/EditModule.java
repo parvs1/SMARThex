@@ -16,7 +16,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class EditModule extends AppCompatActivity
+public class EditModule extends AppCompatActivity implements AdapterView.OnItemSelectedListener
 {
 
     ArrayList<Medicine> medicines;
@@ -24,6 +24,8 @@ public class EditModule extends AppCompatActivity
     TextView timesList;
     public String medName;
     public final String TAG = "MEDICATION_ADHERENCE"; //TAG for log usage
+    Spinner colorPicker;
+    int color;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +74,7 @@ public class EditModule extends AppCompatActivity
                 times.clear();
                 for (int i = 0; i < medicines.size(); i++) {
                     if (medicines.get(i).medicineName.equals(medicineName))
-                        times.add(medicines.get(i).hour + ":" + medicines.get(i).minute + ", " + Arrays.toString(daysArrayShortener((medicines.get(i).days))));
+                        times.add(medicines.get(i).hour + ":" + medicines.get(i).minute + ", " + daysArrayShortener((medicines.get(i).days)));
                 }
 
                 medName = medicineName;
@@ -101,6 +103,18 @@ public class EditModule extends AppCompatActivity
 
             }
         });
+
+        colorPicker = (Spinner) findViewById(R.id.colorPicker);
+
+        //set the items in the spinner to be choices of n days
+        ArrayAdapter<CharSequence> colorAdapter = ArrayAdapter.createFromResource(this, R.array.color_picker, android.R.layout.simple_spinner_item);
+        colorAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        colorPicker.setAdapter(colorAdapter);
+
+        colorPicker.setSelection(0);
+        //create the onItemSelectedListener
+        colorPicker.setOnItemSelectedListener(this);
     }
 
     public void createTimesList() {
@@ -155,16 +169,24 @@ public class EditModule extends AppCompatActivity
         }
     }
 
-    public String[] daysArrayShortener (boolean[] daysArray)
+    public String daysArrayShortener (boolean[] daysArray)
     {
-        String[] shortenedArray = new String[daysArray.length];
-        for(int i = 0; i < shortenedArray.length; i++){
+        String weekSchedule = "";
+        for(int i = 0; i < daysArray.length; i++){
             if(daysArray[i])
-                shortenedArray[i] = "t";
+                weekSchedule += "t";
             else
-                shortenedArray[i] = "f";
+                weekSchedule += "f";
         }
 
-        return shortenedArray;
+        return weekSchedule;
+    }
+
+    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+        color = pos;    //since pos 0 is equivalent to 1 day, add 1
+    }
+
+    public void onNothingSelected(AdapterView<?> parent) {
+        // Another interface callback
     }
 }
