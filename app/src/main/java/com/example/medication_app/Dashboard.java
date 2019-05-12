@@ -43,6 +43,26 @@ public class Dashboard extends AppCompatActivity implements Serializable
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_dashboard_hex);
 
+        setContentView(R.layout.activity_dashboard_hex);
+        ImageButton setting = (ImageButton) findViewById(R.id.settings);
+        setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Dashboard.this, SettingsActivity.class);
+                startActivity(i);
+
+            }
+        });
+        ImageButton alarm = (ImageButton)findViewById(R.id.alarms);
+        alarm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent j = new Intent(Dashboard.this, MainActivity.class);
+                startActivity(j);
+
+            }
+        });
+
 		textViewModule1 = findViewById(R.id.textViewModule1);
 		textViewModule2 = findViewById(R.id.textViewModule2);
 		textViewModule3 = findViewById(R.id.textViewModule3);
@@ -266,6 +286,11 @@ public class Dashboard extends AppCompatActivity implements Serializable
 								message = numTimes.getBytes();
 								sendMessage(message);
 								//wait for BLE to receive
+
+								for(int j = 0; j < module.times.size(); j++){
+									message = module.times.get(j).getBytes();
+									sendMessage(message);
+								}
 
 								sendMessage(semicolon.getBytes());
 							}
