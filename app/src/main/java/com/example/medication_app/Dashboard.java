@@ -341,7 +341,7 @@ public class Dashboard extends AppCompatActivity implements Serializable
 
 			int color = data.getIntExtra("color", 0);
 
-
+			switch
 
 			if (newModule.module == 1)
 			{
