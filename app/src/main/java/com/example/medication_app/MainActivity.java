@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         //create and set array adapter for medicines and medSchedule listview
-        adapter = new ArrayAdapter<Medicine>(this, android.R.layout.simple_list_item_1, medicines);
+        adapter = new ArrayAdapter<Medicine>(this, R.layout.list_item, medicines);
         medSchedule = (ListView) findViewById(R.id.medProfile);
         medSchedule.setAdapter(adapter);
 

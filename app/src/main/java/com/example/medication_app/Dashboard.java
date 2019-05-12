@@ -264,12 +264,8 @@ public class Dashboard extends AppCompatActivity implements Serializable
 
 						time = "" + Math.round((System.currentTimeMillis()/1000));
 
-
-
 						message = time.getBytes();
 						sendMessage(message);
-
-
 
 						for (int i = 0; i < modules.size(); i++)
 						{
