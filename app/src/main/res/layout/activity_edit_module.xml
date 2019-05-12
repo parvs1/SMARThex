@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".EditModule">
+    tools:context=".EditModule"
+    android:background="#0097A7">
 
     <TextView
         android:id="@+id/medicinePromptText"
@@ -14,6 +15,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:text="Choose Medicine in this Module"
+        android:textColor="@android:color/white"
         android:textAlignment="center"
         android:textSize="22sp"
         android:textStyle="bold"
@@ -24,6 +26,7 @@
     <Spinner
         android:id="@+id/medicineSelector"
         android:layout_width="255dp"
+        android:background="@android:color/white"
         android:layout_height="36dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="168dp"
@@ -39,6 +42,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="376dp"
+        android:textColor="@android:color/white"
         android:text="Dispenses at the following times: "
         android:textAlignment="textStart"
         android:textSize="18sp"
@@ -49,13 +53,14 @@
 
     <TextView
         android:id="@+id/timesList"
-        android:layout_width="156dp"
-        android:layout_height="218dp"
+        android:layout_width="161dp"
+        android:layout_height="129dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:text="Insert times here"
+        android:textColor="@android:color/white"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -76,5 +81,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.006"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Spinner
+        android:id="@+id/colorPicker"
+        android:layout_width="229dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="28dp"
+        android:background="@android:color/white"
+        app:layout_constraintBottom_toTopOf="@+id/finishButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/timesList"
+        app:layout_constraintVertical_bias="0.783" />
 
 </android.support.constraint.ConstraintLayout>
