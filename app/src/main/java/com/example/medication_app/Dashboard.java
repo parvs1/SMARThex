@@ -26,6 +26,7 @@ public class Dashboard extends AppCompatActivity implements Serializable
 	ImageButton moduleBtn4;
 	ImageButton moduleBtn5;
 	ImageButton moduleBtn6;
+	ImageButton profile;
 	TextView textViewModule1;
 	TextView textViewModule2;
 	TextView textViewModule3;
@@ -54,6 +55,17 @@ public class Dashboard extends AppCompatActivity implements Serializable
 
             }
         });
+
+        profile = (ImageButton) findViewById(R.id.profile);
+        profile.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view)
+			{
+				Intent profileActivity = new Intent(Dashboard.this,Profile.class);
+				startActivity(profileActivity);
+			}
+		});
+
         alarm = (Button) findViewById(R.id.editAlarms);
         alarm.setOnClickListener(new View.OnClickListener() {
 			@Override

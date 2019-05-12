@@ -145,7 +145,7 @@ public class BluetoothConnectActivity extends AppCompatActivity
 				public void onScanResult(int callbackType, ScanResult result) {
 					BluetoothDevice device = result.getDevice();
 
-					if (!devices.contains(device) && device.getName() != null && device.getType() == BluetoothDevice.DEVICE_TYPE_LE) {
+					if (!devices.contains(device) && device.getName() != null && device.getType() == BluetoothDevice.DEVICE_TYPE_LE && device.getName().contains("SMARThex")) {
 						devices.add(device);
 						deviceAdapter.notifyDataSetChanged();
 					}
