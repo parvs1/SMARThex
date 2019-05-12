@@ -57,7 +57,7 @@ public class Dashboard extends AppCompatActivity implements Serializable
 
             }
         });
-        ImageButton alarm = (ImageButton)findViewById(R.id.alarms);
+        ImageButton alarm = (ImageButton)findViewById(R.id.alarm);
         alarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -347,38 +347,55 @@ public class Dashboard extends AppCompatActivity implements Serializable
 			Log.e("module", Integer.toString(newModule.module));
 
 			int color = data.getIntExtra("color", 0);
+			int imageResource = R.drawable.hexagon_gray;
 
-			switch
+			switch(color){
+				case 0:
+					imageResource = R.drawable.hexagon_red;
+					break;
+				case 1:
+					imageResource = R.drawable.hexagon_orange;
+					break;
+				case 2:
+					imageResource = R.drawable.hexagon_green;
+					break;
+				case 3:
+					imageResource = R.drawable.hexagon_blue;
+					break;
+				case 4:
+					imageResource = R.drawable.hexagon_purple;
+					break;
+			}
 
 			if (newModule.module == 1)
 			{
-				moduleBtn1.setColorFilter(Color.RED);
+				moduleBtn1.setImageResource(imageResource);
 				textViewModule1.setText(modules.get(0).modBtnText());
 				textViewModule1.setVisibility(View.VISIBLE);
 			}
 			if (newModule.module == 2)
 			{
+				moduleBtn2.setImageResource(imageResource);
 				textViewModule2.setText(modules.get(1).modBtnText());
 				textViewModule2.setVisibility(View.VISIBLE);
-				moduleBtn2.setColorFilter(Color.CYAN);
 			}
 			if (newModule.module == 3)
 			{
+				moduleBtn3.setImageResource(imageResource);
 				textViewModule3.setText(modules.get(2).modBtnText());
 				textViewModule3.setVisibility(View.VISIBLE);
-				moduleBtn3.setColorFilter(Color.GREEN);
 			}
 			if (newModule.module == 4)
 			{
+				moduleBtn4.setImageResource(imageResource);
 				textViewModule4.setText(modules.get(3).modBtnText());
 				textViewModule4.setVisibility(View.VISIBLE);
-				moduleBtn4.setColorFilter(Color.YELLOW);
 			}
 			if (newModule.module == 5)
 			{
+				moduleBtn5.setImageResource(imageResource);
 				textViewModule5.setText(modules.get(4).modBtnText());
 				textViewModule5.setVisibility(View.VISIBLE);
-				moduleBtn5.setColorFilter(Color.BLUE);
 			}
 		}
 	}
