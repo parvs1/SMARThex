@@ -56,7 +56,7 @@ public class Dashboard extends AppCompatActivity implements Serializable
 
             }
         });
-        ImageButton alarm = (ImageButton)findViewById(R.id.alarms);
+        ImageButton alarm = (ImageButton)findViewById(R.id.alarm);
         alarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

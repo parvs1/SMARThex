@@ -5,7 +5,8 @@
     android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:layout_editor_absoluteY="81dp">
+    tools:layout_editor_absoluteY="81dp"
+    android:background="#0097A7">
 
     <EditText
         android:id="@+id/editMedName"
@@ -19,7 +20,10 @@
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="@android:color/white"
+        android:textColorHint="@android:color/white"
+        android:backgroundTint="@android:color/white"/>
 
 
     <Button
@@ -54,7 +58,9 @@
         android:layout_marginTop="56dp"
         android:text="Sunday"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/timePickerButton" />
+        app:layout_constraintTop_toBottomOf="@+id/timePickerButton"
+        android:textColor="@android:color/white"
+        android:buttonTint="@android:color/white"/>
 
     <CheckBox
         android:id="@+id/monCheck"
@@ -64,7 +70,9 @@
         android:layout_marginTop="20dp"
         android:text="Monday"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sunCheck" />
+        app:layout_constraintTop_toBottomOf="@+id/sunCheck"
+        android:textColor="@android:color/white"
+        android:buttonTint="@android:color/white"/>
 
     <CheckBox
         android:id="@+id/tuesCheck"
@@ -74,7 +82,9 @@
         android:layout_marginTop="20dp"
         android:text="Tuesday"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/monCheck" />
+        app:layout_constraintTop_toBottomOf="@+id/monCheck"
+        android:textColor="@android:color/white"
+        android:buttonTint="@android:color/white"/>
 
     <CheckBox
         android:id="@+id/wedCheck"
@@ -84,7 +94,9 @@
         android:layout_marginTop="20dp"
         android:text="Wednesday"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tuesCheck" />
+        app:layout_constraintTop_toBottomOf="@+id/tuesCheck"
+        android:textColor="@android:color/white"
+        android:buttonTint="@android:color/white"/>
 
     <CheckBox
         android:id="@+id/thursCheck"
@@ -94,7 +106,9 @@
         android:layout_marginTop="20dp"
         android:text="Thursday"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/wedCheck" />
+        app:layout_constraintTop_toBottomOf="@+id/wedCheck"
+        android:textColor="@android:color/white"
+        android:buttonTint="@android:color/white"/>
 
     <CheckBox
         android:id="@+id/friCheck"
@@ -104,7 +118,9 @@
         android:layout_marginTop="20dp"
         android:text="Friday"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/thursCheck" />
+        app:layout_constraintTop_toBottomOf="@+id/thursCheck"
+        android:textColor="@android:color/white"
+        android:buttonTint="@android:color/white"/>
 
     <CheckBox
         android:id="@+id/satCheck"
@@ -114,6 +130,8 @@
         android:layout_marginTop="20dp"
         android:text="Saturday"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/friCheck" />
+        app:layout_constraintTop_toBottomOf="@+id/friCheck"
+        android:textColor="@android:color/white"
+        android:buttonTint="@android:color/white"/>
 
 </android.support.constraint.ConstraintLayout>
