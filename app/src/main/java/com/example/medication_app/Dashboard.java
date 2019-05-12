@@ -57,15 +57,6 @@ public class Dashboard extends AppCompatActivity implements Serializable
 
             }
         });
-        ImageButton alarm = (ImageButton)findViewById(R.id.alarm);
-        alarm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent j = new Intent(Dashboard.this, MainActivity.class);
-                startActivity(j);
-
-            }
-        });
 
 		textViewModule1 = findViewById(R.id.textViewModule1);
 		textViewModule2 = findViewById(R.id.textViewModule2);

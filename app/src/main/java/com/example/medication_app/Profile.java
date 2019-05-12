@@ -53,7 +53,7 @@ public class Profile extends AppCompatActivity {
                 }
                 if(position == 1)
                 {
-                    Intent j = new Intent(Profile.this, MainActivity.class);
+                    Intent j = new Intent(Profile.this, Dashboard.class);
                     startActivity(j);
                 }
                 if(position == 2)
