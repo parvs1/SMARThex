@@ -14,6 +14,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.io.Serializable;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -260,7 +261,8 @@ public class Dashboard extends AppCompatActivity implements Serializable
 						hour = Calendar.HOUR_OF_DAY;
 						min = Calendar.MINUTE;
 						second = Calendar.SECOND;
-						time = "" + (hour*3600) + (min*60) + second;
+
+						time = "" + Math.round((System.currentTimeMillis()/1000));
 
 						message = time.getBytes();
 						sendMessage(message);
