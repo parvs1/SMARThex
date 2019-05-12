@@ -97,6 +97,7 @@ public class EditModule extends AppCompatActivity implements AdapterView.OnItemS
 
                 Intent editedModule = new Intent();
                 editedModule.putExtra("editedModule", tempModule);
+                editedModule.putExtra("color", color);
 
                 setResult(RESULT_OK, editedModule);
                 finish();

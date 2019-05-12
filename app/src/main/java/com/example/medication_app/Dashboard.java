@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class Dashboard extends AppCompatActivity implements Serializable
 {
@@ -252,10 +253,16 @@ public class Dashboard extends AppCompatActivity implements Serializable
 						ArrayList<byte[]> resultNames = new ArrayList<>();
 						ArrayList<byte[]> resultLists = new ArrayList<>();
 
-						String time = "" + SystemClock.currentThreadTimeMillis();
+						Calendar calendar = Calendar.getInstance();
+						calendar.setTimeInMillis(System.currentTimeMillis());
+						String hour = calendar.
+
+
 
 						message = time.getBytes();
 						sendMessage(message);
+
+
 
 						for (int i = 0; i < modules.size(); i++)
 						{
@@ -331,6 +338,10 @@ public class Dashboard extends AppCompatActivity implements Serializable
 			Module newModule = (Module) data.getSerializableExtra("editedModule");
 			modules.set(newModule.module - 1, newModule);
 			Log.e("module", Integer.toString(newModule.module));
+
+			int color = data.getIntExtra("color", 0);
+
+
 
 			if (newModule.module == 1)
 			{
