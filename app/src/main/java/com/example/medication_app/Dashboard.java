@@ -348,16 +348,21 @@ public class Dashboard extends AppCompatActivity implements Serializable
 			int imageResource = R.drawable.hexagon_gray;
 
 			switch(color){
-				case 1:
+				case 0:
 					imageResource = R.drawable.hexagon_red;
-				case 2:
+					break;
+				case 1:
 					imageResource = R.drawable.hexagon_orange;
-				case 3:
+					break;
+				case 2:
 					imageResource = R.drawable.hexagon_green;
-				case 4:
+					break;
+				case 3:
 					imageResource = R.drawable.hexagon_blue;
-				case 5:
+					break;
+				case 4:
 					imageResource = R.drawable.hexagon_purple;
+					break;
 			}
 
 			if (newModule.module == 1)
