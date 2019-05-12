@@ -262,12 +262,8 @@ public class Dashboard extends AppCompatActivity implements Serializable
 						second = Calendar.SECOND;
 						time = "" + (hour*3600) + (min*60) + second;
 
-
-
 						message = time.getBytes();
 						sendMessage(message);
-
-
 
 						for (int i = 0; i < modules.size(); i++)
 						{
