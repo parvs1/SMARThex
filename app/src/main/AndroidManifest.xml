@@ -84,7 +84,7 @@
                 <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>
-        <activity android:name=".HomeScreen">
+        <activity android:name=".dashboard_hexagon">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

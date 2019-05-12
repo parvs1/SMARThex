@@ -99,17 +99,7 @@ public class HomeScreen extends AppCompatActivity {
             e.printStackTrace();
         }
 
-    settings = (Button) findViewById(R.id.settings);
-    settings.setOnClickListener(new View.OnClickListener()
 
-    {
-        @Override
-        public void onClick (View v){
-        Intent i = new Intent(HomeScreen.this, SettingsActivity.class);
-        startActivity(i);
-
-    }
-    });
 
     dashboard = (Button) findViewById(R.id.dashboard);
 

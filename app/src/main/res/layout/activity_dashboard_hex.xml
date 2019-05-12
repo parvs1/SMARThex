@@ -139,16 +139,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/logo_white" />
 
-    <ImageButton
-        android:id="@+id/imageButton"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:background="@android:color/transparent"
-        app:layout_constraintBottom_toBottomOf="@+id/textViewDashboard"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/baseline_settings_white_36" />
+
 
     <TextView
         android:id="@+id/textViewModule1"
@@ -219,5 +210,24 @@
         app:layout_constraintEnd_toEndOf="@+id/moduleBtn5"
         app:layout_constraintStart_toStartOf="@+id/moduleBtn5"
         app:layout_constraintTop_toTopOf="@+id/moduleBtn5" />
+    <ImageButton
+        android:id="@+id/settings"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="4dp"
+        android:background="@android:color/transparent"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewDashboard"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/baseline_settings_white_36" />
+
+    <ImageButton
+        android:id="@+id/alarms"
+        android:layout_width="91dp"
+        android:layout_height="100dp"
+        android:background="@android:color/transparent"
+        app:srcCompat="@drawable/round_alarm_add_24"
+        tools:layout_editor_absoluteX="-5dp"
+        tools:layout_editor_absoluteY="-18dp" />
 
 </android.support.constraint.ConstraintLayout>
