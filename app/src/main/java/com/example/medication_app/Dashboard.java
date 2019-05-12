@@ -247,13 +247,9 @@ public class Dashboard extends AppCompatActivity implements Serializable
 						ArrayList<byte[]> resultNames = new ArrayList<>();
 						ArrayList<byte[]> resultLists = new ArrayList<>();
 
-						Calendar calendar = Calendar.getInstance();
-						calendar.setTimeInMillis(System.currentTimeMillis());
-						hour = Calendar.HOUR_OF_DAY;
-						min = Calendar.MINUTE;
-						second = Calendar.SECOND;
+						time = "\"" + Math.round((System.currentTimeMillis() / 1000.0));
 
-						time = "" + Math.round((System.currentTimeMillis()/1000));
+						Log.e("TIME", time);
 
 						message = time.getBytes();
 						sendMessage(message);
@@ -261,7 +257,7 @@ public class Dashboard extends AppCompatActivity implements Serializable
 						for (int i = 0; i < modules.size(); i++)
 						{
 
-							String colon = ":";
+							String colon = "-";
 							String semicolon = ";";
 
 							if (!modules.get(i).medicineName.equals("-1"))
@@ -290,6 +286,8 @@ public class Dashboard extends AppCompatActivity implements Serializable
 								sendMessage(message);
 								//wait for BLE to receive
 
+								sendMessage(colon.getBytes());
+
 								for(int j = 0; j < module.times.size(); j++){
 									message = module.times.get(j).getBytes();
 									sendMessage(message);
@@ -302,6 +300,7 @@ public class Dashboard extends AppCompatActivity implements Serializable
 				});
 			}
 
+			sendMessage("\"".getBytes());
             /*
             final ArrayList<byte[]> bbrr = new ArrayList<>();
             final byte[] result = new byte [6];
