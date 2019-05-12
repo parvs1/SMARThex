@@ -45,8 +45,7 @@ public class Dashboard extends AppCompatActivity implements Serializable
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_dashboard_hex);
 
-        setContentView(R.layout.activity_dashboard_hex);
-        ImageButton setting = (ImageButton) findViewById(R.id.settings);
+		ImageButton setting = (ImageButton) findViewById(R.id.settings);
         setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,7 +54,7 @@ public class Dashboard extends AppCompatActivity implements Serializable
 
             }
         });
-        alarm = findViewById(R.id.alarm);
+        alarm = (Button) findViewById(R.id.editAlarms);
         alarm.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
