@@ -9,7 +9,7 @@
 
     <TextView
         android:id="@+id/alarmDays"
-        android:layout_width="139dp"
+        android:layout_width="wrap_content"
         android:layout_height="25dp"
         android:layout_marginStart="8dp"
         android:gravity="left|center_vertical"
@@ -33,7 +33,7 @@
 
     <TextView
         android:id="@+id/alarmMedName"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="52dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
