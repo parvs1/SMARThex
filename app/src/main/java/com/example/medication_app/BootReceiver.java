@@ -15,15 +15,15 @@ import java.util.Calendar;
 public class BootReceiver extends BroadcastReceiver {
 
     ArrayList<Medicine> medicines;
-    Context context;
     private PendingIntent alarmIntent;
     private AlarmManager alarmManager;
+    Context receiverContext;
     public final String TAG = "MEDICATION_ADHERENCE";//TAG for log usage
 
     @Override
     public void onReceive(Context context, Intent intent) {
         if (intent.getAction().equals("android.intent.action.BOOT_COMPLETED")) {
-
+            receiverContext = context;
             alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
             String medicinesFileText = "";
@@ -82,13 +82,13 @@ public class BootReceiver extends BroadcastReceiver {
         for (int i = 0; i < medicines.size(); i++) {
             Medicine temp = medicines.get(i);
 
-            Intent alarmReceiver = new Intent(context, Alarm1Receiver.class);
+            Intent alarmReceiver = new Intent(receiverContext, Alarm1Receiver.class);
             alarmReceiver.addFlags(Intent.FLAG_RECEIVER_FOREGROUND);
             alarmReceiver.putExtra("nameToAlert", temp.medicineName);
             alarmReceiver.putExtra("requestCode", temp.alarmRequestCode);
 
             //Lets the other application continue the process as if we are owning it
-            alarmIntent = PendingIntent.getBroadcast(context, temp.alarmRequestCode, alarmReceiver, PendingIntent.FLAG_CANCEL_CURRENT);
+            alarmIntent = PendingIntent.getBroadcast(receiverContext, temp.alarmRequestCode, alarmReceiver, PendingIntent.FLAG_CANCEL_CURRENT);
 
             // Set the alarm to start at the Medicine time.
             Calendar calendar = Calendar.getInstance();

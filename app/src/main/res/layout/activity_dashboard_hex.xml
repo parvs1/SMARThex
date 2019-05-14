@@ -159,8 +159,9 @@
 
     <TextView
         android:id="@+id/textViewModule1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center|center_vertical"
         android:text="TextView"
         android:textColor="@android:color/white"
         android:textSize="20dp"
@@ -173,8 +174,9 @@
 
     <TextView
         android:id="@+id/textViewModule2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center|center_vertical"
         android:text="TextView"
         android:textColor="@android:color/white"
         android:textSize="20dp"
@@ -187,8 +189,9 @@
 
     <TextView
         android:id="@+id/textViewModule3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center|center_vertical"
         android:text="TextView"
         android:textColor="@android:color/white"
         android:textSize="20dp"
@@ -201,8 +204,9 @@
 
     <TextView
         android:id="@+id/textViewModule4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center|center_vertical"
         android:text="TextView"
         android:textColor="@android:color/white"
         android:textSize="20dp"
@@ -215,8 +219,9 @@
 
     <TextView
         android:id="@+id/textViewModule5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center|center_vertical"
         android:text="TextView"
         android:textColor="@android:color/white"
         android:textSize="20dp"

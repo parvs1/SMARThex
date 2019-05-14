@@ -6,6 +6,8 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -90,12 +92,12 @@ public class MainActivity extends AppCompatActivity {
         }
         else {
             boolean[] days = new boolean[7];
-            medicines.add(new Medicine("Add new alarms using the FAB below or tap existing ones to edit!", "00", "30", 100, days)); //initial placeholder text to guide user through editing a medicine for first time
+            medicines.add(new Medicine("Add an alarm!", "00", "30", 100, days)); //initial placeholder text to guide user through editing a medicine for first time
         }
 
 
         //create and set array adapter for medicines and medSchedule listview
-        adapter = new ArrayAdapter<Medicine>(this, R.layout.list_item, medicines);
+        adapter = new MedicineListAdapter(this,R.layout.alarm,medicines);
         medSchedule = (ListView) findViewById(R.id.medProfile);
         medSchedule.setAdapter(adapter);
 

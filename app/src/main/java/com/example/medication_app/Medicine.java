@@ -33,7 +33,7 @@ public class Medicine implements Serializable {
     {
         //unless it is original place holder, make each item for listview read 'medicineName; taken every n days
 
-        if (medicineName.equals("Tap me to edit!"))
+        if (medicineName.equals("Add an alarm!"))
             return medicineName;
         else {
             String description = "" + medicineName + "     " + hour + ":" + minute + "     ";

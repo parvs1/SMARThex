@@ -154,9 +154,6 @@ public class EditMedicineActivity extends AppCompatActivity {
                 editedDays[5] = friCheck.isChecked();
                 editedDays[6] = satCheck.isChecked();
 
-                for(int day = 0; day < editedDays.length; day++)
-                    Log.i(TAG, "" + day + ":" + editedDays[day]);
-
                 Medicine tempMedicine = new Medicine(editMedName.getText().toString(), time[0], time[1], alarmRequestCode, editedDays);
                 Log.d(TAG, ""+ tempMedicine);
 

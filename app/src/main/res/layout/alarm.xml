@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0097A7">
+
+    <TextView
+        android:id="@+id/alarmDays"
+        android:layout_width="139dp"
+        android:layout_height="25dp"
+        android:layout_marginEnd="8dp"
+        android:gravity="center_vertical|end"
+        android:text="S M T W Th F Sa"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/alarmClockImage" />
+
+    <TextView
+        android:id="@+id/alarmTime"
+        android:layout_width="103dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="8dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="12:00 PM"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/alarmClockImage" />
+
+    <TextView
+        android:id="@+id/alarmMedName"
+        android:layout_width="wrap_content"
+        android:layout_height="50sp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="Antibiotics"
+        android:textColor="@android:color/white"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/alarmClockImage"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/alarmClockImage"
+        android:layout_width="103dp"
+        android:layout_height="57dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/baseline_alarm_24" />
+
+</android.support.constraint.ConstraintLayout>

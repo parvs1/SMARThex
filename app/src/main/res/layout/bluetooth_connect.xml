@@ -43,6 +43,7 @@
         android:background="@drawable/white_bg"
         android:text="Next"
         android:textColor="#00BCD4"
+        android:textSize="24sp"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

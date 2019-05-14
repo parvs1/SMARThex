@@ -15,11 +15,26 @@
         android:layout_marginTop="100dp"
         android:layout_marginEnd="50dp"
         android:background="@drawable/white_bg"
-        android:text="      NFC ID: "
+        android:text="NFC ID: "
         android:textColor="#00BCD4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/contactButton" />
+
+    <Button
+        android:id="@+id/resetAlarmsButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="56dp"
+        android:background="@drawable/white_bg"
+        android:text="Reset All Alarms"
+        android:textColor="#00BCD4"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/contactButton"
@@ -41,12 +56,13 @@
         android:layout_width="wrap_content"
         android:layout_height="32dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="52dp"
         android:layout_marginEnd="8dp"
         android:text="Scan SMARThex to Change NFC ID"
         android:textColor="@android:color/white"
         android:textSize="22dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.49"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nfcButton" />
 
