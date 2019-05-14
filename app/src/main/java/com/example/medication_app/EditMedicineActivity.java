@@ -44,9 +44,6 @@ public class EditMedicineActivity extends AppCompatActivity {
         Medicine medicineToEdit = (Medicine)getIntent().getSerializableExtra("medicineToEdit");
         alarmRequestCode = medicineToEdit.alarmRequestCode;
 
-        time[0] = "12";
-        time[1] = "00";
-
         editedDays = new boolean[7];
 
         //if adding new medicine, not editing, change medicineToEdit to some default placeholders and give it a unique, random request code
@@ -55,9 +52,13 @@ public class EditMedicineActivity extends AppCompatActivity {
             medicineToEdit.medicineName = "";
             medicineToEdit.hour = "12";
             medicineToEdit.minute = "00";
+
             Random random = new Random();
             alarmRequestCode = random.nextInt(798) + 101;
         }
+
+        time[0] = medicineToEdit.hour;
+        time[1] = medicineToEdit.minute;
 
         editMedName = (EditText)findViewById(R.id.editMedName);
         editMedName.setText(medicineToEdit.medicineName);
