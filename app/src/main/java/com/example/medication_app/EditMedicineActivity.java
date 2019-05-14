@@ -107,7 +107,7 @@ public class EditMedicineActivity extends AppCompatActivity {
                         time[1] = selectedMinText;
 
                         //set the timePickerButton's text to the new time set by the user
-                        String timeText = "" + selectedHourText + ":" + selectedMinText;
+                        String timeText = "" + Integer.parseInt(selectedHourText)%12 + ":" + selectedMinText;
                         timePickerButton.setText(timeText);
                     }
                 }, hour, minute, false);

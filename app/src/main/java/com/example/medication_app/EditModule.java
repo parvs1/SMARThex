@@ -21,6 +21,7 @@ public class EditModule extends AppCompatActivity implements AdapterView.OnItemS
 
     ArrayList<Medicine> medicines;
     ArrayList<String> times;
+    ArrayList<String> timesFormatted;
     TextView timesList;
     public String medName;
     public final String TAG = "MEDICATION_ADHERENCE"; //TAG for log usage
@@ -39,9 +40,8 @@ public class EditModule extends AppCompatActivity implements AdapterView.OnItemS
         medName = moduleToEdit.medicineName;
 
         times = moduleToEdit.times;
+        timesFormatted = new ArrayList<String>();
         timesList = findViewById(R.id.timesList);
-        createTimesList();
-
 
         ArrayList<String> medNamesArrayList = new ArrayList<String>();
         for (int i = 0; i < medicines.size(); i++) {
@@ -72,9 +72,12 @@ public class EditModule extends AppCompatActivity implements AdapterView.OnItemS
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String medicineName = spinnerAdapter.getItem(position);
                 times.clear();
+                timesFormatted.clear();
                 for (int i = 0; i < medicines.size(); i++) {
-                    if (medicines.get(i).medicineName.equals(medicineName))
+                    if (medicines.get(i).medicineName.equals(medicineName)) {
                         times.add(medicines.get(i).hour + ":" + medicines.get(i).minute + ", " + daysArrayShortener((medicines.get(i).days)));
+                        timesFormatted.add(medicines.get(i).hour + ":" + medicines.get(i).minute + ", " + dayArrayStringFormatter((medicines.get(i).days)));
+                    }
                 }
 
                 medName = medicineName;
@@ -121,12 +124,32 @@ public class EditModule extends AppCompatActivity implements AdapterView.OnItemS
     public void createTimesList() {
         String timeListString = "";
 
-        for (int i = 0; i < times.size(); i++) {
-            timeListString+= "◦ " + times.get(i);
+        for (int i = 0; i < timesFormatted.size(); i++) {
+            timeListString+= "◦ " + timesFormatted.get(i);
             timeListString+= "\n";
         }
 
         timesList.setText(timeListString);
+    }
+
+    public String dayArrayStringFormatter(boolean[] daysArray)
+    {
+        String days = "";
+        if(daysArray[0])
+            days+= "S ";
+        if(daysArray[1])
+            days+= "M ";
+        if(daysArray[2])
+            days+= "T ";
+        if(daysArray[3])
+            days+= "W ";
+        if(daysArray[4])
+            days+= "Th ";
+        if(daysArray[5])
+            days+= "F ";
+        if(daysArray[6])
+            days+= "Sa ";
+        return days;
     }
 
     public void getMedicinesfromFile() {

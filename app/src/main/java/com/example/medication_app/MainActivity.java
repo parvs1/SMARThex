@@ -237,7 +237,7 @@ public class MainActivity extends AppCompatActivity {
         alarmReceiver.putExtra("requestCode", temp.alarmRequestCode);
 
         //Lets the other application continue the process as if we are owning it
-        alarmIntent = PendingIntent.getBroadcast(MainActivity.this, temp.alarmRequestCode, alarmReceiver, PendingIntent.FLAG_CANCEL_CURRENT);
+        alarmIntent = PendingIntent.getBroadcast(MainActivity.this, temp.alarmRequestCode, alarmReceiver, PendingIntent.FLAG_IMMUTABLE);
 
         // Set the alarm to start at the Medicine time.
         Calendar calendar = Calendar.getInstance();
@@ -308,7 +308,7 @@ public class MainActivity extends AppCompatActivity {
             alarmReceiver.putExtra("requestCode", temp.alarmRequestCode);
 
             //Lets the other application continue the process as if we are owning it
-            alarmIntent = PendingIntent.getBroadcast(MainActivity.this, temp.alarmRequestCode, alarmReceiver, PendingIntent.FLAG_CANCEL_CURRENT);
+            alarmIntent = PendingIntent.getBroadcast(MainActivity.this, temp.alarmRequestCode, alarmReceiver, PendingIntent.FLAG_IMMUTABLE);
 
             // Set the alarm to start at the Medicine time.
             Calendar calendar = Calendar.getInstance();

@@ -28,6 +28,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
@@ -533,27 +534,17 @@ public class Dashboard extends AppCompatActivity implements Serializable
 
 				Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
 
-				Intent Level2Receiver = new Intent(getApplicationContext(), Alarm2Receiver.class);
-				boolean isActive = (PendingIntent.getBroadcast(getApplicationContext(), 992, Level2Receiver, PendingIntent.FLAG_NO_CREATE)) != null; //check if Level 2 alarm is active
+				Intent Level2Receiver = new Intent(this, Alarm2Receiver.class);
+				boolean isActive = (PendingIntent.getBroadcast(this, 992, Level2Receiver, PendingIntent.FLAG_NO_CREATE)) != null; //check if Level 2 alarm is active
 
 				if (getTextFromTag(tag).equals(nfcID) && isActive) {
 
-					Snackbar.make(getWindow().getDecorView().getRootView(), "Confirmed! Thank you for taking your medication!", Snackbar.LENGTH_LONG)
-							.setAction("CLOSE", new View.OnClickListener()
-							{
-								@Override
-								public void onClick(View view)
-								{
-
-								}
-							})
-							.setActionTextColor(getResources().getColor(android.R.color.holo_red_light))
-							.show();
+					Toast.makeText(this, "Confirmed! Thank you for taking your medication!", Toast.LENGTH_LONG).show();
 
 					//Cancel Level 2
 					PendingIntent Level2Intent = PendingIntent.getBroadcast(
 							getApplicationContext(), 992, Level2Receiver,
-							PendingIntent.FLAG_ONE_SHOT);
+							PendingIntent.FLAG_CANCEL_CURRENT);
 
 					alarmManager.cancel(Level2Intent);
 
@@ -561,7 +552,7 @@ public class Dashboard extends AppCompatActivity implements Serializable
 					Intent Level3Receiver = new Intent(getApplicationContext(), Alarm3Receiver.class);
 					PendingIntent Level3Intent = PendingIntent.getBroadcast(
 							getApplicationContext(), 993, Level3Receiver,
-							PendingIntent.FLAG_ONE_SHOT);
+							PendingIntent.FLAG_CANCEL_CURRENT);
 
 					alarmManager.cancel(Level3Intent);
 
@@ -569,34 +560,14 @@ public class Dashboard extends AppCompatActivity implements Serializable
 					Intent Level4Receiver = new Intent(getApplicationContext(), Alarm4Receiver.class);
 					PendingIntent Level4Intent = PendingIntent.getBroadcast(
 							getApplicationContext(), 994, Level4Receiver,
-							PendingIntent.FLAG_ONE_SHOT);
+							PendingIntent.FLAG_CANCEL_CURRENT);
 
 					alarmManager.cancel(Level4Intent);
 				}
 				else if (getTextFromTag(tag).equals(nfcID) && !isActive)
-					Snackbar.make(getWindow().getDecorView().getRootView(), "No alarms have triggered yet. No need to take any medicine right now.", Snackbar.LENGTH_LONG)
-							.setAction("CLOSE", new View.OnClickListener()
-							{
-								@Override
-								public void onClick(View view)
-								{
-
-								}
-							})
-							.setActionTextColor(getResources().getColor(android.R.color.holo_red_light))
-							.show();
+					Toast.makeText(this, "No medicine alarms have been triggered yet. No need to take medicine right now.", Toast.LENGTH_LONG).show();
 				else
-					Snackbar.make(getWindow().getDecorView().getRootView(), "Wrong NFC Tag ID. If you think this is a mistake, then you can change the NFC ID in the SMARThex app settings.", Snackbar.LENGTH_LONG)
-							.setAction("CLOSE", new View.OnClickListener()
-							{
-								@Override
-								public void onClick(View view)
-								{
-
-								}
-							})
-							.setActionTextColor(getResources().getColor(android.R.color.holo_red_light))
-							.show();
+					Toast.makeText(this, "Wrong NFC ID. If you think this is a mistake, then change the NFC id of your app using the SMARThex app settings.", Toast.LENGTH_LONG).show();
 			} else {
 				//keep on going
 			}
