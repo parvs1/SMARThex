@@ -44,13 +44,13 @@ public class MedicineListAdapter extends ArrayAdapter<Medicine> {
                 String time = "" + Integer.parseInt(temp.hour)%12 + ":" + temp.minute;
 
                 if(Integer.parseInt(temp.hour) < 12 && Integer.parseInt(temp.hour) > 0)
-                    time += "AM";
+                    time += " AM";
                 else if(Integer.parseInt(temp.hour) > 12)
-                    time += "PM";
+                    time += " PM";
                 else if (Integer.parseInt(temp.hour) == 0)
-                    time = "12:" + temp.minute + "AM";
+                    time = "12:" + temp.minute + " AM";
                 else //hour = 12 noon
-                    time = "12:" + temp.minute + "PM";
+                    time = "12:" + temp.minute + " PM";
 
                 alarmTime.setText(time);
             }
