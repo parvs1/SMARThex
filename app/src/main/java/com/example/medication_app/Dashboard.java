@@ -535,9 +535,9 @@ public class Dashboard extends AppCompatActivity implements Serializable
 				Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
 
 				Intent Level2Receiver = new Intent(this, Alarm2Receiver.class);
-				boolean isActive = (PendingIntent.getBroadcast(this, 992, Level2Receiver, PendingIntent.FLAG_NO_CREATE)) != null; //check if Level 2 alarm is active
+				boolean isActive = true; //(PendingIntent.getBroadcast(this, 992, Level2Receiver, PendingIntent.FLAG_NO_CREATE)) != null; //check if Level 2 alarm is active
 
-				if (getTextFromTag(tag).equals(nfcID)) {
+				if (getTextFromTag(tag).equals(nfcID) && isActive) {
 
 					Toast.makeText(this, "Confirmed! Thank you for taking your medication!", Toast.LENGTH_LONG).show();
 

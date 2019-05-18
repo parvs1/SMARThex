@@ -53,8 +53,7 @@ public class Profile extends AppCompatActivity {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent l = new Intent(Profile.this, Dashboard.class);
-                startActivity(l);
+                finish();
             }
         });
 

@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
@@ -61,7 +62,8 @@ public class EditModule extends AppCompatActivity implements AdapterView.OnItemS
         for (int i = 0; i < medNamesArrayList.size(); i++)
             medNames[i] = medNamesArrayList.get(i);
 
-        final Spinner medicineSelector = (Spinner)findViewById(R.id.medicineSelector);
+        final Spinner medicineSelector = (Spinner) findViewById(R.id.medicineSelector);
+
 
         final ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(EditModule.this, android.R.layout.simple_spinner_item, medNames);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -70,6 +72,7 @@ public class EditModule extends AppCompatActivity implements AdapterView.OnItemS
         medicineSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
                 String medicineName = spinnerAdapter.getItem(position);
                 times.clear();
                 timesFormatted.clear();
@@ -176,20 +179,27 @@ public class EditModule extends AppCompatActivity implements AdapterView.OnItemS
 
         String[] medicinesFileTextArray = medicinesFileText.split("\n"); //split text from 'medicinesFile.txt' by line
 
-        for (int i = 0; i < medicinesFileTextArray.length; i+=5) {
-            String tempName = medicinesFileTextArray[i];
-            String tempHour = medicinesFileTextArray[i + 1];
-            String tempMin = medicinesFileTextArray[i + 2];
-            int tempAlarmRequestCode = Integer.parseInt(medicinesFileTextArray[i+3]);
-            String daysString = medicinesFileTextArray[i + 4];
+        if(medicinesFileTextArray.length < 5) {
+            setResult(RESULT_CANCELED);
+            Toast.makeText(this, "Create a medicine before setting up a module!", Toast.LENGTH_LONG).show();
+            finish();
+        }
+        else {
+            for (int i = 0; i < medicinesFileTextArray.length; i += 5) {
+                String tempName = medicinesFileTextArray[i];
+                String tempHour = medicinesFileTextArray[i + 1];
+                String tempMin = medicinesFileTextArray[i + 2];
+                int tempAlarmRequestCode = Integer.parseInt(medicinesFileTextArray[i + 3]);
+                String daysString = medicinesFileTextArray[i + 4];
 
-            String[] daysArray = daysString.split(",");
+                String[] daysArray = daysString.split(",");
 
-            boolean[] days = new boolean[7];
-            for(int day = 0; day < days.length; day++)
-                days[day] = Boolean.parseBoolean(daysArray[day]);
+                boolean[] days = new boolean[7];
+                for (int day = 0; day < days.length; day++)
+                    days[day] = Boolean.parseBoolean(daysArray[day]);
 
-            medicines.add(new Medicine(tempName, tempHour, tempMin, tempAlarmRequestCode, days));
+                medicines.add(new Medicine(tempName, tempHour, tempMin, tempAlarmRequestCode, days));
+            }
         }
     }
 

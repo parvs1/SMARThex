@@ -4,6 +4,53 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DoctorContact">
+    tools:context=".DoctorContact"
+    android:background="#0097A7">
+
+    <Button
+        android:id="@+id/doctor"
+        android:layout_width="276dp"
+        android:layout_height="101dp"
+        android:layout_marginStart="131dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginEnd="131dp"
+        android:background="@drawable/white_bg"
+        android:text="Send Text To My Doctor"
+        android:textColor="#00BCD4"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/messagetodoc" />
+
+    <EditText
+        android:id="@+id/messagetodoc"
+        android:layout_width="285dp"
+        android:layout_height="113dp"
+        android:layout_marginStart="110dp"
+        android:layout_marginTop="250dp"
+        android:layout_marginEnd="110dp"
+        android:layout_marginBottom="56dp"
+        android:textColor="@android:color/white"
+        android:backgroundTint="@android:color/white"
+        android:textColorHint="@android:color/white"
+        android:hint="Enter message to doctor:"
+        app:layout_constraintBottom_toTopOf="@+id/doctor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/choosedoc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="161dp"
+        android:layout_marginTop="110dp"
+        android:layout_marginEnd="161dp"
+        android:text="Choose Doctor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:textColor="#00BCD4"
+        android:background="@drawable/white_bg"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

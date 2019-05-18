@@ -52,7 +52,7 @@
 
     <TextView
         android:id="@+id/timesList"
-        android:layout_width="161dp"
+        android:layout_width="175dp"
         android:layout_height="129dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"

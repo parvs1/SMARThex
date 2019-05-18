@@ -9,30 +9,52 @@
     android:background="#0097A7">
 
 
-    <EditText
-        android:id="@+id/editMedName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="8dp"
-        android:ems="10"
-        android:hint="@string/enter_medicine_name"
-        android:inputType="textPersonName"
+    <Spinner
+        android:id="@+id/medicineSelector"
+        android:layout_width="255dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="17dp"
+        android:layout_marginTop="150dp"
+        android:layout_marginEnd="17dp"
+        android:layout_marginBottom="60dp"
+        android:background="@android:color/white"
+        app:layout_constraintBottom_toTopOf="@+id/button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/medicinePromptText2" />
+
+    <TextView
+        android:id="@+id/medicinePromptText2"
+        android:layout_width="342dp"
+        android:layout_height="27dp"
+        android:layout_marginStart="61dp"
+        android:layout_marginTop="45dp"
+        android:layout_marginEnd="61dp"
+        android:text="Choose Medicine in this Module"
+        android:textAlignment="center"
         android:textColor="@android:color/white"
-        android:textColorHint="@android:color/white"
-        android:backgroundTint="@android:color/white"/>
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/button"
         android:layout_width="158dp"
         android:layout_height="55dp"
-        android:text="Button"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="117dp" />
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="160dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="448dp"
+        android:textColor="#00BCD4"
+        android:background="@drawable/white_bg"
+        android:text="Send Request To Doctor"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/medicineSelector" />
 
 
 </android.support.constraint.ConstraintLayout>
