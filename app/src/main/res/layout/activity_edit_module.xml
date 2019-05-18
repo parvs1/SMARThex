@@ -42,13 +42,12 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="376dp"
-        android:textColor="@android:color/white"
         android:text="Dispenses at the following times: "
         android:textAlignment="textStart"
+        android:textColor="@android:color/white"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.155"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -71,15 +70,17 @@
 
     <Button
         android:id="@+id/finishButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="160dp"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="56dp"
+        android:layout_marginBottom="48dp"
+        android:background="@drawable/white_bg"
         android:text="Finish"
+        android:textColor="#00BCD4"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.006"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Spinner

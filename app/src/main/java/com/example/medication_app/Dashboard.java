@@ -537,7 +537,7 @@ public class Dashboard extends AppCompatActivity implements Serializable
 				Intent Level2Receiver = new Intent(this, Alarm2Receiver.class);
 				boolean isActive = (PendingIntent.getBroadcast(this, 992, Level2Receiver, PendingIntent.FLAG_NO_CREATE)) != null; //check if Level 2 alarm is active
 
-				if (getTextFromTag(tag).equals(nfcID) && isActive) {
+				if (getTextFromTag(tag).equals(nfcID)) {
 
 					Toast.makeText(this, "Confirmed! Thank you for taking your medication!", Toast.LENGTH_LONG).show();
 
