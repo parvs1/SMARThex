@@ -1,7 +1,39 @@
-# What is SMARThex?
+# SMARThex
+<p align="center">
+    <img src="doc/smarthexLogo.png" />
+</p>
+
+Overview
+--------
+<p align="center">
+    <img src="doc/image/product.jpg" />
+</p>
+
 SMARThex, the Simple Medication Adherence Remembrance Tool, ensures that users take their
 medication on time, every time. SMARThex combats the nonadherence epidemic through an
-integrated, custom pill dispenser and app system.
+integrated custom pill dispenser and app system.
+
+The App
+--------
+<p align="center">
+    <img src="doc/image/appScreenshots.png" />
+</p>
+<p align="center">(Screenshots From the SMARThex App)</p>
+
+With a simple and enhanced user interface, the SMARThex app allows users to manage their
+medications on their dashboard where they connect to the dispenser and easily input their
+medication schedule into the application. The solution boosts adherence through a four-layered
+notification system in the app. After linking their medications in the physical dispenser to the
+model in the app, a series of four reminders is triggered until the user takes their pill: a push
+notification, an alarm, a text, and a phone call. Once the user acknowledges one of the
+notifications, the rest are stopped.
+
+The Pill Dispenser
+--------
+<p align="center">
+    <img src="doc/image/pillDispenser.png" />
+</p>
+<p align="center">(CAD Drawings of the Pill Dispenser Created in Fusion 360)</p>
 
 The pill dispenser is composed of a hexagonal central unit and pill dispenser modules that
 connect around the hub. The central module houses a microcontroller and battery, powering the
@@ -11,22 +43,6 @@ pill dispensers to release medications at a specific time. Each pill dispenser m
 servo motor to actuate a disk that drops a pill into a tray where the user can simply grab their
 medication.
 
-Our app, with a simple and enhanced user interface, allows users to manage their
-medications on their dashboard where they connect to the dispenser and easily input their
-medication schedule into the application. The solution boosts adherence through a four-layered
-notification system in the app. After linking their medications in the physical dispenser to the
-model in the app, a series of four reminders is triggered until the user takes their pill: a push
-notification, an alarm, a text, and a phone call. Once the user acknowledges one of the
-notifications, the rest are stopped.
-
-When it is time to take their medication, the user scans their phone with the NFC tag on the
-dispenser to record that they are taking the correct dosage, creating data of their medication
-adherence pattern to be used by doctors and pharmacists for later analysis. At the same time,
-the dispenser automatically releases the requisite dosage of medicine. NFC (Near Field
-Communication) technology is a bluetooth-powered chip located on the back of modern
-smartphones. When contact is made between two NFC tags, a bluetooth connection is
-established and both devices can communicate with each other. By integrating this technology
-into the SMARThex dispenser and mobile app, we ensured that each user needs to make
-deliberate contact between their SMARThex device and their own smartphone to bypass the
-four-layered redundancy system, making it nearly impossible for users to neglect taking their
-medicine.
+SMARThex In Action!
+--------
+Check out a [demo](https://photos.app.goo.gl/MzV15pCoprQDqdQj8) of SMARThex where a pill is dispensed when the device connects to the dispenser.
