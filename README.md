@@ -1,12 +1,11 @@
-# SMARThex
 <p align="center">
-    <img src="doc/smarthexLogo.png" />
+    <img src="doc/smarthexLogo.PNG" />
 </p>
 
 Overview
 --------
 <p align="center">
-    <img src="doc/image/product.jpg" />
+    <img src="doc/product.jpg" />
 </p>
 
 SMARThex, the Simple Medication Adherence Remembrance Tool, ensures that users take their
@@ -16,7 +15,7 @@ integrated custom pill dispenser and app system.
 The App
 --------
 <p align="center">
-    <img src="doc/image/appScreenshots.png" />
+    <img src="doc/appScreenshots.png" />
 </p>
 <p align="center">(Screenshots From the SMARThex App)</p>
 
@@ -31,9 +30,9 @@ notifications, the rest are stopped.
 The Pill Dispenser
 --------
 <p align="center">
-    <img src="doc/image/pillDispenser.png" />
+    <img src="doc/pillDispenser.PNG" />
 </p>
-<p align="center">(CAD Drawings of the Pill Dispenser Created in Fusion 360)</p>
+<p align="center">(CAD Drawing of the Pill Dispenser Created in Fusion 360)</p>
 
 The pill dispenser is composed of a hexagonal central unit and pill dispenser modules that
 connect around the hub. The central module houses a microcontroller and battery, powering the
