@@ -9,7 +9,7 @@ medication on time, every time. SMARThex combats the nonadherence epidemic throu
 integrated custom pill dispenser and app system.
 
 <p align="center">
-    <img src="doc/product.jpg" />
+    <img src="doc/productUpdated.jpg" />
 </p>
 
 The App
